@@ -6,13 +6,6 @@ from IPython.display import clear_output
 # TODO
 # object-oriented API
 
-def translate_metric(x):
-    translations = {'acc': "Accuracy", 'loss': "Log-loss (cost function)"}
-    if x in translations:
-        return translations[x]
-    else:
-        return x
-
 metric2printable = {
     "acc": "Accuracy",
     "mean_squared_error": "Mean squared error",
@@ -26,13 +19,16 @@ metric2printable = {
 }
 
 class PlotLosses(Callback):
-    def __init__(self, figsize=None):
-        #super(PlotLosses, self).__init__()
+    def __init__(self, figsize=None, dynamic_x_axis=False):
         self.figsize = figsize
+        self.dynamic_x_axis = dynamic_x_axis
 
     def on_train_begin(self, logs={}):
 
         self.base_metrics = [metric for metric in self.params['metrics'] if not metric.startswith('val_')]
+        self.loss_metric = self.model.loss
+        self.max_epoch = self.params['epochs']
+
         self.logs = []
 
     def on_epoch_end(self, epoch, logs={}):
@@ -44,6 +40,9 @@ class PlotLosses(Callback):
         for metric_id, metric in enumerate(self.base_metrics):
             plt.subplot(1, len(self.base_metrics), metric_id + 1)
 
+            if not self.dynamic_x_axis:
+                plt.xlim(xmax=self.max_epoch)
+
             plt.plot(range(1, len(self.logs) + 1),
                      [log[metric] for log in self.logs],
                      label="training")
@@ -51,7 +50,11 @@ class PlotLosses(Callback):
                 plt.plot(range(1, len(self.logs) + 1),
                          [log['val_' + metric] for log in self.logs],
                          label="validation")
-            plt.title(translate_metric(metric))
+            if metric == 'loss':
+                plt.title(metric2printable.get(self.loss_metric, self.loss_metric) + " (cost function)")
+            else:
+                plt.title(metric2printable.get(metric, metric))
+
             plt.xlabel('epoch')
             plt.legend(loc='center right')
 
