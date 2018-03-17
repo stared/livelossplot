@@ -15,7 +15,7 @@ metric2printable = {
     "kullback_leibler_divergence": "Log-loss"
 }
 
-class PlotLosses(Callback):
+class PlotLossesKeras(Callback):
     def __init__(self, figsize=None, cell_size=(6, 4), dynamic_x_axis=False, max_cols=2):
         self.figsize = figsize
         self.cell_size = cell_size

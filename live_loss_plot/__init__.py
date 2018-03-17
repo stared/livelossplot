@@ -1,5 +1,6 @@
 from .core import draw_plot
-from .keras_plot import PlotLosses
+from .generic_plot import PlotLosses
+from .keras_plot import PlotLossesKeras
 
 # TODO:
-# * import keras plot 
+# * import keras plot only if there is keras
