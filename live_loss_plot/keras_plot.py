@@ -1,12 +1,7 @@
 from __future__ import division
 
-import matplotlib.pyplot as plt
 from keras.callbacks import Callback
-from IPython.display import clear_output
-
-# TODO
-# * object-oriented API
-# * only integer ticks
+from .core import draw_plot
 
 metric2printable = {
     "acc": "Accuracy",
@@ -26,48 +21,25 @@ class PlotLosses(Callback):
         self.cell_size = cell_size
         self.dynamic_x_axis = dynamic_x_axis
         self.max_cols = max_cols
+        self.metric2printable = metric2printable.copy()
 
     def on_train_begin(self, logs={}):
-
         self.base_metrics = [metric for metric in self.params['metrics'] if not metric.startswith('val_')]
         if self.figsize is None:
             self.figsize = (
                 self.max_cols * self.cell_size[0],
                 ((len(self.base_metrics) + 1) // self.max_cols + 1) * self.cell_size[1]
             )
-        self.loss_metric = self.model.loss
-        self.max_epoch = self.params['epochs']
+        self.metric2printable['loss'] = self.metric2printable.get(self.model.loss, self.model.loss) + " (cost function)"
+        self.max_epoch = self.params['epochs'] if not self.dynamic_x_axis else None
 
         self.logs = []
 
     def on_epoch_end(self, epoch, logs={}):
         self.logs.append(logs)
 
-        clear_output(wait=True)
-        plt.figure(figsize=self.figsize)
-
-        for metric_id, metric in enumerate(self.base_metrics):
-            plt.subplot((len(self.base_metrics) + 1) // self.max_cols + 1, self.max_cols, metric_id + 1)
-
-            if not self.dynamic_x_axis:
-                plt.xlim(1, self.max_epoch)
-
-            plt.plot(range(1, len(self.logs) + 1),
-                     [log[metric] for log in self.logs],
-                     label="training")
-
-            if self.params['do_validation']:
-                plt.plot(range(1, len(self.logs) + 1),
-                         [log['val_' + metric] for log in self.logs],
-                         label="validation")
-
-            if metric == 'loss':
-                plt.title(metric2printable.get(self.loss_metric, self.loss_metric) + " (cost function)")
-            else:
-                plt.title(metric2printable.get(metric, metric))
-
-            plt.xlabel('epoch')
-            plt.legend(loc='center right')
-
-        plt.tight_layout()
-        plt.show();
+        draw_plot(self.logs, self.base_metrics,
+                  figsize=self.figsize, max_epoch=self.max_epoch,
+                  max_cols=self.max_cols,
+                  validation_fmt="val_{}",
+                  metric2title=self.metric2printable)

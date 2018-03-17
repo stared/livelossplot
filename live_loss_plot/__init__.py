@@ -1,7 +1,5 @@
+from .core import draw_plot
 from .keras_plot import PlotLosses
 
-# try:
-#     import keras
-#     from .keras_plot import PlotLosses
-# except:
-#     pass
+# TODO:
+# * import keras plot 
