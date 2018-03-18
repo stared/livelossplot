@@ -2,7 +2,7 @@
 
 Don't train deep learning models blindfolded! Be impatient and look at each epoch of your training!
 
-Live training loss plot in [Jupyter Notebook](http://jupyter.org/) for [Keras](https://keras.io/), [PyTorch](http://pytorch.org/) and other frameworks. An open source Python package by [Piotr Migdał](http://p.migdal.pl/).
+A live training loss plot in [Jupyter Notebook](http://jupyter.org/) for [Keras](https://keras.io/), [PyTorch](http://pytorch.org/) and other frameworks. An open source Python package by [Piotr Migdał](http://p.migdal.pl/).
 
 ```
 from livelossplot import PlotLossesKeras
@@ -15,6 +15,8 @@ model.fit(X_train, Y_train,
 ```
 
 ![](livelossplot.gif)
+
+So remember, [log your loss](https://twitter.com/pmigdal/status/943764924983017473)!
 
 ## Installation
 
