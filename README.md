@@ -1,4 +1,4 @@
-# live-loss-plot
+# Live Loss Plot - a Python package
 
 Don't train deep learning models blindfolded!
 
@@ -9,13 +9,13 @@ Live training loss plot in [Jupyter Notebook](http://jupyter.org/) for [Keras](h
 
 ## Installation
 
-```pip install git+git://github.com/stared/live-loss-plot.git
+```
+pip install git+git://github.com/stared/livelossplot.git
 ```
 
 ## History
 
 Started as [this gist](https://gist.github.com/stared/dfb4dfaf6d9a8501cd1cc8b8cb806d2e). Since it went popular, decided to rewrite it as a package.
-
 
 ## To do
 
