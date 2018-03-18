@@ -2,7 +2,7 @@
 
 Don't train deep learning models blindfolded! Be impatient and look at each epoch of your training!
 
-Live training loss plot in [Jupyter Notebook](http://jupyter.org/) for [Keras](https://keras.io/), [PyTorch](http://pytorch.org/) and others. An open source Python package by [Piotr Migdał](http://p.migdal.pl/).
+Live training loss plot in [Jupyter Notebook](http://jupyter.org/) for [Keras](https://keras.io/), [PyTorch](http://pytorch.org/) and other frameworks. An open source Python package by [Piotr Migdał](http://p.migdal.pl/).
 
 ```
 from livelossplot import PlotLossesKeras
@@ -18,13 +18,24 @@ model.fit(X_train, Y_train,
 
 ## Installation
 
+To install [this verson from PyPI](https://pypi.python.org/pypi/livelossplot/), type:
+
+```
+pip install livelossplot
+```
+
+To get the newest one from this repo (note that we are in the alpha stage, so there may be frequent updates), type:
+
 ```
 pip install git+git://github.com/stared/livelossplot.git
 ```
 
 ## Examples
 
-Look at notebook files with full examples.
+Look at notebook files with full working examples:
+
+* [minimal_example.ipynb](https://github.com/stared/livelossplot/blob/master/minimal_example.ipynb) - a bare API, to use anyware (including PyTorch)
+* [keras_example.ipynb](https://github.com/stared/livelossplot/blob/master/keras_example.ipynb) - a Keras callback
 
 ## Overview
 
@@ -36,7 +47,7 @@ If you want to get serious - use [Neptune - Machine Learning Lab](https://neptun
 
 But what if you just want to train a small model in Jupyter Notebook? Here is a way to do so, using `livelossplot` as a plug&play component.
 
-It started as [this gist](https://gist.github.com/stared/dfb4dfaf6d9a8501cd1cc8b8cb806d2e). Since it went popular, decided to rewrite it as a package.
+It started as [this gist](https://gist.github.com/stared/dfb4dfaf6d9a8501cd1cc8b8cb806d2e). Since it went popular, I decided to rewrite it as a package.
 
 ## To do
 
