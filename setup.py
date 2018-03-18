@@ -17,7 +17,7 @@ setup(name='livelossplot',
           'Intended Audience :: Science/Research',
           'Topic :: Scientific/Engineering',
           'Topic :: Scientific/Engineering :: Artificial Intelligence',
-          'opic :: Scientific/Engineering :: Visualization,
+          'opic :: Scientific/Engineering :: Visualization',
           'License :: OSI Approved :: MIT License',
           'Programming Language :: Python :: 2',
           'Programming Language :: Python :: 3'
