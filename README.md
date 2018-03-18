@@ -34,8 +34,9 @@ pip install git+git://github.com/stared/livelossplot.git
 
 Look at notebook files with full working examples:
 
-* [minimal_example.ipynb](https://github.com/stared/livelossplot/blob/master/minimal_example.ipynb) - a bare API, to use anyware (including PyTorch)
 * [keras_example.ipynb](https://github.com/stared/livelossplot/blob/master/keras_example.ipynb) - a Keras callback
+* [minimal_example.ipynb](https://github.com/stared/livelossplot/blob/master/minimal_example.ipynb) - a bare API, to use anyware
+* [pytorch_example.ipynb](https://github.com/stared/livelossplot/blob/master/pytorch_example.ipynb) - a bare API, as applied to PyTorch
 
 ## Overview
 
