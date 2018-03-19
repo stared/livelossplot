@@ -18,6 +18,9 @@ model.fit(X_train, Y_train,
 
 So remember, [log your loss](https://twitter.com/pmigdal/status/943764924983017473)!
 
+* (The most FA)Q: Why not TensorBoard?
+* A: Jupyter Notebook compability (for exploration and teaching). Simplicity of use.
+
 ## Installation
 
 To install [this verson from PyPI](https://pypi.python.org/pypi/livelossplot/), type:
@@ -44,9 +47,9 @@ Look at notebook files with full working examples:
 
 Text logs are easy, but it's easy to miss the most crucial information: is it learning, doing nothing or overfitting?
 
-Visual feedback allows us to keep track of the training proces.
+Visual feedback allows us to keep track of the training proces. Now there is one for Jupyter.
 
-If you want to get serious - use [Neptune - Machine Learning Lab](https://neptune.ml/) or at least [TensorBoard](https://www.tensorflow.org/programmers_guide/summaries_and_tensorboard).
+If you want to get serious - use [TensorBoard](https://www.tensorflow.org/programmers_guide/summaries_and_tensorboard) or even better - [Neptune - Machine Learning Lab](https://neptune.ml/) (as it allows to compare between models, in a Kaggle leaderboard style).
 
 But what if you just want to train a small model in Jupyter Notebook? Here is a way to do so, using `livelossplot` as a plug&play component.
 
@@ -54,7 +57,6 @@ It started as [this gist](https://gist.github.com/stared/dfb4dfaf6d9a8501cd1cc8b
 
 ## To do
 
-* Submit to PyPI
 * Add [Bokeh](https://bokeh.pydata.org/) backend
 * History saving
 * Add connectors to Tensorboard and Neptune
