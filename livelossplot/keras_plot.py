@@ -15,6 +15,14 @@ metric2printable = {
     "kullback_leibler_divergence": "Log-loss"
 }
 
+def loss2name(loss):
+    if hasattr(loss, '__call__'):
+        # if passed as a function
+        return loss.__name__
+    else:
+        # if passed as a string
+        return loss
+
 class PlotLossesKeras(Callback):
     def __init__(self, figsize=None, cell_size=(6, 4), dynamic_x_axis=False, max_cols=2):
         self.figsize = figsize
@@ -30,7 +38,8 @@ class PlotLossesKeras(Callback):
                 self.max_cols * self.cell_size[0],
                 ((len(self.base_metrics) + 1) // self.max_cols + 1) * self.cell_size[1]
             )
-        self.metric2printable['loss'] = self.metric2printable.get(self.model.loss, self.model.loss) + " (cost function)"
+        loss_name = loss2name(self.model.loss)
+        self.metric2printable['loss'] = self.metric2printable.get(loss_name, loss_name) + " (cost function)"
         self.max_epoch = self.params['epochs'] if not self.dynamic_x_axis else None
 
         self.logs = []
