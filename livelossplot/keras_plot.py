@@ -38,8 +38,19 @@ class PlotLossesKeras(Callback):
                 self.max_cols * self.cell_size[0],
                 ((len(self.base_metrics) + 1) // self.max_cols + 1) * self.cell_size[1]
             )
-        loss_name = loss2name(self.model.loss)
-        self.metric2printable['loss'] = self.metric2printable.get(loss_name, loss_name) + " (cost function)"
+
+        if isinstance(self.model.loss, list):
+            losses = self.model.loss
+        elif isinstance(self.model.loss, dict):
+            losses = self.model.loss.values()
+        else:
+            # the most typical scenario
+            losses = [self.model.loss]
+                    
+        for loss in losses:
+            loss_name = loss2name(loss)
+            self.metric2printable['loss'] = self.metric2printable.get(loss_name, loss_name) + " (cost function)"
+
         self.max_epoch = self.params['epochs'] if not self.dynamic_x_axis else None
 
         self.logs = []
