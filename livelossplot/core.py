@@ -15,8 +15,10 @@ def check_inline():
 def draw_plot(logs, metrics, figsize=None, max_epoch=None,
               max_cols=2,
               validation_fmt="val_{}",
-              metric2title={}):
-    clear_output(wait=True)
+              metric2title={}, 
+              clear_outputs=True):
+    if clear_outputs: 
+      clear_output(wait=True)
     plt.figure(figsize=figsize)
 
     for metric_id, metric in enumerate(metrics):
