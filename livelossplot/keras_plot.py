@@ -46,9 +46,10 @@ class PlotLossesKeras(Callback):
         else:
             # the most typical scenario
             losses = [self.model.loss]
-                    
+
         for loss in losses:
             loss_name = loss2name(loss)
+            # better support for multiple loss functions...
             self.metric2printable['loss'] = self.metric2printable.get(loss_name, loss_name) + " (cost function)"
 
         self.max_epoch = self.params['epochs'] if not self.dynamic_x_axis else None
