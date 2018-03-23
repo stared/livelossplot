@@ -1,14 +1,16 @@
 from __future__ import division
+import warnings
 
 import matplotlib
 import matplotlib.pyplot as plt
 from IPython.display import clear_output
 
-def check_inline():
-    return "backend_inline" in matplotlib.get_backend()
+def not_inline_warning():
+    backend = matplotlib.get_backend()
+    if "backend_inline" not in backend:
+        warnings.warn("livelossplot requires inline plots.\nYour current backend is: {}\nRun in a Jupyter environment and execute '%matplotlib inline'.".format(backend))
 
 # TODO
-# * check backend
 # * object-oriented API
 # * only integer ticks
 

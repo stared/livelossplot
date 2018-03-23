@@ -1,7 +1,7 @@
 from __future__ import division
 
 from keras.callbacks import Callback
-from .core import draw_plot
+from .core import draw_plot, not_inline_warning
 
 metric2printable = {
     "acc": "Accuracy",
@@ -30,6 +30,8 @@ class PlotLossesKeras(Callback):
         self.dynamic_x_axis = dynamic_x_axis
         self.max_cols = max_cols
         self.metric2printable = metric2printable.copy()
+
+        not_inline_warning()
 
     def on_train_begin(self, logs={}):
         self.base_metrics = [metric for metric in self.params['metrics'] if not metric.startswith('val_')]

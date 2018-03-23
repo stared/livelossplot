@@ -1,6 +1,6 @@
 from __future__ import division
 
-from .core import draw_plot
+from .core import draw_plot, not_inline_warning
 
 class PlotLosses():
     def __init__(self, figsize=None, cell_size=(6, 4), dynamic_x_axis=False, max_cols=2, max_epoch=None, metric2title={},
@@ -13,6 +13,8 @@ class PlotLosses():
         self.metric2title = metric2title
         self.validation_fmt = validation_fmt
         self.logs = None
+
+        not_inline_warning()
 
     def set_metrics(self, metrics):
         self.base_metrics = metrics
