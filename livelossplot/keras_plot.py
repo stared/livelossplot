@@ -41,19 +41,23 @@ class PlotLossesKeras(Callback):
                 ((len(self.base_metrics) + 1) // self.max_cols + 1) * self.cell_size[1]
             )
 
+        # slightly convolved due to model.complie(loss=...) stuff
+        # vide https://github.com/keras-team/keras/blob/master/keras/engine/training.py
         if isinstance(self.model.loss, list):
             losses = self.model.loss
         elif isinstance(self.model.loss, dict):
             losses = self.model.loss.values()
         else:
-            # the most typical scenario
+            # by far the most common scenario
             losses = [self.model.loss]
 
-        for loss in losses:
-            loss_name = loss2name(loss)
-            # better support for multiple loss functions...
-            self.metric2printable['loss'] = self.metric2printable.get(loss_name, loss_name) + " (cost function)"
-
+        if len(losses) == 1:
+            loss_name = loss2name(losses[0])
+            self.metric2printable['loss'] = "{} (cost function)".format(self.metric2printable.get(loss_name, loss_name))
+            for output_name, loss in zip(self.model.output_names, losses):
+                loss_name = loss2name(loss)
+                self.metric2printable['{}_loss'.format(output_name)] = "{} (cost function)".format(self.metric2printable.get(loss_name, loss_name))
+                
         self.max_epoch = self.params['epochs'] if not self.dynamic_x_axis else None
 
         self.logs = []
