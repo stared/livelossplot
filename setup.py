@@ -1,7 +1,8 @@
 from setuptools import setup, find_packages
+import codecs
 
 def readme():
-    with open('README.md') as f:
+    with codecs.open('README.md', encoding='utf-8') as f:
         return f.read()
 
 setup(name='livelossplot',
