@@ -51,13 +51,16 @@ class PlotLossesKeras(Callback):
             # by far the most common scenario
             losses = [self.model.loss]
 
-        if len(losses) == 1:
-            loss_name = loss2name(losses[0])
-            self.metric2printable['loss'] = "{} (cost function)".format(self.metric2printable.get(loss_name, loss_name))
+        loss_name = loss2name(losses[0])
+        self.metric2printable['loss'] = "{} (cost function)".format(self.metric2printable.get(loss_name, loss_name))
+        if len(losses) > 1:
             for output_name, loss in zip(self.model.output_names, losses):
-                loss_name = loss2name(loss)
-                self.metric2printable['{}_loss'.format(output_name)] = "{} (cost function)".format(self.metric2printable.get(loss_name, loss_name))
-                
+               loss_name = loss2name(loss)
+               self.metric2printable['{}_loss'.format(output_name)] = "{} ({})".format(self.metric2printable.get(loss_name, loss_name), output_name)
+        else:
+            for output_name in self.model.output_names:
+               self.metric2printable['{}_loss'.format(output_name)] = "{} ({})".format(self.metric2printable.get(loss_name, loss_name), output_name)
+
         self.max_epoch = self.params['epochs'] if not self.dynamic_x_axis else None
 
         self.logs = []
