@@ -5,10 +5,11 @@ def readme():
         return f.read()
 
 setup(name='livelossplot',
-      version='0.1.5',
+      version='0.1.6',
       install_requires=['matplotlib', 'notebook'],
       description='Live training loss plot in Jupyter Notebook for Keras, PyTorch and others.',
       long_description=readme(),
+      long_description_content_type='text/markdown',
       url='https://github.com/stared/livelossplot',
       author='Piotr Migdał',
       author_email='pmigdal@gmail.com',
