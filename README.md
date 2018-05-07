@@ -1,5 +1,10 @@
 # Live Loss Plot
 
+![PyPI version](https://img.shields.io/pypi/pyversions/livelossplot.svg)
+![PyPI license](https://img.shields.io/pypi/l/livelossplot.svg)
+![PyPI status](https://img.shields.io/pypi/status/livelossplot.svg)
+[![Downloads](http://pepy.tech/badge/livelossplot)](http://pepy.tech/count/livelossplot)
+
 Don't train deep learning models blindfolded! Be impatient and look at each epoch of your training!
 
 A live training loss plot in [Jupyter Notebook](http://jupyter.org/) for [Keras](https://keras.io/), [PyTorch](http://pytorch.org/) and other frameworks. An open source Python package by [Piotr Migdał](http://p.migdal.pl/) et al.
