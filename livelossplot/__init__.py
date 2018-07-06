@@ -5,3 +5,8 @@ try:
 except:
     # import keras plot only if there is keras
     pass
+try:
+    from .pytoune_plot import PlotLossesPytoune
+except:
+    # import pytoune plot only if there is pytoune
+    pass

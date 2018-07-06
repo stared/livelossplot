@@ -47,6 +47,7 @@ Look at notebook files with full working examples:
 * [keras_example.ipynb](https://github.com/stared/livelossplot/blob/master/keras_example.ipynb) - a Keras callback
 * [minimal_example.ipynb](https://github.com/stared/livelossplot/blob/master/minimal_example.ipynb) - a bare API, to use anywhere
 * [pytorch_example.ipynb](https://github.com/stared/livelossplot/blob/master/pytorch_example.ipynb) - a bare API, as applied to PyTorch
+* [pytoune_example.ipynb](https://github.com/stared/livelossplot/blob/master/pytoune_example.ipynb) - a Pytoune callback; [PyToune](https://pytoune.org/) is a Keras-like framework for PyTorch.
 
 ## Overview
 
