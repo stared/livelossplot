@@ -42,12 +42,12 @@ pip install git+git://github.com/stared/livelossplot.git
 
 ## Examples
 
-Look at notebook files with full working examples:
+Look at notebook files with full working [examples](https://github.com/stared/livelossplot/blob/master/examples/):
 
-* [keras_example.ipynb](https://github.com/stared/livelossplot/blob/master/keras_example.ipynb) - a Keras callback
-* [minimal_example.ipynb](https://github.com/stared/livelossplot/blob/master/minimal_example.ipynb) - a bare API, to use anywhere
-* [pytorch_example.ipynb](https://github.com/stared/livelossplot/blob/master/pytorch_example.ipynb) - a bare API, as applied to PyTorch
-* [pytoune_example.ipynb](https://github.com/stared/livelossplot/blob/master/pytoune_example.ipynb) - a Pytoune callback; [PyToune](https://pytoune.org/) is a Keras-like framework for PyTorch.
+* [keras.ipynb](https://github.com/stared/livelossplot/blob/master/examples/keras.ipynb) - a Keras callback
+* [minimal.ipynb](https://github.com/stared/livelossplot/blob/master/examples/minimal.ipynb) - a bare API, to use anywhere
+* [pytorch.ipynb](https://github.com/stared/livelossplot/blob/master/examples/pytorch.ipynb) - a bare API, as applied to PyTorch
+* [pytoune.ipynb](https://github.com/stared/livelossplot/blob/master/examples/pytoune.ipynb) - a PyToune callback ([PyToune](https://pytoune.org/) is a Keras-like framework for PyTorch)
 
 ## Overview
 
