@@ -7,7 +7,7 @@
 
 Don't train deep learning models blindfolded! Be impatient and look at each epoch of your training!
 
-A live training loss plot in [Jupyter Notebook](http://jupyter.org/) for [Keras](https://keras.io/), [PyTorch](http://pytorch.org/) and other frameworks. An open source Python package by [Piotr Migdał](http://p.migdal.pl/) et al. Open for collaboration!
+A live training loss plot in [Jupyter Notebook](http://jupyter.org/) for [Keras](https://keras.io/), [PyTorch](http://pytorch.org/) and other frameworks. An open source Python package by [Piotr Migdał](http://p.migdal.pl/) et al. **Open for collaboration!** (Some tasks are as simple as writing code docstrings, so - no excuses! :))
 
 ```
 from livelossplot import PlotLossesKeras
@@ -63,6 +63,7 @@ It started as [this gist](https://gist.github.com/stared/dfb4dfaf6d9a8501cd1cc8b
 
 ## To do
 
+* Add docstrings
 * Add [Bokeh](https://bokeh.pydata.org/) backend
 * History saving
 * Add connectors to TensorBoard and Neptune
