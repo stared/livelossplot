@@ -46,7 +46,7 @@ class PlotLossesKeras(Callback):
         if isinstance(self.model.loss, list):
             losses = self.model.loss
         elif isinstance(self.model.loss, dict):
-            losses = self.model.loss.values()
+            losses = list(self.model.loss.values())
         else:
             # by far the most common scenario
             losses = [self.model.loss]
