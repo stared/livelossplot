@@ -5,6 +5,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 from IPython.display import clear_output
 
+
 def not_inline_warning():
     backend = matplotlib.get_backend()
     if "backend_inline" not in backend:
@@ -14,10 +15,12 @@ def not_inline_warning():
 # * object-oriented API
 # * only integer ticks
 
+
 def draw_plot(logs, metrics, figsize=None, max_epoch=None,
               max_cols=2,
               validation_fmt="val_{}",
-              metric2title={}):
+              metric2title={},
+              extrema=None):
     clear_output(wait=True)
     plt.figure(figsize=figsize)
 
@@ -31,14 +34,32 @@ def draw_plot(logs, metrics, figsize=None, max_epoch=None,
                  [log[metric] for log in logs],
                  label="training")
 
+        annotation_fmt = '{phase:20} minimum: {min:10.4}    maximum: {max:10.4}'
+        annotation = None
+        if extrema:
+            annotation = annotation_fmt\
+                .format(phase='training:',
+                        min=extrema[metric].get('min', float('inf')),
+                        max=extrema[metric].get('max', -float('inf')))
+
         if validation_fmt.format(metric) in logs[0]:
+            val_metric = validation_fmt.format(metric)
             plt.plot(range(1, len(logs) + 1),
-                     [log[validation_fmt.format(metric)] for log in logs],
+                     [log[val_metric] for log in logs],
                      label="validation")
+            if extrema:
+                annotation += '\n' + annotation_fmt\
+                    .format(phase='validation:',
+                            min=extrema[val_metric].get('min', float('inf')),
+                            max=extrema[val_metric].get('max', -float('inf')))
 
         plt.title(metric2title.get(metric, metric))
         plt.xlabel('epoch')
         plt.legend(loc='center right')
+        if annotation:
+            plt.annotate(annotation, (0, 0), (0, -40),
+                         xycoords='axes fraction', textcoords='offset points', va='top')
 
     plt.tight_layout()
-    plt.show();
+    plt.subplots_adjust(hspace=0.5)
+    plt.show()
