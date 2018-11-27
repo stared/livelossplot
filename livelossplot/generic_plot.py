@@ -5,7 +5,7 @@ from .core import draw_plot, not_inline_warning
 
 class PlotLosses():
     def __init__(self, figsize=None, cell_size=(6, 4), dynamic_x_axis=False, max_cols=2,
-                 max_epoch=None, metric2title={}, validation_fmt="val_{}"):
+                 max_epoch=None, metric2title={}, validation_fmt="val_{}", plot_extrema=True):
         self.figsize = figsize
         self.cell_size = cell_size
         self.dynamic_x_axis = dynamic_x_axis
@@ -15,13 +15,14 @@ class PlotLosses():
         self.validation_fmt = validation_fmt
         self.logs = None
         self.base_metrics = None
-        self.base_metrics_extrema = None
+        self.metrics_extrema = None
+        self.plot_extrema = plot_extrema
 
         not_inline_warning()
 
     def set_metrics(self, metrics):
         self.base_metrics = metrics
-        self.base_metrics_extrema = {
+        self.metrics_extrema = {
             ftm.format(metric): {
                 'min': None,
                 'max': None,
@@ -45,7 +46,7 @@ class PlotLosses():
     def _update_extrema(self, log):
         for metric, value in log.items():
             formatted_name = self._format_metric_name(metric)
-            extrema = self.base_metrics_extrema[formatted_name]
+            extrema = self.metrics_extrema[formatted_name]
             if extrema['min'] is None or value < extrema['min']:
                 extrema['min'] = float(value)
             if extrema['max'] is None or value > extrema['max']:
@@ -66,4 +67,4 @@ class PlotLosses():
                   max_cols=self.max_cols,
                   validation_fmt=self.validation_fmt,
                   metric2title=self.metric2title,
-                  extrema=self.base_metrics_extrema)
+                  extrema=self.metrics_extrema if self.plot_extrema else None)
