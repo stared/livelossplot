@@ -1,7 +1,7 @@
 from __future__ import division
 
 from keras.callbacks import Callback
-from .core import draw_plot, not_inline_warning
+from .generic_plot import PlotLosses
 
 metric2printable = {
     "acc": "Accuracy",
@@ -15,6 +15,7 @@ metric2printable = {
     "kullback_leibler_divergence": "Log-loss"
 }
 
+
 def loss2name(loss):
     if hasattr(loss, '__call__'):
         # if passed as a function
@@ -23,23 +24,17 @@ def loss2name(loss):
         # if passed as a string
         return loss
 
-class PlotLossesKeras(Callback):
-    def __init__(self, figsize=None, cell_size=(6, 4), dynamic_x_axis=False, max_cols=2):
-        self.figsize = figsize
-        self.cell_size = cell_size
-        self.dynamic_x_axis = dynamic_x_axis
-        self.max_cols = max_cols
-        self.metric2printable = metric2printable.copy()
 
-        not_inline_warning()
+class PlotLossesKeras(Callback):
+    def __init__(self, **kwargs):
+        super(PlotLossesKeras, self).__init__()
+        self.liveplot = PlotLosses(**kwargs)
 
     def on_train_begin(self, logs={}):
-        self.base_metrics = [metric for metric in self.params['metrics'] if not metric.startswith('val_')]
-        if self.figsize is None:
-            self.figsize = (
-                self.max_cols * self.cell_size[0],
-                ((len(self.base_metrics) + 1) // self.max_cols + 1) * self.cell_size[1]
-            )
+        self.liveplot.set_metrics([
+            metric for metric in self.params['metrics']
+            if not metric.startswith('val_')
+        ])
 
         # slightly convolved due to model.complie(loss=...) stuff
         # vide https://github.com/keras-team/keras/blob/master/keras/engine/training.py
@@ -51,25 +46,24 @@ class PlotLossesKeras(Callback):
             # by far the most common scenario
             losses = [self.model.loss]
 
+        metric2printable_updated = metric2printable.copy()
         loss_name = loss2name(losses[0])
-        self.metric2printable['loss'] = "{} (cost function)".format(self.metric2printable.get(loss_name, loss_name))
+        metric2printable_updated['loss'] =\
+            "{} (cost function)".format(metric2printable_updated.get(loss_name, loss_name))
+
         if len(losses) > 1:
             for output_name, loss in zip(self.model.output_names, losses):
-               loss_name = loss2name(loss)
-               self.metric2printable['{}_loss'.format(output_name)] = "{} ({})".format(self.metric2printable.get(loss_name, loss_name), output_name)
+                loss_name = loss2name(loss)
+                metric2printable_updated['{}_loss'.format(output_name)] =\
+                    "{} ({})".format(metric2printable_updated.get(loss_name, loss_name), output_name)
         else:
             for output_name in self.model.output_names:
-               self.metric2printable['{}_loss'.format(output_name)] = "{} ({})".format(self.metric2printable.get(loss_name, loss_name), output_name)
+                metric2printable_updated['{}_loss'.format(output_name)] =\
+                    "{} ({})".format(metric2printable_updated.get(loss_name, loss_name), output_name)
 
-        self.max_epoch = self.params['epochs'] if not self.dynamic_x_axis else None
-
-        self.logs = []
+        self.liveplot.metric2title = metric2printable_updated
+        self.liveplot.max_epoch = self.params['epochs']
 
     def on_epoch_end(self, epoch, logs={}):
-        self.logs.append(logs.copy())
-
-        draw_plot(self.logs, self.base_metrics,
-                  figsize=self.figsize, max_epoch=self.max_epoch,
-                  max_cols=self.max_cols,
-                  validation_fmt="val_{}",
-                  metric2title=self.metric2printable)
+        self.liveplot.update(logs.copy())
+        self.liveplot.draw()
