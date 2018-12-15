@@ -16,11 +16,12 @@ def not_inline_warning():
 # * only integer ticks
 
 
-def draw_plot(logs, metrics, save_img, file_name, figsize=None, max_epoch=None,
+def draw_plot(logs, metrics, figsize=None, max_epoch=None,
               max_cols=2,
               validation_fmt="val_{}",
               metric2title={},
-              extrema=None,):
+              extrema=None,
+              fig_path=None):
     clear_output(wait=True)
     plt.figure(figsize=figsize)
 
@@ -70,7 +71,7 @@ def draw_plot(logs, metrics, save_img, file_name, figsize=None, max_epoch=None,
         plt.legend(loc='center right')
 
     plt.tight_layout()
-    if save_img:
-        plt.savefig(file_name)
+    if fig_path is not None:
+        plt.savefig(fig_path)
     plt.show()
     print('\n\n'.join(extrema_logs))
