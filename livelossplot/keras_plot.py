@@ -1,6 +1,9 @@
 from __future__ import division
 
-from keras.callbacks import Callback
+try:
+    from keras.callbacks import Callback
+except ImportError:
+    from tensorflow.keras.callbacks import Callback
 from .generic_plot import PlotLosses
 
 metric2printable = {
