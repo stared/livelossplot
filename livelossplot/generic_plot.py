@@ -1,6 +1,11 @@
 from __future__ import division
+import math
 
 from .core import draw_plot, not_inline_warning
+
+
+def _is_unset(metric):
+    return metric is None or math.isnan(metric)
 
 
 class PlotLosses():
@@ -47,9 +52,9 @@ class PlotLosses():
         for metric, value in log.items():
             formatted_name = self._format_metric_name(metric)
             extrema = self.metrics_extrema[formatted_name]
-            if extrema['min'] is None or value < extrema['min']:
+            if _is_unset(extrema['min']) or value < extrema['min']:
                 extrema['min'] = float(value)
-            if extrema['max'] is None or value > extrema['max']:
+            if _is_unset(extrema['max']) or value > extrema['max']:
                 extrema['max'] = float(value)
 
     def update(self, log):
