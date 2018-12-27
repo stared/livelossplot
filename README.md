@@ -48,6 +48,7 @@ Look at notebook files with full working [examples](https://github.com/stared/li
 * [minimal.ipynb](https://github.com/stared/livelossplot/blob/master/examples/minimal.ipynb) - a bare API, to use anywhere
 * [pytorch.ipynb](https://github.com/stared/livelossplot/blob/master/examples/pytorch.ipynb) - a bare API, as applied to PyTorch
 * [pytoune.ipynb](https://github.com/stared/livelossplot/blob/master/examples/pytoune.ipynb) - a PyToune callback ([PyToune](https://pytoune.org/) is a Keras-like framework for PyTorch)
+* [torchbearer.ipynb](https://github.com/stared/livelossplot/blob/master/examples/torchbearer.ipynb) - an example using the built in functionality from torchbearer ([torchbearer](https://github.com/ecs-vlc/torchbearer) is a model fitting library for PyTorch)
 
 ## Overview
 
