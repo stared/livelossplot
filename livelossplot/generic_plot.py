@@ -13,9 +13,8 @@ class PlotLosses():
                  max_epoch=None, metric2title={}, validation_fmt="val_{}", plot_extrema=True):
         self.figsize = figsize
         self.cell_size = cell_size
-        self.dynamic_x_axis = dynamic_x_axis
         self.max_cols = max_cols
-        self.max_epoch = max_epoch
+        self.max_epoch = max_epoch if not dynamic_x_axis else None
         self.metric2title = metric2title
         self.validation_fmt = validation_fmt
         self.logs = None
