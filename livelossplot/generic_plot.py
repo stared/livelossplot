@@ -26,14 +26,15 @@ class PlotLosses():
 
     def set_metrics(self, metrics):
         self.base_metrics = metrics
-        self.metrics_extrema = {
-            ftm.format(metric): {
-                'min': None,
-                'max': None,
+        if self.plot_extrema:
+            self.metrics_extrema = {
+                ftm.format(metric): {
+                    'min': None,
+                    'max': None,
+                }
+                for metric in metrics
+                for ftm in ['{}', self.validation_fmt]
             }
-            for metric in metrics
-            for ftm in ['{}', self.validation_fmt]
-        }
         if self.figsize is None:
             self.figsize = (
                 self.max_cols * self.cell_size[0],
@@ -63,7 +64,8 @@ class PlotLosses():
                 if 'val' not in metric.lower()
             ])
         self.logs.append(log)
-        self._update_extrema(log)
+        if self.plot_extrema:
+            self._update_extrema(log)
 
     def draw(self):
         draw_plot(self.logs, self.base_metrics,
@@ -71,4 +73,4 @@ class PlotLosses():
                   max_cols=self.max_cols,
                   validation_fmt=self.validation_fmt,
                   metric2title=self.metric2title,
-                  extrema=self.metrics_extrema if self.plot_extrema else None)
+                  extrema=self.metrics_extrema)
