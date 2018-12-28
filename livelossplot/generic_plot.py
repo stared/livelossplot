@@ -10,7 +10,7 @@ def _is_unset(metric):
 
 class PlotLosses():
     def __init__(self, figsize=None, cell_size=(6, 4), dynamic_x_axis=False, max_cols=2,
-                 max_epoch=None, metric2title={}, validation_fmt="val_{}", plot_extrema=True):
+                 max_epoch=None, metric2title={}, validation_fmt="val_{}", plot_extrema=True, fig_path=None):
         self.figsize = figsize
         self.cell_size = cell_size
         self.max_cols = max_cols
@@ -21,6 +21,7 @@ class PlotLosses():
         self.base_metrics = None
         self.metrics_extrema = None
         self.plot_extrema = plot_extrema
+        self.fig_path = fig_path
 
         not_inline_warning()
 
@@ -73,4 +74,5 @@ class PlotLosses():
                   max_cols=self.max_cols,
                   validation_fmt=self.validation_fmt,
                   metric2title=self.metric2title,
-                  extrema=self.metrics_extrema)
+                  extrema=self.metrics_extrema,
+                  fig_path=self.fig_path)
