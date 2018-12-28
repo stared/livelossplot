@@ -62,7 +62,7 @@ class PlotLossesKeras(Callback):
                     "{} ({})".format(metric2printable_updated.get(loss_name, loss_name), output_name)
 
         self.liveplot.metric2title = metric2printable_updated
-        self.liveplot.max_epoch = self.params['epochs']
+        self.liveplot.set_max_epoch(self.params['epochs'])
 
     def on_epoch_end(self, epoch, logs={}):
         self.liveplot.update(logs.copy())
