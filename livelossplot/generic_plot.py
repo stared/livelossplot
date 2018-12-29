@@ -13,8 +13,9 @@ class PlotLosses():
                  max_epoch=None, metric2title={}, validation_fmt="val_{}", plot_extrema=True, fig_path=None):
         self.figsize = figsize
         self.cell_size = cell_size
+        self.dynamic_x_axis = dynamic_x_axis
         self.max_cols = max_cols
-        self.max_epoch = max_epoch if not dynamic_x_axis else None
+        self.max_epoch = max_epoch
         self.metric2title = metric2title
         self.validation_fmt = validation_fmt
         self.logs = None
@@ -23,7 +24,11 @@ class PlotLosses():
         self.plot_extrema = plot_extrema
         self.fig_path = fig_path
 
+        self.set_max_epoch(max_epoch)
         not_inline_warning()
+
+    def set_max_epoch(self, max_epoch):
+        self.max_epoch = max_epoch if not self.dynamic_x_axis else None
 
     def set_metrics(self, metrics):
         self.base_metrics = metrics
