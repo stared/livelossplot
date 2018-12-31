@@ -1,6 +1,11 @@
 from __future__ import division
+import math
 
 from .core import draw_plot, not_inline_warning
+
+
+def _is_unset(metric):
+    return metric is None or math.isnan(metric)
 
 
 class PlotLosses():
@@ -19,18 +24,23 @@ class PlotLosses():
         self.plot_extrema = plot_extrema
         self.fig_path = fig_path
 
+        self.set_max_epoch(max_epoch)
         not_inline_warning()
+
+    def set_max_epoch(self, max_epoch):
+        self.max_epoch = max_epoch if not self.dynamic_x_axis else None
 
     def set_metrics(self, metrics):
         self.base_metrics = metrics
-        self.metrics_extrema = {
-            ftm.format(metric): {
-                'min': None,
-                'max': None,
+        if self.plot_extrema:
+            self.metrics_extrema = {
+                ftm.format(metric): {
+                    'min': None,
+                    'max': None,
+                }
+                for metric in metrics
+                for ftm in ['{}', self.validation_fmt]
             }
-            for metric in metrics
-            for ftm in ['{}', self.validation_fmt]
-        }
         if self.figsize is None:
             self.figsize = (
                 self.max_cols * self.cell_size[0],
@@ -48,9 +58,9 @@ class PlotLosses():
         for metric, value in log.items():
             formatted_name = self._format_metric_name(metric)
             extrema = self.metrics_extrema[formatted_name]
-            if extrema['min'] is None or value < extrema['min']:
+            if _is_unset(extrema['min']) or value < extrema['min']:
                 extrema['min'] = float(value)
-            if extrema['max'] is None or value > extrema['max']:
+            if _is_unset(extrema['max']) or value > extrema['max']:
                 extrema['max'] = float(value)
 
     def update(self, log):
@@ -60,7 +70,8 @@ class PlotLosses():
                 if 'val' not in metric.lower()
             ])
         self.logs.append(log)
-        self._update_extrema(log)
+        if self.plot_extrema:
+            self._update_extrema(log)
 
     def draw(self):
         draw_plot(self.logs, self.base_metrics,
@@ -68,5 +79,5 @@ class PlotLosses():
                   max_cols=self.max_cols,
                   validation_fmt=self.validation_fmt,
                   metric2title=self.metric2title,
-                  extrema=self.metrics_extrema if self.plot_extrema else None,
+                  extrema=self.metrics_extrema,
                   fig_path=self.fig_path)
