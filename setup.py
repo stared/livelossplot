@@ -6,7 +6,7 @@ def readme():
         return f.read()
 
 setup(name='livelossplot',
-      version='0.2.3',
+      version='0.3.0',
       install_requires=['matplotlib', 'notebook'],
       description='Live training loss plot in Jupyter Notebook for Keras, PyTorch and others.',
       long_description=readme(),

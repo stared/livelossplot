@@ -25,9 +25,9 @@ def loss2name(loss):
         return loss
 
 
-class PlotLossesKeras(Callback):
+class PlotLossesCallback(Callback):
     def __init__(self, **kwargs):
-        super(PlotLossesKeras, self).__init__()
+        super(PlotLossesCallback, self).__init__()
         self.liveplot = PlotLosses(**kwargs)
 
     def on_train_begin(self, logs={}):

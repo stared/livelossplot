@@ -2,9 +2,9 @@ from pytoune.framework import Callback
 from .generic_plot import PlotLosses
 
 
-class PlotLossesPytoune(Callback):
+class PlotLossesCallback(Callback):
     def __init__(self, **kwargs):
-        super(PlotLossesPytoune, self).__init__()
+        super(PlotLossesCallback, self).__init__()
         self.liveplot = PlotLosses(**kwargs)
         self.metrics = None
 

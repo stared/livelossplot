@@ -1,14 +1,16 @@
+import warnings
 from .core import draw_plot
 from .generic_plot import PlotLosses
 
-try:
-    from .keras_plot import PlotLossesKeras
-except ImportError:
-    # import keras plot only if there is keras
-    pass
+# keras.PlotLossesCallback and pytoune.PlotLossesCallback
+# NOT loaded, as they depend on other libraries
 
-try:
-    from .pytoune_plot import PlotLossesPytoune
-except ImportError:
-    # import pytoune plot only if there is pytoune
-    pass
+def PlotLossesKeras(*args, **kwargs):
+    warnings.warn("Deprecation warning:\nFrom v0.3 onwards, use:\nfrom livelossplot.keras import PlotLossesCallback")
+    from .keras import PlotLossesCallback
+    return PlotLossesCallback(*args, **kwargs)
+
+def PlotLossesPytoune(*args, **kwargs):
+    warnings.warn("From v0.3 onwards, use:\nfrom livelossplot.pytoune import PlotLossesCallback", DeprecationWarning)
+    from .pytoune import PlotLossesCallback
+    return PlotLossesCallback(*args, **kwargs)
