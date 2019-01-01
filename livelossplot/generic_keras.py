@@ -1,6 +1,4 @@
 from __future__ import division
-
-from keras.callbacks import Callback
 from .generic_plot import PlotLosses
 
 metric2printable = {
@@ -25,9 +23,8 @@ def loss2name(loss):
         return loss
 
 
-class PlotLossesKeras(Callback):
+class _PlotLossesCallback():
     def __init__(self, **kwargs):
-        super(PlotLossesKeras, self).__init__()
         self.liveplot = PlotLosses(**kwargs)
 
     def on_train_begin(self, logs={}):
