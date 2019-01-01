@@ -28,7 +28,6 @@ class _PlotLossesCallback():
         self.liveplot = PlotLosses(**kwargs)
 
     def on_train_begin(self, logs={}):
-        print("aaa")
         self.liveplot.set_metrics([
             metric for metric in self.params['metrics']
             if not metric.startswith('val_')
