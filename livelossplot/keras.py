@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 import keras
 from .generic_keras import _PlotLossesCallback
 
