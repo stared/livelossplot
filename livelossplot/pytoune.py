@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 from pytoune.framework import Callback
 from .generic_plot import PlotLosses
 
