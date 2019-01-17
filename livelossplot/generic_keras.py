@@ -26,6 +26,7 @@ def loss2name(loss):
 class _PlotLossesCallback():
     def __init__(self, **kwargs):
         self.liveplot = PlotLosses(**kwargs)
+        self.samples_per_update = kwargs["samples_per_update"] if "samples_per_update" in kwargs else None
 
     def on_train_begin(self, logs={}):
         self.liveplot.set_metrics([
@@ -62,5 +63,9 @@ class _PlotLossesCallback():
         self.liveplot.set_max_epoch(self.params['epochs'])
 
     def on_epoch_end(self, epoch, logs={}):
-        self.liveplot.update(logs.copy())
+        self.liveplot.update(logs.copy(), epoch_log = True)
         self.liveplot.draw()
+    def on_batch_end(self, epoch, logs={}):
+        self.liveplot.update(logs.copy(), epoch_log = False)
+        if self.samples_per_update is not None:
+            self.liveplot.draw()
