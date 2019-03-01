@@ -5,7 +5,7 @@ from .core import draw_plot, not_inline_warning
 
 
 def _is_unset(metric):
-    return metric is None or math.isnan(metric)
+    return metric is None or math.isnan(metric) or math.isinf(metric)
 
 
 class PlotLosses():
@@ -40,7 +40,7 @@ class PlotLosses():
                     'max': -float('inf'),
                 }
                 for metric in metrics
-                for ftm in (['{}', self.validation_fmt] + list(self.series_fmt.values()))
+                for ftm in list(self.series_fmt.values())
             }
         if self.figsize is None:
             self.figsize = (
@@ -50,15 +50,9 @@ class PlotLosses():
 
         self.logs = []
 
-    def _format_metric_name(self, metric_name):
-        if '_' in metric_name:
-            return metric_name.split('_')[-1]
-        return metric_name
-
     def _update_extrema(self, log):
         for metric, value in log.items():
-            formatted_name = self._format_metric_name(metric)
-            extrema = self.metrics_extrema[formatted_name]
+            extrema = self.metrics_extrema[metric]
             if _is_unset(extrema['min']) or value < extrema['min']:
                 extrema['min'] = float(value)
             if _is_unset(extrema['max']) or value > extrema['max']:
