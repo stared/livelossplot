@@ -10,7 +10,7 @@ def _is_unset(metric):
 
 class PlotLosses():
     def __init__(self, figsize=None, cell_size=(6, 4), dynamic_x_axis=False, max_cols=2,
-                 max_epoch=None, metric2title={}, validation_fmt="val_{}", plot_extrema=True, fig_path=None):
+                 max_epoch=None, metric2title={}, validation_fmt="val_{}", plot_extrema=True, fig_path=None, series_fmt={}):
         self.figsize = figsize
         self.cell_size = cell_size
         self.dynamic_x_axis = dynamic_x_axis
@@ -18,6 +18,7 @@ class PlotLosses():
         self.max_epoch = max_epoch
         self.metric2title = metric2title
         self.validation_fmt = validation_fmt
+        self.series_fmt = series_fmt
         self.logs = None
         self.base_metrics = None
         self.metrics_extrema = None
@@ -35,11 +36,11 @@ class PlotLosses():
         if self.plot_extrema:
             self.metrics_extrema = {
                 ftm.format(metric): {
-                    'min': None,
-                    'max': None,
+                    'min': float('inf'),
+                    'max': -float('inf'),
                 }
                 for metric in metrics
-                for ftm in ['{}', self.validation_fmt]
+                for ftm in (['{}', self.validation_fmt] + list(self.series_fmt.values()))
             }
         if self.figsize is None:
             self.figsize = (
@@ -50,9 +51,9 @@ class PlotLosses():
         self.logs = []
 
     def _format_metric_name(self, metric_name):
-        if 'val' not in metric_name:
-            return metric_name
-        return metric_name.replace('validation_', 'val_')  # this should be more generic
+        if '_' in metric_name:
+            return metric_name.split('_')[-1]
+        return metric_name
 
     def _update_extrema(self, log):
         for metric, value in log.items():
@@ -65,10 +66,7 @@ class PlotLosses():
 
     def update(self, log):
         if self.logs is None:
-            self.set_metrics([
-                metric for metric in log.keys()
-                if 'val' not in metric.lower()
-            ])
+            self.set_metrics(set([metric.split('_')[-1] for metric in log.keys()]))
         self.logs.append(log)
         if self.plot_extrema:
             self._update_extrema(log)
@@ -78,6 +76,7 @@ class PlotLosses():
                   figsize=self.figsize, max_epoch=self.max_epoch,
                   max_cols=self.max_cols,
                   validation_fmt=self.validation_fmt,
+                  series_fmt=self.series_fmt,
                   metric2title=self.metric2title,
                   extrema=self.metrics_extrema,
                   fig_path=self.fig_path)

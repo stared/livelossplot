@@ -19,6 +19,7 @@ def not_inline_warning():
 def draw_plot(logs, metrics, figsize=None, max_epoch=None,
               max_cols=2,
               validation_fmt="val_{}",
+              series_fmt={},
               metric2title={},
               extrema=None,
               fig_path=None):
@@ -65,6 +66,22 @@ def draw_plot(logs, metrics, figsize=None, max_epoch=None,
                     max=extrema[val_metric_name].get('max', -float('inf')),
                     cur=val_metric_logs[-1]
                 )
+
+        # generic for any other serie
+        for (serie_label, serie_fmt) in series_fmt.items():
+            serie_log_fmt = '\n' + serie_label + ' ({})'.format(values_fmt)
+            if serie_fmt.format(metric) in logs[0]:
+                serie_metric_name = serie_fmt.format(metric)
+                serie_metric_logs = [log[serie_metric_name] for log in logs]
+                plt.plot(range(1, len(logs) + 1),
+                         serie_metric_logs,
+                         label=serie_label)
+                if extrema:
+                    extrema_logs[-1] += serie_log_fmt.format(
+                        min=extrema[serie_metric_name].get('min', float('inf')),
+                        max=extrema[serie_metric_name].get('max', -float('inf')),
+                        cur=serie_metric_logs[-1]
+                    )
 
         plt.title(metric2title.get(metric, metric))
         plt.xlabel('epoch')
