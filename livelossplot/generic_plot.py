@@ -10,15 +10,18 @@ def _is_unset(metric):
 
 class PlotLosses():
     def __init__(self, figsize=None, cell_size=(6, 4), dynamic_x_axis=False, max_cols=2,
-                 max_epoch=None, metric2title={}, validation_fmt="val_{}", plot_extrema=True, fig_path=None, series_fmt={}):
+                 max_epoch=None, metric2title={}, validation_fmt=None, plot_extrema=True, fig_path=None, 
+                 series_fmt={'training': '{}', 'validation':'val_{}'}):
         self.figsize = figsize
         self.cell_size = cell_size
         self.dynamic_x_axis = dynamic_x_axis
         self.max_cols = max_cols
         self.max_epoch = max_epoch
         self.metric2title = metric2title
-        self.validation_fmt = validation_fmt
         self.series_fmt = series_fmt
+        if validation_fmt is not None:
+            # backward compatibility
+            self.series_fmt['validation'] = validation_fmt
         self.logs = None
         self.base_metrics = None
         self.metrics_extrema = None
@@ -69,7 +72,6 @@ class PlotLosses():
         draw_plot(self.logs, self.base_metrics,
                   figsize=self.figsize, max_epoch=self.max_epoch,
                   max_cols=self.max_cols,
-                  validation_fmt=self.validation_fmt,
                   series_fmt=self.series_fmt,
                   metric2title=self.metric2title,
                   extrema=self.metrics_extrema,

@@ -18,8 +18,7 @@ def not_inline_warning():
 
 def draw_plot(logs, metrics, figsize=None, max_epoch=None,
               max_cols=2,
-              validation_fmt="val_{}",
-              series_fmt={},
+              series_fmt={'training': '{}', 'validation':'val_{}'},
               metric2title={},
               extrema=None,
               fig_path=None):
