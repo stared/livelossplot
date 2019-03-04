@@ -1,17 +1,27 @@
 from __future__ import division
 import math
 
-from .core import draw_plot, not_inline_warning
+from .core import draw_plot, not_inline_warning, MATPLOTLIB_TARGET, NEPTUNE_TARGET
 from collections import OrderedDict
+from .neptune_integration import neptune_send_plot  # TO FIX - requires neptune even if not used
 
 def _is_unset(metric):
     return metric is None or math.isnan(metric) or math.isinf(metric)
 
 
 class PlotLosses():
-    def __init__(self, figsize=None, cell_size=(6, 4), dynamic_x_axis=False, max_cols=2,
-                 max_epoch=None, metric2title={}, validation_fmt=None, plot_extrema=True, fig_path=None, 
-                 series_fmt={'training': '{}', 'validation':'val_{}'}):
+    def __init__(self,
+                 figsize=None,
+                 cell_size=(6, 4),
+                 dynamic_x_axis=False,
+                 max_cols=2,
+                 max_epoch=None,
+                 metric2title={},
+                 series_fmt={'training': '{}', 'validation':'val_{}'},
+                 validation_fmt="val_{}",
+                 plot_extrema=True,
+                 fig_path=None,
+                 target=MATPLOTLIB_TARGET):
         self.figsize = figsize
         self.cell_size = cell_size
         self.dynamic_x_axis = dynamic_x_axis
@@ -26,9 +36,11 @@ class PlotLosses():
         self.base_metrics = None
         self.metrics_extrema = None
         self.plot_extrema = plot_extrema
+        self.target = target
         self.fig_path = fig_path
 
         self.set_max_epoch(max_epoch)
+        self._validate_target()
         not_inline_warning()
 
     def set_max_epoch(self, max_epoch):
@@ -69,10 +81,20 @@ class PlotLosses():
             self._update_extrema(log)
 
     def draw(self):
-        draw_plot(self.logs, self.base_metrics,
-                  figsize=self.figsize, max_epoch=self.max_epoch,
-                  max_cols=self.max_cols,
-                  series_fmt=self.series_fmt,
-                  metric2title=self.metric2title,
-                  extrema=self.metrics_extrema,
-                  fig_path=self.fig_path)
+        if self.target == MATPLOTLIB_TARGET:
+            draw_plot(self.logs, self.base_metrics,
+                      figsize=self.figsize,
+                      max_epoch=self.max_epoch,
+                      max_cols=self.max_cols,
+                      series_fmt=self.series_fmt,
+                      metric2title=self.metric2title,
+                      extrema=self.metrics_extrema,
+                      fig_path=self.fig_path)
+        if self.target == NEPTUNE_TARGET:
+            neptune_send_plot(self.logs)
+
+    def _validate_target(self):
+        assert isinstance(self.target, str),\
+            'target must be str, got "{}" instead.'.format(type(self.target))
+        if self.target != MATPLOTLIB_TARGET and self.target != NEPTUNE_TARGET:
+            raise ValueError('Target must be "{}" or "{}", got "{}" instead.'.format(MATPLOTLIB_TARGET, NEPTUNE_TARGET, self.target))

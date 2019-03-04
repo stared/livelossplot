@@ -5,6 +5,9 @@ import matplotlib
 import matplotlib.pyplot as plt
 from IPython.display import clear_output
 
+MATPLOTLIB_TARGET = 'matplotlib'
+NEPTUNE_TARGET = 'neptune'
+
 
 def not_inline_warning():
     backend = matplotlib.get_backend()
