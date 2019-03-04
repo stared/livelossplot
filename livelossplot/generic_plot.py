@@ -3,7 +3,6 @@ import math
 
 from .core import draw_plot, not_inline_warning, MATPLOTLIB_TARGET, NEPTUNE_TARGET
 from collections import OrderedDict
-from .neptune_integration import neptune_send_plot  # TO FIX - requires neptune even if not used
 
 def _is_unset(metric):
     return metric is None or math.isnan(metric) or math.isinf(metric)
@@ -37,6 +36,7 @@ class PlotLosses():
         self.metrics_extrema = None
         self.plot_extrema = plot_extrema
         self.target = target
+        from .neptune_integration import neptune_send_plot
         self.fig_path = fig_path
 
         self.set_max_epoch(max_epoch)
@@ -91,6 +91,7 @@ class PlotLosses():
                       extrema=self.metrics_extrema,
                       fig_path=self.fig_path)
         if self.target == NEPTUNE_TARGET:
+            from .neptune_integration import neptune_send_plot
             neptune_send_plot(self.logs)
 
     def _validate_target(self):

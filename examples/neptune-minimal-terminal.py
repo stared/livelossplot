@@ -8,7 +8,7 @@
 from time import sleep
 import numpy as np
 
-from livelossplot.generic_plot import PlotLosses
+from livelossplot import PlotLosses
 
 liveplot = PlotLosses(target='neptune')
 for i in range(20):
