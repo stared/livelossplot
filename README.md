@@ -49,7 +49,7 @@ Look at notebook files with full working [examples](https://github.com/stared/li
 * [pytorch.ipynb](https://github.com/stared/livelossplot/blob/master/examples/pytorch.ipynb) - a bare API, as applied to PyTorch
 * [pytoune.ipynb](https://github.com/stared/livelossplot/blob/master/examples/pytoune.ipynb) - a PyToune callback ([PyToune](https://pytoune.org/) is a Keras-like framework for PyTorch)
 * [torchbearer.ipynb](https://github.com/stared/livelossplot/blob/master/examples/torchbearer.ipynb) - an example using the built in functionality from torchbearer ([torchbearer](https://github.com/ecs-vlc/torchbearer) is a model fitting library for PyTorch)
-* [neptune-minimal-terminal.py](https://github.com/stared/livelossplot/blob/master/examples/neptune-minimal-terminal.py) - a [Neptune.ML](https://neptune.ml/) Pythin script (so far the only way to use livelossplot outside of Jupyter)
+* [neptune-minimal-terminal.py](https://github.com/stared/livelossplot/blob/master/examples/neptune-minimal-terminal.py) - a [Neptune.ML](https://neptune.ml/) Python script (so far the only way to use livelossplot outside of Jupyter)
 * [neptune-minimal-jupyter.ipynb](https://github.com/stared/livelossplot/blob/master/examples/neptune-minimal-jupyter.ipynb) - a [Neptune.ML](https://neptune.ml/) Jupyter Notebook integration
 
 ## Overview
