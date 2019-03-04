@@ -21,7 +21,7 @@ def not_inline_warning():
 
 def draw_plot(logs, metrics, figsize=None, max_epoch=None,
               max_cols=2,
-              validation_fmt="val_{}",
+              series_fmt={'training': '{}', 'validation':'val_{}'},
               metric2title={},
               extrema=None,
               fig_path=None):
@@ -35,39 +35,28 @@ def draw_plot(logs, metrics, figsize=None, max_epoch=None,
         if max_epoch is not None:
             plt.xlim(1, max_epoch)
 
-        metric_logs = [log[metric] for log in logs]
-        plt.plot(range(1, len(logs) + 1),
-                 metric_logs,
-                 label="training")
+        values_fmt = ' (min: {min:8.3f}, max: {max:8.3f}, cur: {cur:8.3f})'
+        
+        serie_name_max_length = max([len(key) for key in series_fmt.keys()])
 
-        values_fmt = 'min: {min:8.3f}, max: {max:8.3f}, cur: {cur:8.3f}'
-        training_log_fmt = '{metric}:\ntraining   ({values_fmt})'.format(
-            metric=metric2title.get(metric, metric),
-            values_fmt=values_fmt
-        )
-        validation_log_fmt = '\nvalidation ({})'.format(values_fmt)
-
-        if extrema:
-            extrema_logs.append(
-                training_log_fmt.format(
-                    min=extrema[metric].get('min', float('inf')),
-                    max=extrema[metric].get('max', -float('inf')),
-                    cur=metric_logs[-1]
-                )
-            )
-
-        if validation_fmt.format(metric) in logs[0]:
-            val_metric_name = validation_fmt.format(metric)
-            val_metric_logs = [log[val_metric_name] for log in logs]
-            plt.plot(range(1, len(logs) + 1),
-                     val_metric_logs,
-                     label="validation")
-            if extrema:
-                extrema_logs[-1] += validation_log_fmt.format(
-                    min=extrema[val_metric_name].get('min', float('inf')),
-                    max=extrema[val_metric_name].get('max', -float('inf')),
-                    cur=val_metric_logs[-1]
-                )
+        # generic for any serie
+        for i, (serie_label, serie_fmt) in enumerate(series_fmt.items()):
+            serie_log_fmt = '\n{message: <{fill}}'.format(message=serie_label, fill=serie_name_max_length) + values_fmt
+            if serie_fmt.format(metric) in logs[0]:
+                serie_metric_name = serie_fmt.format(metric)
+                serie_metric_logs = [log[serie_metric_name] for log in logs]
+                plt.plot(range(1, len(logs) + 1),
+                         serie_metric_logs,
+                         label=serie_label)
+                if extrema:
+                    log = serie_log_fmt.format(
+                        min=extrema[serie_metric_name].get('min'),
+                        max=extrema[serie_metric_name].get('max'),
+                        cur=serie_metric_logs[-1])
+                    if i==0:
+                        extrema_logs.append(metric2title.get(metric, metric) + ':' + log)
+                    else:
+                        extrema_logs[-1] += log
 
         plt.title(metric2title.get(metric, metric))
         plt.xlabel('epoch')

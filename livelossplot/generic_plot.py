@@ -2,11 +2,11 @@ from __future__ import division
 import math
 
 from .core import draw_plot, not_inline_warning, MATPLOTLIB_TARGET, NEPTUNE_TARGET
-from .neptune_integration import neptune_send_plot
-
+from collections import OrderedDict
+from .neptune_integration import neptune_send_plot  # TO FIX - requires neptune even if not used
 
 def _is_unset(metric):
-    return metric is None or math.isnan(metric)
+    return metric is None or math.isnan(metric) or math.isinf(metric)
 
 
 class PlotLosses():
@@ -17,6 +17,7 @@ class PlotLosses():
                  max_cols=2,
                  max_epoch=None,
                  metric2title={},
+                 series_fmt={'training': '{}', 'validation':'val_{}'},
                  validation_fmt="val_{}",
                  plot_extrema=True,
                  fig_path=None,
@@ -27,7 +28,10 @@ class PlotLosses():
         self.max_cols = max_cols
         self.max_epoch = max_epoch
         self.metric2title = metric2title
-        self.validation_fmt = validation_fmt
+        self.series_fmt = series_fmt
+        if validation_fmt is not None:
+            # backward compatibility
+            self.series_fmt['validation'] = validation_fmt
         self.logs = None
         self.base_metrics = None
         self.metrics_extrema = None
@@ -47,11 +51,11 @@ class PlotLosses():
         if self.plot_extrema:
             self.metrics_extrema = {
                 ftm.format(metric): {
-                    'min': None,
-                    'max': None,
+                    'min': float('inf'),
+                    'max': -float('inf'),
                 }
                 for metric in metrics
-                for ftm in ['{}', self.validation_fmt]
+                for ftm in list(self.series_fmt.values())
             }
         if self.figsize is None:
             self.figsize = (
@@ -61,15 +65,9 @@ class PlotLosses():
 
         self.logs = []
 
-    def _format_metric_name(self, metric_name):
-        if 'val' not in metric_name:
-            return metric_name
-        return metric_name.replace('validation_', 'val_')  # this should be more generic
-
     def _update_extrema(self, log):
         for metric, value in log.items():
-            formatted_name = self._format_metric_name(metric)
-            extrema = self.metrics_extrema[formatted_name]
+            extrema = self.metrics_extrema[metric]
             if _is_unset(extrema['min']) or value < extrema['min']:
                 extrema['min'] = float(value)
             if _is_unset(extrema['max']) or value > extrema['max']:
@@ -77,10 +75,7 @@ class PlotLosses():
 
     def update(self, log):
         if self.logs is None:
-            self.set_metrics([
-                metric for metric in log.keys()
-                if 'val' not in metric.lower()
-            ])
+            self.set_metrics(list(OrderedDict.fromkeys([metric.split('_')[-1] for metric in log.keys()])))
         self.logs.append(log)
         if self.plot_extrema:
             self._update_extrema(log)
@@ -91,7 +86,7 @@ class PlotLosses():
                       figsize=self.figsize,
                       max_epoch=self.max_epoch,
                       max_cols=self.max_cols,
-                      validation_fmt=self.validation_fmt,
+                      series_fmt=self.series_fmt,
                       metric2title=self.metric2title,
                       extrema=self.metrics_extrema,
                       fig_path=self.fig_path)
