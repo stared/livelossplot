@@ -21,7 +21,8 @@ class PlotLosses():
                  validation_fmt="val_{}",
                  plot_extrema=True,
                  fig_path=None,
-                 target=MATPLOTLIB_TARGET):
+                 target=MATPLOTLIB_TARGET,
+                 mark_high_score={}):
         self.figsize = figsize
         self.cell_size = cell_size
         self.dynamic_x_axis = dynamic_x_axis
@@ -38,6 +39,8 @@ class PlotLosses():
         self.plot_extrema = plot_extrema
         self.target = target
         self.fig_path = fig_path
+        self.mark_high_score = mark_high_score
+        self.high_scores = {log:[] for log in self.mark_high_score.keys()}
 
         self.set_max_epoch(max_epoch)
         self._validate_target()
@@ -65,19 +68,26 @@ class PlotLosses():
 
         self.logs = []
 
+    def _update_high_scores(self, metric):
+        self.high_scores[metric].append(len([l for l in self.logs if metric in l])-1)
+		
     def _update_extrema(self, log):
         for metric, value in log.items():
             extrema = self.metrics_extrema[metric]
             if _is_unset(extrema['min']) or value < extrema['min']:
                 extrema['min'] = float(value)
+                if metric in self.mark_high_score and self.mark_high_score[metric] == 'lower':
+                    self._update_high_scores(metric)
             if _is_unset(extrema['max']) or value > extrema['max']:
                 extrema['max'] = float(value)
+                if metric in self.mark_high_score and self.mark_high_score[metric] == 'higher':
+                    self._update_high_scores(metric)
 
     def update(self, log):
         if self.logs is None:
             self.set_metrics(list(OrderedDict.fromkeys([metric.split('_')[-1] for metric in log.keys()])))
         self.logs.append(log)
-        if self.plot_extrema:
+        if self.plot_extrema or len(self.mark_high_score) > 0:
             self._update_extrema(log)
 
     def draw(self):
@@ -88,8 +98,9 @@ class PlotLosses():
                       max_cols=self.max_cols,
                       series_fmt=self.series_fmt,
                       metric2title=self.metric2title,
-                      extrema=self.metrics_extrema,
-                      fig_path=self.fig_path)
+                      extrema=(self.metrics_extrema if self.plot_extrema else None),
+                      fig_path=self.fig_path,
+					  high_scores=self.high_scores)
         if self.target == NEPTUNE_TARGET:
             neptune_send_plot(self.logs)
 
