@@ -2,7 +2,7 @@ from __future__ import division
 import math
 
 from .core import draw_plot, not_inline_warning
-
+from collections import OrderedDict
 
 def _is_unset(metric):
     return metric is None or math.isnan(metric) or math.isinf(metric)
@@ -63,7 +63,7 @@ class PlotLosses():
 
     def update(self, log):
         if self.logs is None:
-            self.set_metrics(set([metric.split('_')[-1] for metric in log.keys()]))
+            self.set_metrics(list(OrderedDict.fromkeys([metric.split('_')[-1] for metric in log.keys()])))
         self.logs.append(log)
         if self.plot_extrema:
             self._update_extrema(log)
