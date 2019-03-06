@@ -36,12 +36,11 @@ class PlotLosses():
         self.metrics_extrema = None
         self.plot_extrema = plot_extrema
         self.target = target
-        from .neptune_integration import neptune_send_plot
-        self.fig_path = fig_path
-
-        self.set_max_epoch(max_epoch)
         self._validate_target()
-        not_inline_warning()
+        if target == MATPLOTLIB_TARGET:
+            not_inline_warning()
+        self.fig_path = fig_path
+        self.set_max_epoch(max_epoch)
 
     def set_max_epoch(self, max_epoch):
         self.max_epoch = max_epoch if not self.dynamic_x_axis else None
