@@ -1,7 +1,7 @@
 from __future__ import division
 import math
 
-from .core import draw_plot, not_inline_warning, MATPLOTLIB_TARGET, NEPTUNE_TARGET
+from .core import draw_plot, print_extrema, not_inline_warning, MATPLOTLIB_TARGET, NEPTUNE_TARGET
 from collections import OrderedDict
 
 def _is_unset(metric):
@@ -87,8 +87,13 @@ class PlotLosses():
                       max_cols=self.max_cols,
                       series_fmt=self.series_fmt,
                       metric2title=self.metric2title,
-                      extrema=self.metrics_extrema,
                       fig_path=self.fig_path)
+            if self.metrics_extrema:
+                print_extrema(self.logs,
+                              self.base_metrics,
+                              self.metrics_extrema,
+                              series_fmt=self.series_fmt,
+                              metric2title=self.metric2title)
         if self.target == NEPTUNE_TARGET:
             from .neptune_integration import neptune_send_plot
             neptune_send_plot(self.logs)
