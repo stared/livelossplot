@@ -1,6 +1,7 @@
 import warnings
 from .core import draw_plot
 from .generic_plot import PlotLosses
+from .version import __version__
 
 # keras.PlotLossesCallback and pytoune.PlotLossesCallback
 # NOT loaded, as they depend on other libraries
