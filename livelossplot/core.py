@@ -28,8 +28,6 @@ def draw_plot(logs, metrics, figsize=None, max_epoch=None,
     clear_output(wait=True)
     plt.figure(figsize=figsize)
 
-    extrema_logs = []
-
     max_rows = (len(metrics) + len(extra_plots) + 1) // max_cols + 1
 
     for metric_id, metric in enumerate(metrics):
