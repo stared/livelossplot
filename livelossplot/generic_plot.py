@@ -19,6 +19,7 @@ class PlotLosses():
                  series_fmt={'training': '{}', 'validation':'val_{}'},
                  validation_fmt="val_{}",
                  plot_extrema=True,
+                 extra_plots=[],
                  fig_path=None,
                  target=MATPLOTLIB_TARGET):
         self.figsize = figsize
@@ -41,6 +42,7 @@ class PlotLosses():
             not_inline_warning()
         self.fig_path = fig_path
         self.set_max_epoch(max_epoch)
+        self.extra_plots = extra_plots
 
     def set_max_epoch(self, max_epoch):
         self.max_epoch = max_epoch if not self.dynamic_x_axis else None
@@ -87,6 +89,7 @@ class PlotLosses():
                       max_cols=self.max_cols,
                       series_fmt=self.series_fmt,
                       metric2title=self.metric2title,
+                      extra_plots=self.extra_plots,
                       fig_path=self.fig_path)
             if self.metrics_extrema:
                 print_extrema(self.logs,

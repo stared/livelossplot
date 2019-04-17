@@ -23,13 +23,17 @@ def draw_plot(logs, metrics, figsize=None, max_epoch=None,
               max_cols=2,
               series_fmt={'training': '{}', 'validation':'val_{}'},
               metric2title={},
+              extra_plots=[],
               fig_path=None):
     clear_output(wait=True)
     plt.figure(figsize=figsize)
 
     extrema_logs = []
+
+    max_rows = (len(metrics) + len(extra_plots) + 1) // max_cols + 1
+
     for metric_id, metric in enumerate(metrics):
-        plt.subplot((len(metrics) + 1) // max_cols + 1, max_cols, metric_id + 1)
+        plt.subplot(max_rows, max_cols, metric_id + 1)
 
         if max_epoch is not None:
             plt.xlim(1, max_epoch)
@@ -46,6 +50,10 @@ def draw_plot(logs, metrics, figsize=None, max_epoch=None,
         plt.title(metric2title.get(metric, metric))
         plt.xlabel('epoch')
         plt.legend(loc='center right')
+
+    for i, extra_plot in enumerate(extra_plots):
+        plt.subplot(max_rows, max_cols, i + len(metrics) + 1)
+        extra_plot(logs)
 
     plt.tight_layout()
     if fig_path is not None:
