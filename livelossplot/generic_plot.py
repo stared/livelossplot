@@ -2,7 +2,10 @@ from __future__ import division
 import math
 
 from .core import draw_plot, print_extrema, not_inline_warning, MATPLOTLIB_TARGET, NEPTUNE_TARGET
+from .core_bokeh import draw_plot_bokeh, BOKEH_TARGET
+
 from collections import OrderedDict
+
 
 def _is_unset(metric):
     return metric is None or math.isnan(metric) or math.isinf(metric)
@@ -16,7 +19,7 @@ class PlotLosses():
                  max_cols=2,
                  max_epoch=None,
                  metric2title={},
-                 series_fmt={'training': '{}', 'validation':'val_{}'},
+                 series_fmt={'training': '{}', 'validation': 'val_{}'},
                  validation_fmt="val_{}",
                  plot_extrema=True,
                  extra_plots=[],
@@ -61,7 +64,8 @@ class PlotLosses():
         if self.figsize is None:
             self.figsize = (
                 self.max_cols * self.cell_size[0],
-                ((len(self.base_metrics) + 1) // self.max_cols + 1) * self.cell_size[1]
+                ((len(self.base_metrics) + 1) //
+                 self.max_cols + 1) * self.cell_size[1]
             )
 
         self.logs = []
@@ -76,7 +80,8 @@ class PlotLosses():
 
     def update(self, log):
         if self.logs is None:
-            self.set_metrics(list(OrderedDict.fromkeys([metric.split('_')[-1] for metric in log.keys()])))
+            self.set_metrics(list(OrderedDict.fromkeys(
+                [metric.split('_')[-1] for metric in log.keys()])))
         self.logs.append(log)
         if self.plot_extrema:
             self._update_extrema(log)
@@ -97,6 +102,23 @@ class PlotLosses():
                               self.metrics_extrema,
                               series_fmt=self.series_fmt,
                               metric2title=self.metric2title)
+        if self.target == BOKEH_TARGET:
+            draw_plot_bokeh(self.logs, self.base_metrics,
+                            figsize=self.figsize,
+                            max_epoch=self.max_epoch,
+                            max_cols=self.max_cols,
+                            series_fmt=self.series_fmt,
+                            metric2title=self.metric2title,
+                            extra_plots=self.extra_plots,
+                            fig_path=self.fig_path)
+
+            if self.metrics_extrema:
+                print_extrema(self.logs,
+                              self.base_metrics,
+                              self.metrics_extrema,
+                              series_fmt=self.series_fmt,
+                              metric2title=self.metric2title)
+
         if self.target == NEPTUNE_TARGET:
             from .neptune_integration import neptune_send_plot
             neptune_send_plot(self.logs)
@@ -104,5 +126,6 @@ class PlotLosses():
     def _validate_target(self):
         assert isinstance(self.target, str),\
             'target must be str, got "{}" instead.'.format(type(self.target))
-        if self.target != MATPLOTLIB_TARGET and self.target != NEPTUNE_TARGET:
-            raise ValueError('Target must be "{}" or "{}", got "{}" instead.'.format(MATPLOTLIB_TARGET, NEPTUNE_TARGET, self.target))
+        if self.target != MATPLOTLIB_TARGET and self.target != NEPTUNE_TARGET and self.target != BOKEH_TARGET:
+            raise ValueError('Target must be "{}", "{}", or "{}". "{}" was passed instead.'.format(
+                MATPLOTLIB_TARGET, NEPTUNE_TARGET, BOKEH_TARGET, self.target))
