@@ -23,7 +23,6 @@ def draw_plot_bokeh(logs,
                     extra_plots=[],
                     fig_path=None):
 
-    reset_output()
     output_notebook(hide_banner=True)
     clear_output(wait=True)
 
