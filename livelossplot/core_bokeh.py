@@ -60,6 +60,8 @@ def draw_plot_bokeh(logs,
                 fig.legend.location = "center_right"
                 fig.legend.background_fill_alpha = 0.5
                 fig.legend.padding = 5
+                fig.xaxis.ticker = [i for i in range(1, len(logs)+1)]
+                fig.grid.visible = False
 
         figures.append(fig)
 
