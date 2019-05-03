@@ -35,9 +35,15 @@ def draw_plot_bokeh(logs,
 
     for metric_id, metric in enumerate(metrics):
 
+        TOOLTIPS = [
+            ("Epoch", "@x"),
+            ("Value", "@y"),
+        ]
+
         fig = figure(title=metric,
                      x_axis_label='epoch',
                      tools=['hover,pan,wheel_zoom,box_zoom,reset'],
+                     tooltips=TOOLTIPS,
                      plot_width=400,
                      plot_height=300,
                      x_range=x_range)
