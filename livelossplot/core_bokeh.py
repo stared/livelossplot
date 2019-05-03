@@ -3,7 +3,7 @@ import warnings
 
 from IPython.display import clear_output
 
-from bokeh.plotting import figure, reset_output, save
+from bokeh.plotting import figure, save
 from bokeh.io import push_notebook, show, output_notebook
 from bokeh.layouts import gridplot
 from bokeh.models import Range1d
