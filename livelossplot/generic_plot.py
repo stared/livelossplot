@@ -73,11 +73,14 @@ class PlotLosses():
                 for ftm in list(self.series_fmt.values())
             }
         if self.figsize is None:
-            self.figsize = (
-                self.max_cols * self.cell_size[0],
-                ((len(self.base_metrics) + 1) //
-                 self.max_cols + 1) * self.cell_size[1]
-            )
+            if self.target != BOKEH_TARGET:
+                self.figsize = (
+                    self.max_cols * self.cell_size[0],
+                    ((len(self.base_metrics) + 1) //
+                     self.max_cols + 1) * self.cell_size[1]
+                )
+            else:
+                self.figsize = [400, 300]
 
         self.logs = []
 
