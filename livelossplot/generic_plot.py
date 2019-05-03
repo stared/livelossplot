@@ -151,6 +151,6 @@ class PlotLosses():
     def _validate_target(self):
         assert isinstance(self.target, str),\
             'target must be str, got "{}" instead.'.format(type(self.target))
-        if self.target != MATPLOTLIB_TARGET and self.target != NEPTUNE_TARGET and self.target != BOKEH_TARGET:
+        if self.target not in [BOKEH_TARGET, MATPLOTLIB_TARGET, NEPTUNE_TARGET]:
             raise ValueError('Target must be "{}", "{}", or "{}". "{}" was passed instead.'.format(
                 MATPLOTLIB_TARGET, NEPTUNE_TARGET, BOKEH_TARGET, self.target))
