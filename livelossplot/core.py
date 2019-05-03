@@ -12,7 +12,8 @@ NEPTUNE_TARGET = 'neptune'
 def not_inline_warning():
     backend = matplotlib.get_backend()
     if "backend_inline" not in backend:
-        warnings.warn("livelossplot requires inline plots.\nYour current backend is: {}\nRun in a Jupyter environment and execute '%matplotlib inline'.".format(backend))
+        warnings.warn(
+            "livelossplot requires inline plots.\nYour current backend is: {}\nRun in a Jupyter environment and execute '%matplotlib inline'.".format(backend))
 
 # TODO
 # * object-oriented API
@@ -21,7 +22,7 @@ def not_inline_warning():
 
 def draw_plot(logs, metrics, figsize=None, max_epoch=None,
               max_cols=2,
-              series_fmt={'training': '{}', 'validation':'val_{}'},
+              series_fmt={'training': '{}', 'validation': 'val_{}'},
               metric2title={},
               extra_plots=[],
               fig_path=None):
@@ -58,10 +59,11 @@ def draw_plot(logs, metrics, figsize=None, max_epoch=None,
         plt.savefig(fig_path)
     plt.show()
 
+
 def print_extrema(logs,
                   metrics,
                   extrema,
-                  series_fmt={'training': '{}', 'validation':'val_{}'},
+                  series_fmt={'training': '{}', 'validation': 'val_{}'},
                   metric2title={}):
 
     extrema_logs = []
@@ -73,7 +75,8 @@ def print_extrema(logs,
 
         # generic for any serie
         for i, (serie_label, serie_fmt) in enumerate(series_fmt.items()):
-            serie_log_fmt = '\n{message: <{fill}}'.format(message=serie_label, fill=serie_name_max_length) + values_fmt
+            serie_log_fmt = '\n{message: <{fill}}'.format(
+                message=serie_label, fill=serie_name_max_length) + values_fmt
 
             if serie_fmt.format(metric) in logs[0]:
                 serie_metric_name = serie_fmt.format(metric)
@@ -83,8 +86,9 @@ def print_extrema(logs,
                     min=extrema[serie_metric_name].get('min'),
                     max=extrema[serie_metric_name].get('max'),
                     cur=serie_metric_logs[-1])
-                if i==0:
-                    extrema_logs.append(metric2title.get(metric, metric) + ':' + log)
+                if i == 0:
+                    extrema_logs.append(metric2title.get(
+                        metric, metric) + ':' + log)
                 else:
                     extrema_logs[-1] += log
 
