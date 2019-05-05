@@ -36,14 +36,16 @@ def draw_plot(logs, metrics, figsize=None, max_epoch=None,
         if max_epoch is not None:
             plt.xlim(1, max_epoch)
 
-        for i, (serie_label, serie_fmt) in enumerate(series_fmt.items()):
+        for serie_label, serie_fmt in series_fmt.items():
 
-            if serie_fmt.format(metric) in logs[0]:
-                serie_metric_name = serie_fmt.format(metric)
-                serie_metric_logs = [log[serie_metric_name] for log in logs]
-                plt.plot(range(1, len(logs) + 1),
-                         serie_metric_logs,
-                         label=serie_label)
+            serie_metric_name = serie_fmt.format(metric)
+            serie_metric_logs = [(i, log[serie_metric_name])
+                                 for i, log in enumerate(logs)
+                                 if serie_metric_name in log]
+
+            if len(serie_metric_logs) > 0:
+                xs, ys = zip(*serie_metric_logs)
+                plt.plot(xs, ys, label=serie_label)
 
         plt.title(metric2title.get(metric, metric))
         plt.xlabel('epoch')
@@ -75,17 +77,17 @@ def print_extrema(logs,
         for i, (serie_label, serie_fmt) in enumerate(series_fmt.items()):
             serie_log_fmt = '\n{message: <{fill}}'.format(message=serie_label, fill=serie_name_max_length) + values_fmt
 
-            if serie_fmt.format(metric) in logs[0]:
-                serie_metric_name = serie_fmt.format(metric)
-                serie_metric_logs = [log[serie_metric_name] for log in logs]
+            serie_metric_name = serie_fmt.format(metric)
+            serie_metric_logs = [log[serie_metric_name] for log in logs if serie_metric_name in log]
 
-                log = serie_log_fmt.format(
-                    min=extrema[serie_metric_name].get('min'),
-                    max=extrema[serie_metric_name].get('max'),
-                    cur=serie_metric_logs[-1])
-                if i==0:
-                    extrema_logs.append(metric2title.get(metric, metric) + ':' + log)
-                else:
-                    extrema_logs[-1] += log
+            log = serie_log_fmt.format(
+                min=extrema[serie_metric_name].get('min'),
+                max=extrema[serie_metric_name].get('max'),
+                cur=serie_metric_logs[-1])
+
+            if i == 0:
+                extrema_logs.append(metric2title.get(metric, metric) + ':' + log)
+            else:
+                extrema_logs[-1] += log
 
     print('\n\n'.join(extrema_logs))
