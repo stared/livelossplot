@@ -21,6 +21,7 @@ class PlotLosses():
                  plot_extrema=True,
                  extra_plots=[],
                  fig_path=None,
+                 tensorboard_dir=None,
                  target=MATPLOTLIB_TARGET):
         self.figsize = figsize
         self.cell_size = cell_size
@@ -41,6 +42,13 @@ class PlotLosses():
         if target == MATPLOTLIB_TARGET:
             not_inline_warning()
         self.fig_path = fig_path
+
+        if tensorboard_dir:
+            from .tensorboard import TensorboardLogger
+            self.tensorboard_logger = TensorboardLogger(tensorboard_dir)
+        else:
+            self.tensorboard_logger = None
+
         self.set_max_epoch(max_epoch)
         self.extra_plots = extra_plots
 
@@ -78,6 +86,9 @@ class PlotLosses():
         if self.logs is None:
             self.set_metrics(list(OrderedDict.fromkeys([metric.split('_')[-1] for metric in log.keys()])))
         self.logs.append(log)
+        if self.tensorboard_logger:
+            global_step = len(self.logs)
+            self.tensorboard_logger.log_logs(log, global_step)
         if self.plot_extrema:
             self._update_extrema(log)
 
@@ -100,6 +111,9 @@ class PlotLosses():
         if self.target == NEPTUNE_TARGET:
             from .neptune_integration import neptune_send_plot
             neptune_send_plot(self.logs)
+
+    def close(self):
+        self.tensorboard_logger.close()
 
     def _validate_target(self):
         assert isinstance(self.target, str),\
