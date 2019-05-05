@@ -19,6 +19,7 @@ class PlotLosses():
                  series_fmt={'training': '{}', 'validation':'val_{}'},
                  validation_fmt="val_{}",
                  plot_extrema=True,
+                 skip_first=2,
                  extra_plots=[],
                  fig_path=None,
                  tensorboard_dir=None,
@@ -37,6 +38,7 @@ class PlotLosses():
         self.base_metrics = None
         self.metrics_extrema = None
         self.plot_extrema = plot_extrema
+        self.skip_first = skip_first
         self.target = target
         self._validate_target()
         if target == MATPLOTLIB_TARGET:
@@ -104,6 +106,7 @@ class PlotLosses():
                       max_cols=self.max_cols,
                       series_fmt=self.series_fmt,
                       metric2title=self.metric2title,
+                      skip_first=self.skip_first,
                       extra_plots=self.extra_plots,
                       fig_path=self.fig_path)
             if self.metrics_extrema:

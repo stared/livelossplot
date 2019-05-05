@@ -23,6 +23,7 @@ def draw_plot(logs, metrics, figsize=None, max_epoch=None,
               max_cols=2,
               series_fmt={'training': '{}', 'validation':'val_{}'},
               metric2title={},
+              skip_first=2,
               extra_plots=[],
               fig_path=None):
     clear_output(wait=True)
@@ -30,17 +31,26 @@ def draw_plot(logs, metrics, figsize=None, max_epoch=None,
 
     max_rows = (len(metrics) + len(extra_plots) + 1) // max_cols + 1
 
+    if len(logs) < skip_first:
+        skip = 0
+    elif len(logs) < 2 * skip_first:
+        skip = len(logs) - skip_first
+    else:
+        skip = skip_first
+
     for metric_id, metric in enumerate(metrics):
         plt.subplot(max_rows, max_cols, metric_id + 1)
 
         if max_epoch is not None:
-            plt.xlim(1, max_epoch)
+            plt.xlim(1 + skip, max_epoch)
+
+        # y_limit_values = []
 
         for serie_label, serie_fmt in series_fmt.items():
 
             serie_metric_name = serie_fmt.format(metric)
             serie_metric_logs = [(log.get('_i', i + 1), log[serie_metric_name])
-                                 for i, log in enumerate(logs)
+                                 for i, log in enumerate(logs[skip:])
                                  if serie_metric_name in log]
 
             if len(serie_metric_logs) > 0:
