@@ -51,6 +51,7 @@ class PlotLosses():
 
         self.set_max_epoch(max_epoch)
         self.extra_plots = extra_plots
+        self.global_step = 0
 
     def set_max_epoch(self, max_epoch):
         self.max_epoch = max_epoch if not self.dynamic_x_axis else None
@@ -76,19 +77,22 @@ class PlotLosses():
 
     def _update_extrema(self, log):
         for metric, value in log.items():
-            extrema = self.metrics_extrema[metric]
-            if _is_unset(extrema['min']) or value < extrema['min']:
-                extrema['min'] = float(value)
-            if _is_unset(extrema['max']) or value > extrema['max']:
-                extrema['max'] = float(value)
+            if metric != "_i":
+                extrema = self.metrics_extrema[metric]
+                if _is_unset(extrema['min']) or value < extrema['min']:
+                    extrema['min'] = float(value)
+                if _is_unset(extrema['max']) or value > extrema['max']:
+                    extrema['max'] = float(value)
 
-    def update(self, log):
+    def update(self, log, step=1):
+        self.global_step += step
         if self.logs is None:
             self.set_metrics(list(OrderedDict.fromkeys([metric.split('_')[-1] for metric in log.keys()])))
+
+        log["_i"] = self.global_step
         self.logs.append(log)
         if self.tensorboard_logger:
-            global_step = len(self.logs)
-            self.tensorboard_logger.log_logs(log, global_step)
+            self.tensorboard_logger.log_logs(log, self.global_step)
         if self.plot_extrema:
             self._update_extrema(log)
 
