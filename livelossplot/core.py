@@ -39,7 +39,7 @@ def draw_plot(logs, metrics, figsize=None, max_epoch=None,
         for serie_label, serie_fmt in series_fmt.items():
 
             serie_metric_name = serie_fmt.format(metric)
-            serie_metric_logs = [(i, log[serie_metric_name])
+            serie_metric_logs = [(i + 1, log[serie_metric_name])
                                  for i, log in enumerate(logs)
                                  if serie_metric_name in log]
 
