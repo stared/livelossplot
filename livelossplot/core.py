@@ -90,14 +90,15 @@ def print_extrema(logs,
             serie_metric_name = serie_fmt.format(metric)
             serie_metric_logs = [log[serie_metric_name] for log in logs if serie_metric_name in log]
 
-            log = serie_log_fmt.format(
-                min=extrema[serie_metric_name].get('min'),
-                max=extrema[serie_metric_name].get('max'),
-                cur=serie_metric_logs[-1])
+            if len(serie_metric_logs) > 0:
+                log = serie_log_fmt.format(
+                    min=extrema[serie_metric_name].get('min'),
+                    max=extrema[serie_metric_name].get('max'),
+                    cur=serie_metric_logs[-1])
 
-            if i == 0:
-                extrema_logs.append(metric2title.get(metric, metric) + ':' + log)
-            else:
-                extrema_logs[-1] += log
+                if i == 0:
+                    extrema_logs.append(metric2title.get(metric, metric) + ':' + log)
+                else:
+                    extrema_logs[-1] += log
 
     print('\n\n'.join(extrema_logs))

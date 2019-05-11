@@ -86,10 +86,15 @@ class PlotLosses():
                 if _is_unset(extrema['max']) or value > extrema['max']:
                     extrema['max'] = float(value)
 
+    def _get_metric(self, log_metric):
+        for format_string in reversed(sorted(list(self.series_fmt.values()), key=len)):
+            if log_metric.startswith(format_string.replace('{}','')):
+                return log_metric[len(format_string.replace('{}','')):]
+			
     def update(self, log, step=1):
         self.global_step += step
         if self.logs is None:
-            self.set_metrics(list(OrderedDict.fromkeys([metric.split('_')[-1] for metric in log.keys()])))
+            self.set_metrics(list(OrderedDict.fromkeys([self._get_metric(log_metric) for log_metric in log.keys()])))
 
         log["_i"] = self.global_step
         self.logs.append(log)
