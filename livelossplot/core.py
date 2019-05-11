@@ -24,8 +24,7 @@ def draw_plot(logs, metrics, figsize=None, max_epoch=None,
               series_fmt={'training': '{}', 'validation':'val_{}'},
               metric2title={},
               extrema=None,
-              fig_path=None,
-              high_scores={}):
+              fig_path=None):
     clear_output(wait=True)
     plt.figure(figsize=figsize)
 
@@ -48,9 +47,7 @@ def draw_plot(logs, metrics, figsize=None, max_epoch=None,
                 serie_metric_logs = [log[serie_metric_name] for log in logs]
                 plt.plot(range(1, len(logs) + 1),
                          serie_metric_logs,
-                         label=serie_label,
-                         marker=('o' if serie_metric_name in high_scores else None),
-                         markevery=(high_scores[serie_metric_name] if serie_metric_name in high_scores else []))
+                         label=serie_label)
                 if extrema:
                     log = serie_log_fmt.format(
                         min=extrema[serie_metric_name].get('min'),
