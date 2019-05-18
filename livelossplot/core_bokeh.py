@@ -8,67 +8,110 @@ from bokeh.io import push_notebook, show, output_notebook
 from bokeh.layouts import gridplot
 from bokeh.models import Range1d
 
+from bokeh.models import HoverTool
 
 BOKEH_TARGET = 'bokeh'
 COLORS = [(31, 119, 180), (255, 165, 0), (46, 139, 87)]
+TOOLTIPS = [
+    ("Epoch", "@x"),
+    ("Value", "@y"),
+]
 
 
-def draw_plot_bokeh(logs,
-                    metrics,
-                    figsize=None,
-                    max_epoch=None,
-                    max_cols=2,
-                    series_fmt={'training': '{}', 'validation': 'val_{}'},
-                    metric2title={},
-                    extra_plots=[],
-                    fig_path=None):
+class BokehPlot():
 
-    output_notebook(hide_banner=True)
-    clear_output(wait=True)
+    def __init__(self,
+                 logs=None,
+                 metrics=None,
+                 figsize=[400, 300],
+                 max_epoch=None,
+                 max_cols=2,
+                 series_fmt={'training': '{}', 'validation': 'val_{}'},
+                 metric2title={},
+                 extra_plots=[],
+                 fig_path=None,
+                 figures=None,
+                 target=None,
+                 grid=None):
 
-    figures = []
+        self.logs = logs
+        self.metrics = metrics
+        self.figsize = figsize
+        self.max_epoch = max_epoch
+        self.max_cols = max_cols
+        self.series_fmt = series_fmt
+        self.metric2title = metric2title
+        self.extra_plots = extra_plots
+        self.fig_path = fig_path
 
-    if max_epoch:
-        x_range = (1, max_epoch)
-    else:
-        x_range = None
+        self.figures = figures
+        self.target = target
+        self.grid = grid
 
-    for metric_id, metric in enumerate(metrics):
+    def create_figures(self):
 
-        TOOLTIPS = [
-            ("Epoch", "@x"),
-            ("Value", "@y"),
-        ]
+        output_notebook(hide_banner=True)
 
-        fig = figure(title=metric,
-                     x_axis_label='epoch',
-                     tools=['hover,pan,wheel_zoom,box_zoom,reset'],
-                     tooltips=TOOLTIPS,
-                     plot_width=400,
-                     plot_height=300,
-                     x_range=x_range)
+        if self.max_epoch:
+            x_range = (1, self.max_epoch)
+        else:
+            x_range = None
 
-        for i, (serie_label, serie_fmt) in enumerate(series_fmt.items()):
+        self.figures = []
 
-            if serie_fmt.format(metric) in logs[0]:
+        for _, metric in enumerate(self.metrics):
+            fig = figure(title=metric,
+                         x_axis_label='epoch',
+                         tools=['hover,pan,wheel_zoom,box_zoom,reset'],
+                         tooltips=TOOLTIPS,
+                         plot_width=self.figsize[0],
+                         plot_height=self.figsize[1],
+                         x_range=x_range)
+            # line = fig.line(1, 1,
+            #                 legend="aaa", line_width=2)
+            # fig.title.text = str(metric)
 
-                serie_metric_name = serie_fmt.format(metric)
-                serie_metric_logs = [log[serie_metric_name] for log in logs]
+            # fig.legend.location = "center_right"
+            # fig.legend.background_fill_alpha = 0.5
+            # fig.legend.padding = 5
 
-                line = fig.line(range(1, len(logs) + 1), serie_metric_logs,
-                                legend=serie_label, line_width=2, color=COLORS[i])
-                fig.legend.location = "center_right"
-                fig.legend.background_fill_alpha = 0.5
-                fig.legend.padding = 5
-                fig.xaxis.ticker = [i for i in range(1, len(logs)+1)]
-                fig.grid.visible = False
+            # fig.grid.visible = False
+            self.figures.append(fig)
 
-        figures.append(fig)
+        self.grid = gridplot(self.figures, ncols=self.max_cols)
+        self.target = show(self.grid, notebook_handle=True)
 
-    grid = gridplot(figures, ncols=max_cols)
-    target = show(grid, notebook_handle=True)
+    def draw_plot(self,
+                  logs,
+                  metrics,
+                  figsize=None,
+                  max_epoch=None,
+                  max_cols=2,
+                  series_fmt={'training': '{}', 'validation': 'val_{}'},
+                  metric2title={},
+                  extra_plots=[],
+                  fig_path=None):
 
-    if fig_path:
-        save(grid, filename=fig_path)
+        for _, metric in enumerate(self.metrics):
+            for i, (serie_label, serie_fmt) in enumerate(self.series_fmt.items()):
+                if serie_fmt.format(metric) in logs[0]:
 
-    push_notebook(handle=target)
+                    serie_metric_name = serie_fmt.format(metric)
+                    serie_metric_logs = [log[serie_metric_name]
+                                         for log in logs]
+                    # REMEMBER you have to specify the fig among figures list.
+                    line = self.figures[_].line(range(1, len(logs) + 1), serie_metric_logs,
+                                                legend=serie_label, line_width=2, color=COLORS[i])
+            # self.figures[_].title.text = str(metric)
+
+            # self.figures[_].legend.location = "center_right"
+            # self.figures[_].legend.background_fill_alpha = 0.5
+            # self.figures[_].legend.padding = 5
+            # self.figures[_].xaxis.ticker = [
+            #     i for i in range(1, len(logs)+1)]
+            # self.figures[_].grid.visible = False
+
+        push_notebook(handle=self.target)
+
+        if self.fig_path:
+            save(self.grid, filename=fig_path)

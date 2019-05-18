@@ -2,7 +2,8 @@ from __future__ import division
 import math
 
 from .core import draw_plot, print_extrema, not_inline_warning, MATPLOTLIB_TARGET, NEPTUNE_TARGET
-from .core_bokeh import draw_plot_bokeh, BOKEH_TARGET
+from .core_bokeh import BokehPlot, BOKEH_TARGET
+
 
 from collections import OrderedDict
 
@@ -46,6 +47,7 @@ class PlotLosses():
         self._validate_target()
         if target == MATPLOTLIB_TARGET:
             not_inline_warning()
+
         self.fig_path = fig_path
 
         if tensorboard_dir:
@@ -83,6 +85,19 @@ class PlotLosses():
                 self.figsize = [400, 300]
 
         self.logs = []
+        if self.target == BOKEH_TARGET:
+
+            self.bokeh_drawer = BokehPlot(logs=self.logs,
+                                          metrics=self.base_metrics,
+                                          figsize=self.figsize,
+                                          max_epoch=self.max_epoch,
+                                          max_cols=self.max_cols,
+                                          series_fmt=self.series_fmt,
+                                          metric2title=self.metric2title,
+                                          extra_plots=self.extra_plots,
+                                          fig_path=self.fig_path)
+
+            self.bokeh_drawer.create_figures()
 
     def _update_extrema(self, log):
         for metric, value in log.items():
@@ -127,22 +142,9 @@ class PlotLosses():
                               self.metrics_extrema,
                               series_fmt=self.series_fmt,
                               metric2title=self.metric2title)
-        if self.target == BOKEH_TARGET:
-            draw_plot_bokeh(self.logs, self.base_metrics,
-                            figsize=self.figsize,
-                            max_epoch=self.max_epoch,
-                            max_cols=self.max_cols,
-                            series_fmt=self.series_fmt,
-                            metric2title=self.metric2title,
-                            extra_plots=self.extra_plots,
-                            fig_path=self.fig_path)
 
-            if self.metrics_extrema:
-                print_extrema(self.logs,
-                              self.base_metrics,
-                              self.metrics_extrema,
-                              series_fmt=self.series_fmt,
-                              metric2title=self.metric2title)
+        if self.target == BOKEH_TARGET:
+            self.bokeh_drawer.draw_plot(self.logs, self.base_metrics)
 
         if self.target == NEPTUNE_TARGET:
             from .neptune_integration import neptune_send_plot
@@ -152,8 +154,8 @@ class PlotLosses():
         self.tensorboard_logger.close()
 
     def _validate_target(self):
-        assert isinstance(self.target, str),\
-            'target must be str, got "{}" instead.'.format(type(self.target))
+        assert isinstance(self.target, str)
+        'target must be str, got "{}" instead.'.format(type(self.target))
         if self.target not in [BOKEH_TARGET, MATPLOTLIB_TARGET, NEPTUNE_TARGET]:
             raise ValueError('Target must be "{}", "{}", or "{}". "{}" was passed instead.'.format(
                 MATPLOTLIB_TARGET, NEPTUNE_TARGET, BOKEH_TARGET, self.target))
