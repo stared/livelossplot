@@ -67,15 +67,13 @@ class BokehPlot():
                          plot_width=self.figsize[0],
                          plot_height=self.figsize[1],
                          x_range=x_range)
-            # line = fig.line(1, 1,
-            #                 legend="aaa", line_width=2)
-            # fig.title.text = str(metric)
+            line = fig.line(x=1, y=1)
+            fig.title.text = str(metric)
 
-            # fig.legend.location = "center_right"
-            # fig.legend.background_fill_alpha = 0.5
-            # fig.legend.padding = 5
+            hover = HoverTool(tooltips=[("x", "@x"), ("y", "@y")])
+            fig.add_tools(hover)
 
-            # fig.grid.visible = False
+            fig.grid.visible = False
             self.figures.append(fig)
 
         self.grid = gridplot(self.figures, ncols=self.max_cols)
@@ -100,17 +98,24 @@ class BokehPlot():
                     serie_metric_logs = [log[serie_metric_name]
                                          for log in logs]
                     # REMEMBER you have to specify the fig among figures list.
-                    line = self.figures[_].line(range(1, len(logs) + 1), serie_metric_logs,
-                                                legend=serie_label, line_width=2, color=COLORS[i])
-            # self.figures[_].title.text = str(metric)
+                    # line = self.figures[_].line(range(1, len(logs) + 1), serie_metric_logs,
+                    #                             )
 
-            # self.figures[_].legend.location = "center_right"
-            # self.figures[_].legend.background_fill_alpha = 0.5
-            # self.figures[_].legend.padding = 5
-            # self.figures[_].xaxis.ticker = [
-            #     i for i in range(1, len(logs)+1)]
-            # self.figures[_].grid.visible = False
+                    self.figures[_].line(range(1, len(logs) + 1),
+                                         serie_metric_logs, legend=serie_label, line_width=2, color=COLORS[i])
+                    self.figures[_].title.text = str(metric)
 
+                    self.figures[_].legend.location = "center_right"
+                    self.figures[_].legend.background_fill_alpha = 0.5
+                    self.figures[_].legend.padding = 5
+                    self.figures[_].xaxis.ticker = [
+                        i for i in range(1, len(logs)+1)]
+
+                    self.figures[_].add_tools(HoverTool(tooltips=[
+                        ("Epoch", "@x"),
+                        ("Value", "@y"),
+                    ]
+                    ))
         push_notebook(handle=self.target)
 
         if self.fig_path:
