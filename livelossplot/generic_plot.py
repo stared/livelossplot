@@ -111,14 +111,10 @@ class PlotLosses():
     def update(self, log, step=1):
         self.global_step += step
         if self.logs is None:
-<<<<<<< HEAD
-            self.set_metrics(list(OrderedDict.fromkeys([metric.split('_')[-1] for metric in log.keys()])))
-
-        log["_i"] = self.global_step
-=======
             self.set_metrics(list(OrderedDict.fromkeys(
                 [metric.split('_')[-1] for metric in log.keys()])))
->>>>>>> first bokeh backend commit
+
+        log["_i"] = self.global_step
         self.logs.append(log)
         if self.tensorboard_logger:
             self.tensorboard_logger.log_logs(log, self.global_step)
