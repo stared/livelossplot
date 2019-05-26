@@ -47,6 +47,7 @@ Look at notebook files with full working [examples](https://github.com/stared/li
 * [keras.ipynb](https://github.com/stared/livelossplot/blob/master/examples/keras.ipynb) - a Keras callback
 * [minimal.ipynb](https://github.com/stared/livelossplot/blob/master/examples/minimal.ipynb) - a bare API, to use anywhere
 * [pytorch.ipynb](https://github.com/stared/livelossplot/blob/master/examples/pytorch.ipynb) - a bare API, as applied to PyTorch
+* [2d_prediction_maps.ipynb](https://github.com/stared/livelossplot/blob/master/examples/2d_prediction_maps.ipynb) - example of custom plots - 2d prediction maps (0.4.1+)
 * [pytoune.ipynb](https://github.com/stared/livelossplot/blob/master/examples/pytoune.ipynb) - a PyToune callback ([PyToune](https://pytoune.org/) is a Keras-like framework for PyTorch)
 * [torchbearer.ipynb](https://github.com/stared/livelossplot/blob/master/examples/torchbearer.ipynb) - an example using the built in functionality from torchbearer ([torchbearer](https://github.com/ecs-vlc/torchbearer) is a model fitting library for PyTorch)
 * [neptune-minimal-terminal.py](https://github.com/stared/livelossplot/blob/master/examples/neptune-minimal-terminal.py) - a [Neptune.ML](https://neptune.ml/) Python script (so far the only way to use livelossplot outside of Jupyter)
