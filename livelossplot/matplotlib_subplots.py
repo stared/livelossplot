@@ -69,7 +69,7 @@ class Plot1D(BaseSubplot):
         # e.g. model(torch.fromnumpy(X)).detach().numpy()
         return model.predict(X)
 
-    def draw(self):
+    def draw(self, *args, **kwargs):
         plt.plot(self.X, self.Y, 'r.', label="Ground truth")
         plt.plot(self.X, self.predict(self.model, self.X), '-', label="Model")
         plt.title("Prediction")
@@ -77,21 +77,25 @@ class Plot1D(BaseSubplot):
 
 
 class Plot2d(BaseSubplot):
-    def __init__(self, model, X, Y, h):
-        super().__init__(self)
+    def __init__(self, model, X, Y, valiation_data=(None, None), h=0.02, margin=0.25):
+        super().__init__()
+
         self.model = model
         self.X = X 
         self.Y = Y
+        self.X_test, self.Y_test = valiation_data
+
+        # add size assertions
 
         self.cm_bg = plt.cm.RdBu
         self.cm_points = ListedColormap(['#FF0000', '#0000FF'])
 
         h = .02  # step size in the mesh
-        x_min = X[:, 0].min() - .5
-        x_max = X[:, 0].max() + .5
+        x_min = X[:, 0].min() - margin
+        x_max = X[:, 0].max() + margin
 
-        y_min = X[:, 1].min() - .5
-        y_max = X[:, 1].min() - .5
+        y_min = X[:, 1].min() - margin
+        y_max = X[:, 1].max() + margin
 
         self.xx, self.yy = np.meshgrid(
             np.arange(x_min, x_max, h),
@@ -107,9 +111,10 @@ class Plot2d(BaseSubplot):
         # e.g. model(torch.fromnumpy(X)).detach().numpy()
         return model.predict(X)
 
-    def draw(self):
-        Z = self._predict_pytorch(model, np.c_[self.xx.ravel(), self.yy.ravel()])[:, 1]
+    def draw(self, *args, **kwargs):
+        Z = self._predict_pytorch(self.model, np.c_[self.xx.ravel(), self.yy.ravel()])[:, 1]
         Z = Z.reshape(self.xx.shape)
         plt.contourf(self.xx, self.yy, Z, cmap=self.cm_bg, alpha=.8)
         plt.scatter(self.X[:, 0], self.X[:, 1], c=self.Y, cmap=self.cm_points)
-        # plt.scatter(X_test[:, 0], X_test[:, 1], c=y_test, cmap=cm_bright, alpha=0.3)
+        if self.X_test is not None:
+            plt.scatter(self.X_test[:, 0], self.X_test[:, 1], c=self.Y_test, cmap=self.cm_points, alpha=0.3)
