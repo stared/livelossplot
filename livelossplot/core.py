@@ -67,7 +67,7 @@ def draw_plot(logs, metrics, figsize=None, max_epoch=None,
 
     plt.tight_layout()
     if fig_path is not None:
-        plt.savefig(fig_path)
+        plt.savefig(fig_path.format(i=len(logs)))
     plt.show()
 
 def print_extrema(logs,
