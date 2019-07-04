@@ -79,7 +79,7 @@ class PlotLosses():
 
     def _update_extrema(self, log):
         for metric, value in log.items():
-            if metric != "_i":
+            if metric != "_i" and metric != "lr": #<- don't update 'lr' cause it results to Keyerror: 'lr' (see https://github.com/stared/livelossplot/issues/56)
                 extrema = self.metrics_extrema[metric]
                 if _is_unset(extrema['min']) or value < extrema['min']:
                     extrema['min'] = float(value)
