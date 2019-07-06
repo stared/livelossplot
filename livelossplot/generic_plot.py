@@ -80,7 +80,15 @@ class PlotLosses():
     def _update_extrema(self, log):
         for metric, value in log.items():
             if metric != "_i":
-                extrema = self.metrics_extrema[metric]
+                try:
+                    extrema = self.metrics_extrema[metric]
+                except KeyError:
+                    self.metrics_extrema[metric] = {
+                        'min': float('inf'),
+                        'max': -float('inf'),
+                    }
+                    extrema = self.metrics_extrema[metric]
+                
                 if _is_unset(extrema['min']) or value < extrema['min']:
                     extrema['min'] = float(value)
                 if _is_unset(extrema['max']) or value > extrema['max']:
