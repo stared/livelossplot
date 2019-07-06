@@ -65,6 +65,12 @@ But what if you just want to train a small model in Jupyter Notebook? Here is a 
 
 It started as [this gist](https://gist.github.com/stared/dfb4dfaf6d9a8501cd1cc8b8cb806d2e). Since it went popular, I decided to rewrite it as a package.
 
+Oh, an I am in general interested in data vis, see [Simple diagrams of convoluted neural networks](https://medium.com/inbrowserai/simple-diagrams-of-convoluted-neural-networks-39c097d2925b) (and overview of deep learning architecture diagrams):
+
+> A good diagram is worth a thousand equations — let’s create more of these!
+
+...or [my other data vis projects](https://p.migdal.pl/projects/).
+
 ## To do
 
 If you want more functionality - open an [Issue](https://github.com/stared/livelossplot/issues) or even better - prepare a [Pull Request](https://github.com/stared/livelossplot/pulls).
