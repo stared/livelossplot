@@ -3,7 +3,7 @@ from .core import draw_plot
 from .generic_plot import PlotLosses
 from .version import __version__
 
-# keras.PlotLossesCallback and pytoune.PlotLossesCallback
+# keras.PlotLossesCallback and poutyne.PlotLossesCallback
 # NOT loaded, as they depend on other libraries
 
 # open question: keep it as deprecated,
@@ -19,7 +19,7 @@ def PlotLossesTensorFlowKeras(*args, **kwargs):
     from .tf_keras import PlotLossesCallback
     return PlotLossesCallback(*args, **kwargs)
 
-def PlotLossesPytoune(*args, **kwargs):
-    warnings.warn("From v0.3 onwards, use:\nfrom livelossplot.pytoune import PlotLossesCallback", DeprecationWarning)
-    from .pytoune import PlotLossesCallback
+def PlotLossesPoutyne(*args, **kwargs):
+    warnings.warn("From v0.3 onwards, use:\nfrom livelossplot.poutyne import PlotLossesCallback", DeprecationWarning)
+    from .poutyne import PlotLossesCallback
     return PlotLossesCallback(*args, **kwargs)
