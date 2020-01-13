@@ -4,7 +4,7 @@ from os import path
 
 class TensorboardLogger:
     def __init__(self, logdir="./tensorboard_logs/"):
-        time_str = datetime.now().isoformat()[:-7].replace("T", " ")
+        time_str = datetime.now().isoformat()[:-7].replace("T", " ").replace(":", "_")
         self._path = path.join(logdir, time_str)
         self.writer = tf.summary.FileWriter(self._path)
 
@@ -20,4 +20,3 @@ class TensorboardLogger:
     def log_logs(self, logs, global_step):
         for k, v in logs.items():
             self.log_scalar(k, v, global_step)
-
