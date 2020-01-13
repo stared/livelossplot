@@ -1,13 +1,10 @@
-import sys
 import tensorflow as tf
 from datetime import datetime
 from os import path
 
 class TensorboardLogger:
     def __init__(self, logdir="./tensorboard_logs/"):
-        time_str = datetime.now().isoformat()[:-7].replace("T", " ")
-        if sys.platform == "win32":
-            time_str = time_str.replace(":", "_")
+        time_str = datetime.now().isoformat()[:-7].replace("T", " ").replace(":", "_")
         self._path = path.join(logdir, time_str)
         self.writer = tf.summary.FileWriter(self._path)
 
