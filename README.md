@@ -9,6 +9,9 @@ Don't train deep learning models blindfolded! Be impatient and look at each epoc
 
 A live training loss plot in [Jupyter Notebook](http://jupyter.org/) for [Keras](https://keras.io/), [PyTorch](http://pytorch.org/) and other frameworks. An open source Python package by [Piotr Migdał](https://p.migdal.pl/), and [others](https://github.com/stared/livelossplot/graphs/contributors). **Open for collaboration!** (Some tasks are as simple as writing code docstrings, so - no excuses! :))
 
+This project supported by: [Jacek Migdał](http://jacek.migdal.pl/), [Marek Cichy](https://medium.com/@marekkcichy/). [Join the sponsors - show your ❤️ and support, and appear on the list](https://github.com/sponsors/stared)! It will give me time and energy to work on this project.
+
+
 ```
 from livelossplot.keras import PlotLossesCallback
 
