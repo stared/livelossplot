@@ -13,7 +13,7 @@ class PlotLossesCallback:
     def on_epoch_end(self, engine):
         metrics = {}
         for key, val in engine.state.metrics.items():
-            metric_name = f'{self.metrics_prefix}{key}'
+            metric_name = '{}{}'.format(self.metrics_prefix, key)
             metrics[metric_name] = val
         self.liveplot.update(metrics)
         self.liveplot.draw()
