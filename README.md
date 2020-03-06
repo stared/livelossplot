@@ -7,7 +7,7 @@
 
 Don't train deep learning models blindfolded! Be impatient and look at each epoch of your training!
 
-A live training loss plot in [Jupyter Notebook](http://jupyter.org/) for [Keras](https://keras.io/), [PyTorch](http://pytorch.org/) and other frameworks. An open source Python package by [Piotr Migdał](https://p.migdal.pl/), and [others](https://github.com/stared/livelossplot/graphs/contributors). **Open for collaboration!** (Some tasks are as simple as writing code docstrings, so - no excuses! :))
+A live training loss plot in [Jupyter Notebook](http://jupyter.org/) for [Keras](https://keras.io/), [PyTorch](http://pytorch.org/) and other frameworks. An open-source Python package by [Piotr Migdał](https://p.migdal.pl/), and [others](https://github.com/stared/livelossplot/graphs/contributors). **Open for collaboration!** (Some tasks are as simple as writing code docstrings, so - no excuses! :))
 
 This project supported by: [Jacek Migdał](http://jacek.migdal.pl/), [Marek Cichy](https://medium.com/@marekkcichy/). [Join the sponsors - show your ❤️ and support, and appear on the list](https://github.com/sponsors/stared)! It will give me time and energy to work on this project.
 
@@ -31,7 +31,7 @@ So remember, [log your loss](https://twitter.com/pmigdal/status/9437649249830174
 
 ## Installation
 
-To install [this verson from PyPI](https://pypi.org/project/livelossplot/), type:
+To install [this version from PyPI](https://pypi.org/project/livelossplot/), type:
 
 ```
 pip install livelossplot
@@ -68,12 +68,12 @@ But what if you just want to train a small model in Jupyter Notebook? Here is a 
 
 It started as [this gist](https://gist.github.com/stared/dfb4dfaf6d9a8501cd1cc8b8cb806d2e). Since it went popular, I decided to rewrite it as a package.
 
-Oh, an I am in general interested in data vis, see [Simple diagrams of convoluted neural networks](https://medium.com/inbrowserai/simple-diagrams-of-convoluted-neural-networks-39c097d2925b) (and overview of deep learning architecture diagrams):
+Oh, and I am in general interested in data vis, see [Simple diagrams of convoluted neural networks](https://medium.com/inbrowserai/simple-diagrams-of-convoluted-neural-networks-39c097d2925b) (and overview of deep learning architecture diagrams):
 
 > A good diagram is worth a thousand equations — let’s create more of these!
 
 ...or [my other data vis projects](https://p.migdal.pl/projects/).
 
-## To do
+## Todo
 
 If you want more functionality - open an [Issue](https://github.com/stared/livelossplot/issues) or even better - prepare a [Pull Request](https://github.com/stared/livelossplot/pulls).

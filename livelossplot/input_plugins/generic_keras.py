@@ -1,5 +1,5 @@
 from __future__ import division
-from .generic_plot import PlotLosses
+from livelossplot.plot_losses import PlotLosses
 
 metric2printable = {
     "acc": "Accuracy",
