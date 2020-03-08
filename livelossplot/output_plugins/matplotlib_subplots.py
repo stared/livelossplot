@@ -15,6 +15,7 @@ class BaseSubplot:
 
 
 class LossSubplot(BaseSubplot):
+    """To rewrire, this one now won't work"""
     def __init__(self,
                  metric,
                  title="",
@@ -27,6 +28,7 @@ class LossSubplot(BaseSubplot):
         self.series_fmt = series_fmt
         self.skip_first = skip_first
         self.max_epoch = max_epoch
+        raise NotImplementedError()
     
     def _how_many_to_skip(self, log_length, skip_first):
         if log_length < skip_first:

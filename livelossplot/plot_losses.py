@@ -1,10 +1,12 @@
-from typing import List
-from main_logger import MainLogger
+from typing import Type, List
+from livelossplot.main_logger import MainLogger
+from livelossplot.output_plugins.base_output import BaseOutput
+from livelossplot.output_plugins.matplotlib import Matplotlib
 
 class PlotLosses:
-    def __init__(self, outputs=['tensorboard', 'extrema']):
+    def __init__(self, outputs=[Matplotlib()]):
         self.logger = MainLogger()
-        self.outputs = []
+        self.outputs: List[Type[BaseOutput]] = outputs
 
     def update(self, *args, **kwargs):
         self.logger.update(*args, **kwargs)

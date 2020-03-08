@@ -7,7 +7,6 @@ class LogItem(NamedTuple):
     step: int
     value: float  # later, we want to support numpy arrays etc
 
-
 class MainLogger:
     """Main logger"""
     def __init__(self):
@@ -15,7 +14,7 @@ class MainLogger:
         self.groups: Dict[str, List[str]] = {}
         self.current_step: int = -1
 
-    def update(self, logs: dict, i: int or None = None):
+    def update(self, logs: dict, i: int or None = None) -> None:
         """Update logs"""
         if i == None:
             self.current_step += 1
@@ -28,10 +27,11 @@ class MainLogger:
                 self.log_history[k] = []
             self.log_history[k].append(LogItem(step=i, value=v))
 
-    def get_grouped(self):
-        raise NotImplementedError()
+    def grouped_log_history(self) -> Dict[str, Dict[str, List[LogItem]]]:
+        return {group_name: {name: self.log_history[name] for name in names}
+                for group_name, names in self.groups.items()}
 
-    def reset(self):
+    def reset(self) -> None:
         self.log_history = {}
         self.groups = {}
         self.current_step = -1
