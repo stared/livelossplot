@@ -8,6 +8,7 @@ def test_main_logger_one():
     assert 'loss' in logger.log_history.keys()
     assert len(logger.log_history['loss']) == 1
 
+
 def test_main_logger_more():
     logger = MainLogger()
     logger.groups = {'acccuracy': ['acc', 'val_acc'], 'log-loss': ['loss', 'val_loss']}

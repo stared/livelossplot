@@ -1,18 +1,16 @@
 from typing import NamedTuple, Dict, List
-from collections import namedtuple
 
+# Value of metrics - for value later, we want to support numpy arrays etc
+LogItem = NamedTuple('Employee', [('step', int), ('value', float)])
 
-class LogItem(NamedTuple):
-    """Value of metrics"""
-    step: int
-    value: float  # later, we want to support numpy arrays etc
 
 class MainLogger:
     """Main logger"""
+
     def __init__(self):
-        self.log_history: Dict[str, List[LogItem]] = {}
-        self.groups: Dict[str, List[str]] = {}
-        self.current_step: int = -1
+        self.log_history = {}
+        self.groups = {}
+        self.current_step = -1
 
     def update(self, logs: dict, i: int or None = None) -> None:
         """Update logs"""

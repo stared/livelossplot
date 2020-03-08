@@ -7,17 +7,19 @@ import matplotlib.pyplot as plt
 from IPython.display import clear_output
 from livelossplot.main_logger import MainLogger, LogItem
 from livelossplot.output_plugins.base_output import BaseOutput
-# from livelossplot.output_plugins.matplotlib_subplots import 
+# from livelossplot.output_plugins.matplotlib_subplots import
+
 
 class Matplotlib(BaseOutput):
     """NOTE: Removed figsize and dynamix_x_axis."""
+
     def __init__(self,
-                 cell_size: (int, int)=(6, 4),
-                 max_cols: int=2,
-                 max_epoch: int=None,
-                 skip_first: int=2,
+                 cell_size: (int, int) = (6, 4),
+                 max_cols: int = 2,
+                 max_epoch: int = None,
+                 skip_first: int = 2,
                  extra_plots=[],
-                 figpath: str or None=None):
+                 figpath: str or None = None):
 
         self.cell_size = cell_size
         self.max_cols = max_cols
@@ -26,18 +28,19 @@ class Matplotlib(BaseOutput):
         self.extra_plots = extra_plots
         self.max_epoch = max_epoch
         self.figpath = figpath
-        self.i: int = 0  # now only for saving files
+        self.file_idx = 0  # now only for saving files
 
     def close(self):
         pass
 
-
     def send(self, logger: MainLogger):
-        log_groups = logger.grouped_log_history() 
+        log_groups = logger.grouped_log_history()
         figsize_x = self.max_cols * self.cell_size[0]
-        figsize_y = ((len(log_groups) + 1) // self.max_cols + 1) * self.cell_size[1]
+        figsize_y = ((len(log_groups) + 1) //
+                     self.max_cols + 1) * self.cell_size[1]
 
-        max_rows = (len(log_groups) + len(self.extra_plots) + 1) // self.max_cols + 1
+        max_rows = (len(log_groups) + len(self.extra_plots) +
+                    1) // self.max_cols + 1
 
         clear_output(wait=True)
         plt.figure(figsize=(figsize_x, figsize_y))
@@ -52,10 +55,9 @@ class Matplotlib(BaseOutput):
 
         plt.tight_layout()
         if self.figpath is not None:
-            plt.savefig(self.figpath.format(i=self.i))
-            self.i += 1
+            plt.savefig(self.figpath.format(i=self.file_idx))
+            self.file_idx += 1
         plt.show()
-
 
     def _draw_metric_subplot(self, group_logs: List[LogItem], group_name: str = ''):
         # there used to be skip first part, but I skip it first
@@ -75,4 +77,5 @@ class Matplotlib(BaseOutput):
     def _not_inline_warning(self):
         backend = matplotlib.get_backend()
         if "backend_inline" not in backend:
-            warnings.warn("livelossplot requires inline plots.\nYour current backend is: {}\nRun in a Jupyter environment and execute '%matplotlib inline'.".format(backend))
+            warnings.warn(
+                "livelossplot requires inline plots.\nYour current backend is: {}\nRun in a Jupyter environment and execute '%matplotlib inline'.".format(backend))

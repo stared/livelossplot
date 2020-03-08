@@ -1,11 +1,15 @@
-import tensorflow as tf
 from datetime import datetime
 from os import path
+
+import tensorflow as tf
+
 from livelossplot.main_logger import MainLogger
 from livelossplot.output_plugins.base_output import BaseOutput
 
+
 class TensorboardLogger(BaseOutput):
     """TODO: Make a class also for TensorboardX."""
+
     def __init__(self, logdir="./tensorboard_logs/"):
         time_str = datetime.now().isoformat()[:-7].replace("T", " ").replace(":", "_")
         self._path = path.join(logdir, time_str)
