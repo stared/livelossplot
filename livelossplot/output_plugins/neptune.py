@@ -1,11 +1,14 @@
 import neptune
+
 from livelossplot.main_logger import MainLogger
 from livelossplot.output_plugins.base_output import BaseOutput
+
 
 class NeptuneLogger(BaseOutput):
     """See: https://github.com/neptune-ai/neptune-client
     YOUR_API_TOKEN and USERNAME/PROJECT_NAME
     """
+
     def __init__(self, api_token: str, project_qualified_name: str):
         self.neptune = neptune
         self.neptune.init(api_token=api_token, project_qualified_name=project_qualified_name)

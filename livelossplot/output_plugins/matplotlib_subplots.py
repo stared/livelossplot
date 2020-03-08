@@ -1,13 +1,13 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.colors import ListedColormap
 
 
 class BaseSubplot:
     def __init__(self):
         pass
-    
-    def draw(self):
+
+    def draw(self, *args, **kwargs):
         raise Exception("Not implemented")
 
     def __call__(self, *args, **kwargs):
@@ -16,10 +16,11 @@ class BaseSubplot:
 
 class LossSubplot(BaseSubplot):
     """To rewrire, this one now won't work"""
+
     def __init__(self,
                  metric,
                  title="",
-                 series_fmt={'training': '{}', 'validation':'val_{}'},
+                 series_fmt={'training': '{}', 'validation': 'val_{}'},
                  skip_first=2,
                  max_epoch=None):
         super().__init__(self)
@@ -29,7 +30,7 @@ class LossSubplot(BaseSubplot):
         self.skip_first = skip_first
         self.max_epoch = max_epoch
         raise NotImplementedError()
-    
+
     def _how_many_to_skip(self, log_length, skip_first):
         if log_length < skip_first:
             return 0
@@ -48,8 +49,8 @@ class LossSubplot(BaseSubplot):
 
             serie_metric_name = serie_fmt.format(self.metric)
             serie_metric_logs = [(log.get('_i', i + 1), log[serie_metric_name])
-                                for i, log in enumerate(logs[skip:])
-                                if serie_metric_name in log]
+                                 for i, log in enumerate(logs[skip:])
+                                 if serie_metric_name in log]
 
             if len(serie_metric_logs) > 0:
                 xs, ys = zip(*serie_metric_logs)
@@ -64,7 +65,7 @@ class Plot1D(BaseSubplot):
     def __init__(self, model, X, Y):
         super().__init__(self)
         self.model = model
-        self.X = X 
+        self.X = X
         self.Y = Y
 
     def predict(self, model, X):
@@ -83,7 +84,7 @@ class Plot2d(BaseSubplot):
         super().__init__()
 
         self.model = model
-        self.X = X 
+        self.X = X
         self.Y = Y
         self.X_test, self.Y_test = valiation_data
 
@@ -102,7 +103,6 @@ class Plot2d(BaseSubplot):
         self.xx, self.yy = np.meshgrid(
             np.arange(x_min, x_max, h),
             np.arange(y_min, y_max, h))
-        
 
     def _predict_pytorch(self, model, x_numpy):
         import torch
