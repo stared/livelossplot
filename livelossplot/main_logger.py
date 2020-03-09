@@ -9,12 +9,11 @@ class MainLogger:
     """Main logger"""
 
     def __init__(self, groups: Dict[str, List[str]] or None = None,
-                 log_history: Dict[str, List[LogItem]] or None = None,
                  group_patterns: Dict[str, Pattern] or None = None,
                  current_step: int = -1):
-        self.log_history = {} if log_history is None else log_history
-        self.groups = {} if groups is None else groups
-        self.group_patterns = {} if group_patterns is None else group_patterns
+        self.log_history = {}
+        self.groups = groups
+        self.group_patterns = group_patterns
         self.current_step = current_step
 
     def update(self, logs: dict, i: int or None = None) -> None:
@@ -31,8 +30,8 @@ class MainLogger:
             self.log_history[k].append(LogItem(step=i, value=v))
 
     def _generate_groups_with_patterns(self) -> Dict[str, List[str]]:
-        groups = {pattern: [] for pattern in self.group_patterns}
-        for name, pattern in self.group_patterns.items():
+        groups = {pattern: [] for pattern in self._group_patterns}
+        for name, pattern in self._group_patterns.items():
             for key in self.log_history.keys():
                 if re.match(pattern, key):
                     groups[name].append(key)
@@ -48,3 +47,33 @@ class MainLogger:
         self.log_history = {}
         self.groups = {}
         self.current_step = -1
+
+    @property
+    def groups(self) -> Dict[str, List[str]]:
+        return self._groups
+
+    @groups.setter
+    def groups(self, value: Dict[str, List[str]]) -> None:
+        if value is None:
+            self._groups = {}
+        self._groups = value
+
+    @property
+    def log_history(self) -> Dict[str, List[LogItem]]:
+        return self._log_history
+
+    @log_history.setter
+    def log_history(self, value: Dict[str, List[LogItem]]) -> None:
+        if len(value) > 0:
+            raise RuntimeError('Cannot overwrite log history with non empty dictionary')
+        self._log_history = value
+
+    @property
+    def group_patterns(self) -> Dict[str, Pattern]:
+        return self._group_patterns
+
+    @group_patterns.setter
+    def group_patterns(self, value: Dict[str, Pattern]) -> None:
+        if value is None:
+            self._group_patterns = {}
+        self._group_patterns = value
