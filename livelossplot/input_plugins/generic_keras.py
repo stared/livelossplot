@@ -1,5 +1,7 @@
 from __future__ import division
 from livelossplot.plot_losses import PlotLosses
+from ..output_plugins import matplotlib
+
 
 metric2printable = {
     "acc": "Accuracy",
@@ -23,16 +25,12 @@ def loss2name(loss):
         return loss
 
 
-class _PlotLossesCallback():
-    def __init__(self, **kwargs):
+class _PlotLossesCallback:
+    def __init__(self, outputs=(matplotlib.Matplotlib,), **kwargs):
         self.liveplot = PlotLosses(**kwargs)
+        self.matplotlib_output = list(filter(lambda o: isinstance(o, matplotlib.Matplotlib), outputs))[0]
 
     def on_train_begin(self, logs={}):
-        self.liveplot.set_metrics([
-            metric for metric in self.params['metrics']
-            if not metric.startswith('val_')
-        ])
-
         # slightly convolved due to model.complie(loss=...) stuff
         # vide https://github.com/keras-team/keras/blob/master/keras/engine/training.py
         if isinstance(self.model.loss, list):
@@ -58,9 +56,9 @@ class _PlotLossesCallback():
                 metric2printable_updated['{}_loss'.format(output_name)] =\
                     "{} ({})".format(metric2printable_updated.get(loss_name, loss_name), output_name)
 
-        self.liveplot.metric2title = metric2printable_updated
-        self.liveplot.set_max_epoch(self.params['epochs'])
+        self.matplotlib_output.metric2title = metric2printable_updated
+        self.matplotlib_output.max_epoch = self.params['epochs']
 
-    def on_epoch_end(self, epoch, logs={}):
+    def on_epoch_end(self, epoch, logs):
         self.liveplot.update(logs.copy())
-        self.liveplot.draw()
+        self.liveplot.send()
