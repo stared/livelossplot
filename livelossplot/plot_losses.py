@@ -6,8 +6,8 @@ from livelossplot.output_plugins.matplotlib import Matplotlib
 
 
 class PlotLosses:
-    def __init__(self, outputs: List[Type[BaseOutput]] = [Matplotlib()]):
-        self.logger = MainLogger()
+    def __init__(self, outputs: List[Type[BaseOutput]] = (Matplotlib(),), **kwargs):
+        self.logger = MainLogger(**kwargs)
         self.outputs = outputs
 
     def update(self, *args, **kwargs):
