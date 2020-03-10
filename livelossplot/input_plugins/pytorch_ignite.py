@@ -1,5 +1,5 @@
 import ignite.engine
-from livelossplot.generic_plot import PlotLosses
+from livelossplot.plot_losses import PlotLosses
 
 
 class PlotLossesCallback:
@@ -16,3 +16,4 @@ class PlotLossesCallback:
             metric_name = '{}{}'.format(self.metrics_prefix, key)
             metrics[metric_name] = val
         self.liveplot.update(metrics)
+        self.liveplot.send()
