@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 
 from poutyne.framework import Callback
-from .generic_plot import PlotLosses
+from ..plot_losses import PlotLosses
 
 
 class PlotLossesCallback(Callback):
@@ -20,5 +20,5 @@ class PlotLossesCallback(Callback):
             metric: logs[metric] for metric in self.metrics
             if metric in logs
         }
-        self.liveplot.update(metric_logs)
-        self.liveplot.draw()
+        self.liveplot.update(metric_logs, epoch)
+        self.liveplot.send()
