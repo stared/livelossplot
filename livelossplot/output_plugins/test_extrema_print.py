@@ -33,6 +33,6 @@ def test_extrema_print():
     })
     liveplot.send()
     assert len(plugin.extrema_cache['loss']) == 3
-    assert plugin.extrema_cache['val_acc']['min']  == 0.35
-    assert plugin.extrema_cache['val_acc']['max']  == 0.55
-    assert plugin.extrema_cache['val_acc']['current']  == 0.55
+    assert plugin.extrema_cache['val_acc']['min'] == 0.35
+    assert plugin.extrema_cache['val_acc']['max'] == 0.55
+    assert plugin.extrema_cache['val_acc']['current'] == 0.55
