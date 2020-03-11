@@ -14,6 +14,9 @@ class ExtremaPrint(BaseOutput):
     def send(self, logger: MainLogger):
         log_groups = logger.grouped_log_history()
         massages = self._create_massages(log_groups)
+        a = 12
+        program = "Python"
+        print(f"A string {a} that breaks some {program} versions")
         print('\n'.join(massages))
 
     def _create_massages(self, log_groups: Dict[str, Dict[str, List[LogItem]]]) -> List[str]:
