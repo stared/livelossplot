@@ -6,7 +6,8 @@ from .base_output import BaseOutput
 
 
 class ExtremaPrint(BaseOutput):
-    def __init__(self, massage_template: str = '\t{:16} \t (min: {min:8.3f}, max: {max:8.3f}, cur: {current:8.3f})'):
+    def __init__(self, massage_template: str = '\t{metric_name:16} \t (min: {min:8.3f},'
+                                               ' max: {max:8.3f}, cur: {current:8.3f})'):
         self.massage_template = massage_template
         self.extrema_cache = {}
 
@@ -22,7 +23,7 @@ class ExtremaPrint(BaseOutput):
             for metric_name, metric_values in group_logs.items():
                 current_values = self.get_extrema(metric_name, metric_values)
                 msg = self.massage_template.format(
-                    metric_name,
+                    metric_name=metric_name,
                     **current_values)
                 massages.append(msg)
         return massages
