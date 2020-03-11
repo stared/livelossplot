@@ -21,17 +21,17 @@ class ExtremaPrint(BaseOutput):
         for group_name, group_logs in log_groups.items():
             massages.append(group_name)
             for metric_name, metric_values in group_logs.items():
-                current_values = self.get_extrema(metric_name, metric_values)
+                self.update_extrema(metric_name, metric_values)
                 msg = self.massage_template.format(
                     metric_name=metric_name,
-                    **current_values)
+                    **self.extrema_cache[metric_name])
                 massages.append(msg)
         return massages
 
-    def get_extrema(self, metric_name: str, metric_values: List[LogItem], skip_cache: bool = False):
+    def update_extrema(self, metric_name: str, metric_values: List[LogItem]) -> None:
         current_val = metric_values[-1].value
         cache = self.extrema_cache.get(metric_name)
-        if not cache or skip_cache:
+        if not cache:
             min_val = min(metric_values, key=lambda i: i.value).value
             max_val = max(metric_values, key=lambda i: i.value).value
             current_val = metric_values[-1].value
@@ -46,7 +46,6 @@ class ExtremaPrint(BaseOutput):
             cache['min'] = min_val
             cache['max'] = max_val
             cache['current'] = current_val
-        return self.extrema_cache[metric_name]
 
     @property
     def extrema_cache(self) -> Dict[str, Dict[str, float]]:
