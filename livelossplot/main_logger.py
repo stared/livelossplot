@@ -92,5 +92,5 @@ class MainLogger:
     def group_patterns(self, value: Dict[str, Pattern]) -> None:
         """group patterns setter - patterns should be dictionary"""
         if value is None:
-            self._group_patterns = {},
+            self._group_patterns = {}
         self._group_patterns = value
