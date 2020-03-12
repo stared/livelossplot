@@ -3,7 +3,8 @@ import re
 from livelossplot.main_logger import MainLogger
 
 
-def test_main_logger_one():
+def test_main_logger():
+    """Test basic usage"""
     logger = MainLogger()
     logs = {'loss': 0.6}
     logger.update(logs)
@@ -11,7 +12,8 @@ def test_main_logger_one():
     assert len(logger.log_history['loss']) == 1
 
 
-def test_main_logger_more():
+def test_main_logger_with_groups():
+    """Test groups"""
     groups = {'acccuracy': ['acc', 'val_acc'], 'log-loss': ['loss', 'val_loss']}
     logger = MainLogger(groups=groups)
     logger.update({
@@ -39,7 +41,8 @@ def test_main_logger_more():
     assert len(grouped_log_history['log-loss']['loss']) == 3
 
 
-def test_main_logger_three():
+def test_main_logger_with_group_patterns():
+    """Test group patterns"""
     group_patterns = {'acccuracy': re.compile(r'.*acc$'), 'log-loss': re.compile(r'.*loss$')}
     logger = MainLogger(group_patterns=group_patterns)
     logger.update({
