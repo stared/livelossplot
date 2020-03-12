@@ -8,15 +8,20 @@ from .base_output import BaseOutput
 class ExtremaPrint(BaseOutput):
     def __init__(self, massage_template: str = '\t{metric_name:16} \t (min: {min:8.3f},'
                                                ' max: {max:8.3f}, cur: {current:8.3f})'):
+        """
+        :param massage_template: you can specify massage which use all or a few values (min, max, current)
+        """
         self.massage_template = massage_template
         self.extrema_cache = {}
 
     def send(self, logger: MainLogger):
+        """Create massages with log_history and massage template"""
         log_groups = logger.grouped_log_history()
         massages = self._create_massages(log_groups)
         print('\n'.join(massages))
 
     def _create_massages(self, log_groups: Dict[str, Dict[str, List[LogItem]]]) -> List[str]:
+        """Update cache and create massages"""
         massages = []
         for group_name, group_logs in log_groups.items():
             massages.append(group_name)
@@ -29,6 +34,7 @@ class ExtremaPrint(BaseOutput):
         return massages
 
     def update_extrema(self, metric_name: str, metric_values: List[LogItem]) -> None:
+        """Write highest, lower and current value to cache (or initialize if no exist)"""
         current_val = metric_values[-1].value
         cache = self.extrema_cache.get(metric_name)
         if not cache:
@@ -49,13 +55,16 @@ class ExtremaPrint(BaseOutput):
 
     @property
     def extrema_cache(self) -> Dict[str, Dict[str, float]]:
+        """Cache getter"""
         return self._extrema_cache
 
     @extrema_cache.setter
     def extrema_cache(self, value: Dict[str, Dict[str, float]]) -> None:
+        """Cache setter - can initialize cache only with empty dictionary"""
         if len(value) > 0:
             raise RuntimeError('Cannot overwrite cache with non empty dictionary')
         self._extrema_cache = value
 
     def close(self):
+        """Clear cache"""
         self.extrema_cache = {}

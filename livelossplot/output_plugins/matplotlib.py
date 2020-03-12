@@ -7,12 +7,10 @@ import matplotlib.pyplot as plt
 from IPython.display import clear_output
 from livelossplot.main_logger import MainLogger, LogItem
 from livelossplot.output_plugins.base_output import BaseOutput
-# from livelossplot.output_plugins.matplotlib_subplots import
 
 
 class Matplotlib(BaseOutput):
     """NOTE: Removed figsize and dynamix_x_axis."""
-
     def __init__(self,
                  cell_size: (int, int) = (6, 4),
                  max_cols: int = 2,
@@ -20,7 +18,6 @@ class Matplotlib(BaseOutput):
                  skip_first: int = 2,
                  extra_plots=[],
                  figpath: str or None = None):
-
         self.cell_size = cell_size
         self.max_cols = max_cols
         self.max_epoch = max_epoch
@@ -30,10 +27,8 @@ class Matplotlib(BaseOutput):
         self.figpath = figpath
         self.file_idx = 0  # now only for saving files
 
-    def close(self):
-        pass
-
     def send(self, logger: MainLogger):
+        """Draw figures with metrics and show"""
         log_groups = logger.grouped_log_history()
         figsize_x = self.max_cols * self.cell_size[0]
         figsize_y = ((len(log_groups) + 1) //

@@ -80,7 +80,7 @@ class Plot1D(BaseSubplot):
 
 
 class Plot2d(BaseSubplot):
-    def __init__(self, model, X, Y, valiation_data=(None, None), h=0.02, margin=0.25):
+    def __init__(self, model, X, Y, valiation_data=(None, None), h=0.02, margin=0.25, device='cpu'):
         super().__init__()
 
         self.model = model
@@ -104,16 +104,18 @@ class Plot2d(BaseSubplot):
             np.arange(x_min, x_max, h),
             np.arange(y_min, y_max, h))
 
+        self.torch_device = device
+
     def _predict_pytorch(self, model, x_numpy):
         import torch
-        x = torch.from_numpy(x_numpy).float()
-        return model(x).softmax(dim=1).detach().numpy()
+        x = torch.from_numpy(x_numpy).to(self.torch_device).float()
+        return model(x).softmax(dim=1).detach().cpu().numpy()
 
     def predict(self, model, X):
         # e.g. model(torch.fromnumpy(X)).detach().numpy()
         return model.predict(X)
 
-    def draw(self, *args, **kwargs):
+    def send(self, logger):
         Z = self._predict_pytorch(self.model, np.c_[self.xx.ravel(), self.yy.ravel()])[:, 1]
         Z = Z.reshape(self.xx.shape)
         plt.contourf(self.xx, self.yy, Z, cmap=self.cm_bg, alpha=.8)

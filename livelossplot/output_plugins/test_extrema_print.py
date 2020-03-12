@@ -3,6 +3,7 @@ from . import extrema_print
 
 
 def test_extrema_print():
+    """Test if plugin object cache contains valid values"""
     groups = {'acccuracy': ['acc', 'val_acc'], 'log-loss': ['loss', 'val_loss']}
     plugin = extrema_print.ExtremaPrint()
     outputs = (plugin,)
