@@ -1,11 +1,10 @@
-from __future__ import absolute_import
-
 from poutyne.framework import Callback
 from ..plot_losses import PlotLosses
 
 
 class PlotLossesCallback(Callback):
     """Poutyne is a keras-like api framework for pytorch"""
+
     def __init__(self, **kwargs):
         """
         :param kwargs: key-word arguments of PlotLosses

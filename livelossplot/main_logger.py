@@ -19,18 +19,18 @@ class MainLogger:
         self.group_patterns = group_patterns
         self.current_step = current_step
 
-    def update(self, logs: dict, i: int or None = None) -> None:
+    def update(self, logs: dict, current_step: int or None = None) -> None:
         """Update logs - loop step can be controlled outside or inside main logger"""
-        if i == None:
+        if current_step is None:
             self.current_step += 1
-            i = self.current_step
+            current_step = self.current_step
         else:
-            self.current_step = i
+            self.current_step = current_step
 
         for k, v in logs.items():
             if k not in self.log_history:
                 self.log_history[k] = []
-            self.log_history[k].append(LogItem(step=i, value=v))
+            self.log_history[k].append(LogItem(step=current_step, value=v))
 
     def _generate_groups_with_patterns(self) -> Dict[str, List[str]]:
         """

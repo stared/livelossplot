@@ -11,6 +11,7 @@ class TensorboardLogger(BaseOutput):
     """
     Class is the same as tensorboard logger, but it use pure tensorboard instead of tensorflow submodule
     """
+
     def __init__(self, logdir="./tensorboard_logs/"):
         """
         :param logdir: dir where tensorboard events will be written

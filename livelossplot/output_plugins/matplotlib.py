@@ -11,6 +11,7 @@ from livelossplot.output_plugins.base_output import BaseOutput
 
 class Matplotlib(BaseOutput):
     """NOTE: Removed figsize and dynamix_x_axis."""
+
     def __init__(self,
                  cell_size: (int, int) = (6, 4),
                  max_cols: int = 2,
@@ -73,4 +74,5 @@ class Matplotlib(BaseOutput):
         backend = matplotlib.get_backend()
         if "backend_inline" not in backend:
             warnings.warn(
-                "livelossplot requires inline plots.\nYour current backend is: {}\nRun in a Jupyter environment and execute '%matplotlib inline'.".format(backend))
+                "livelossplot requires inline plots.\nYour current backend is: {}"
+                "\nRun in a Jupyter environment and execute '%matplotlib inline'.".format(backend))
