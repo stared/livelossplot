@@ -1,4 +1,4 @@
 -r requirements.txt
 pytest
-flak8
+flake8
 yapf
