@@ -41,6 +41,7 @@ jobs:
         pytest
     - name: yapf
       id: yapf
+      uses: diegovalenzuelaiturra/yapf-action@v0.0.1
       with:
         args: --recursive -i .
     - name: Fail if yapf made changes
