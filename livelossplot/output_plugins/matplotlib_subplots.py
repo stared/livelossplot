@@ -16,13 +16,12 @@ class BaseSubplot:
 
 class LossSubplot(BaseSubplot):
     """To rewrire, this one now won't work"""
-
-    def __init__(self,
-                 metric,
-                 title="",
-                 series_fmt={'training': '{}', 'validation': 'val_{}'},
-                 skip_first=2,
-                 max_epoch=None):
+    def __init__(
+        self, metric, title="", series_fmt={
+            'training': '{}',
+            'validation': 'val_{}'
+        }, skip_first=2, max_epoch=None
+    ):
         super().__init__(self)
         self.metric = metric
         self.title = title
@@ -48,9 +47,10 @@ class LossSubplot(BaseSubplot):
         for serie_label, serie_fmt in self.series_fmt.items():
 
             serie_metric_name = serie_fmt.format(self.metric)
-            serie_metric_logs = [(log.get('_i', i + 1), log[serie_metric_name])
-                                 for i, log in enumerate(logs[skip:])
-                                 if serie_metric_name in log]
+            serie_metric_logs = [
+                (log.get('_i', i + 1), log[serie_metric_name])
+                for i, log in enumerate(logs[skip:]) if serie_metric_name in log
+            ]
 
             if len(serie_metric_logs) > 0:
                 xs, ys = zip(*serie_metric_logs)
@@ -99,9 +99,7 @@ class Plot2d(BaseSubplot):
         y_min = X[:, 1].min() - margin
         y_max = X[:, 1].max() + margin
 
-        self.xx, self.yy = np.meshgrid(
-            np.arange(x_min, x_max, h),
-            np.arange(y_min, y_max, h))
+        self.xx, self.yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
 
         self.torch_device = device
 

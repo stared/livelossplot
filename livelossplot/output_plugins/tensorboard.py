@@ -11,7 +11,6 @@ class TensorboardLogger(BaseOutput):
     """
     Class write logs to tensorboard.
     """
-
     def __init__(self, logdir="./tensorboard_logs/"):
         """
         :param logdir: dir where tensorboard events will be written

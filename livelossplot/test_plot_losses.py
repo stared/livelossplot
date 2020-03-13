@@ -16,23 +16,13 @@ class CheckOutput:
 def test_plot_losses():
     """Test basic usage"""
     group_patterns = {'acccuracy': re.compile(r'.*acc$'), 'log-loss': re.compile(r'.*loss$')}
-    loss_plotter = PlotLosses(outputs=(CheckOutput(),), group_patterns=group_patterns)
-    loss_plotter.update({
-        'acc': 0.5,
-        'val_acc': 0.4,
-        'loss': 1.2,
-        'val_loss': 1.1
-    })
+    loss_plotter = PlotLosses(outputs=(CheckOutput(), ), group_patterns=group_patterns)
+    loss_plotter.update({'acc': 0.5, 'val_acc': 0.4, 'loss': 1.2, 'val_loss': 1.1})
     loss_plotter.update({
         'acc': 0.55,
         'loss': 1.1,
     })
-    loss_plotter.update({
-        'acc': 0.65,
-        'val_acc': 0.55,
-        'loss': 1.0,
-        'val_loss': 0.9
-    })
+    loss_plotter.update({'acc': 0.65, 'val_acc': 0.55, 'loss': 1.0, 'val_loss': 0.9})
     loss_plotter.update({
         'acc': 0.55,
         'loss': 1.1,

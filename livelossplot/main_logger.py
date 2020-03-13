@@ -10,10 +10,12 @@ class MainLogger:
     Main logger - the aim of this class is to store every log from training
     Log is a float value with corresponding training engine step
     """
-
-    def __init__(self, groups: Dict[str, List[str]] or None = None,
-                 group_patterns: Dict[str, Pattern] or None = None,
-                 current_step: int = -1):
+    def __init__(
+        self,
+        groups: Dict[str, List[str]] or None = None,
+        group_patterns: Dict[str, Pattern] or None = None,
+        current_step: int = -1
+    ):
         self.log_history = {}
         self.groups = groups
         self.group_patterns = group_patterns
@@ -50,8 +52,11 @@ class MainLogger:
         """
         if self.group_patterns:
             self.groups = self._generate_groups_with_patterns()
-        return {group_name: {name: self.log_history[name] for name in names}
-                for group_name, names in self.groups.items()}
+        return {
+            group_name: {name: self.log_history[name]
+                         for name in names}
+            for group_name, names in self.groups.items()
+        }
 
     def reset(self) -> None:
         """Method clears logs, groups and reset step counter"""

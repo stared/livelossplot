@@ -8,7 +8,6 @@ class NeptuneLogger(BaseOutput):
     """See: https://github.com/neptune-ai/neptune-client
     YOUR_API_TOKEN and USERNAME/PROJECT_NAME
     """
-
     def __init__(self, api_token: str, project_qualified_name: str):
         """Set secrets and create experiment"""
         self.neptune = neptune

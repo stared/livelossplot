@@ -16,24 +16,9 @@ def test_main_logger_with_groups():
     """Test groups"""
     groups = {'acccuracy': ['acc', 'val_acc'], 'log-loss': ['loss', 'val_loss']}
     logger = MainLogger(groups=groups)
-    logger.update({
-        'acc': 0.5,
-        'val_acc': 0.4,
-        'loss': 1.2,
-        'val_loss': 1.1
-    })
-    logger.update({
-        'acc': 0.55,
-        'val_acc': 0.45,
-        'loss': 1.1,
-        'val_loss': 1.0
-    })
-    logger.update({
-        'acc': 0.65,
-        'val_acc': 0.55,
-        'loss': 1.0,
-        'val_loss': 0.9
-    })
+    logger.update({'acc': 0.5, 'val_acc': 0.4, 'loss': 1.2, 'val_loss': 1.1})
+    logger.update({'acc': 0.55, 'val_acc': 0.45, 'loss': 1.1, 'val_loss': 1.0})
+    logger.update({'acc': 0.65, 'val_acc': 0.55, 'loss': 1.0, 'val_loss': 0.9})
     grouped_log_history = logger.grouped_log_history()
     assert len(grouped_log_history) == 2
     assert len(grouped_log_history['acccuracy']) == 2
@@ -45,24 +30,9 @@ def test_main_logger_with_group_patterns():
     """Test group patterns"""
     group_patterns = {'acccuracy': re.compile(r'.*acc$'), 'log-loss': re.compile(r'.*loss$')}
     logger = MainLogger(group_patterns=group_patterns)
-    logger.update({
-        'acc': 0.5,
-        'val_acc': 0.4,
-        'loss': 1.2,
-        'val_loss': 1.1
-    })
-    logger.update({
-        'acc': 0.55,
-        'val_acc': 0.45,
-        'loss': 1.1,
-        'val_loss': 1.0
-    })
-    logger.update({
-        'acc': 0.65,
-        'val_acc': 0.55,
-        'loss': 1.0,
-        'val_loss': 0.9
-    })
+    logger.update({'acc': 0.5, 'val_acc': 0.4, 'loss': 1.2, 'val_loss': 1.1})
+    logger.update({'acc': 0.55, 'val_acc': 0.45, 'loss': 1.1, 'val_loss': 1.0})
+    logger.update({'acc': 0.65, 'val_acc': 0.55, 'loss': 1.0, 'val_loss': 0.9})
     grouped_log_history = logger.grouped_log_history()
     assert len(grouped_log_history) == 2
     assert len(grouped_log_history['acccuracy']) == 2

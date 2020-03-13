@@ -19,12 +19,14 @@ def main():
     logger = NeptuneLogger(api_token=api_token, project_qualified_name=project_qualified_name)
     liveplot = PlotLosses(outputs=[logger])
     for i in range(20):
-        liveplot.update({
-            'accuracy': 1 - np.random.rand() / (i + 2.),
-            'val_accuracy': 1 - np.random.rand() / (i + 0.5),
-            'mse': 1. / (i + 2.),
-            'val_mse': 1. / (i + 0.5)
-        })
+        liveplot.update(
+            {
+                'accuracy': 1 - np.random.rand() / (i + 2.),
+                'val_accuracy': 1 - np.random.rand() / (i + 0.5),
+                'mse': 1. / (i + 2.),
+                'val_mse': 1. / (i + 0.5)
+            }
+        )
         liveplot.send()
         sleep(.5)
 
