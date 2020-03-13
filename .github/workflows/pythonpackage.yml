@@ -40,9 +40,9 @@ jobs:
       run: |
         pytest
     - name: yapf
-        id: yapf
-        with:
-          args: --recursive -i .
+      id: yapf
+      with:
+        args: --recursive -i .
     - name: Fail if yapf made changes
         if: steps.yapf.outputs.exit-code == 2
         run: exit 1
