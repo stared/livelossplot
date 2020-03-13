@@ -11,14 +11,15 @@ from livelossplot.output_plugins.base_output import BaseOutput
 
 class Matplotlib(BaseOutput):
     """NOTE: Removed figsize and dynamix_x_axis."""
-
-    def __init__(self,
-                 cell_size: (int, int) = (6, 4),
-                 max_cols: int = 2,
-                 max_epoch: int = None,
-                 skip_first: int = 2,
-                 extra_plots=[],
-                 figpath: str or None = None):
+    def __init__(
+        self,
+        cell_size: (int, int) = (6, 4),
+        max_cols: int = 2,
+        max_epoch: int = None,
+        skip_first: int = 2,
+        extra_plots=[],
+        figpath: str or None = None
+    ):
         self.cell_size = cell_size
         self.max_cols = max_cols
         self.max_epoch = max_epoch
@@ -32,11 +33,9 @@ class Matplotlib(BaseOutput):
         """Draw figures with metrics and show"""
         log_groups = logger.grouped_log_history()
         figsize_x = self.max_cols * self.cell_size[0]
-        figsize_y = ((len(log_groups) + 1) //
-                     self.max_cols + 1) * self.cell_size[1]
+        figsize_y = ((len(log_groups) + 1) // self.max_cols + 1) * self.cell_size[1]
 
-        max_rows = (len(log_groups) + len(self.extra_plots) +
-                    1) // self.max_cols + 1
+        max_rows = (len(log_groups) + len(self.extra_plots) + 1) // self.max_cols + 1
 
         clear_output(wait=True)
         plt.figure(figsize=(figsize_x, figsize_y))
@@ -75,4 +74,5 @@ class Matplotlib(BaseOutput):
         if "backend_inline" not in backend:
             warnings.warn(
                 "livelossplot requires inline plots.\nYour current backend is: {}"
-                "\nRun in a Jupyter environment and execute '%matplotlib inline'.".format(backend))
+                "\nRun in a Jupyter environment and execute '%matplotlib inline'.".format(backend)
+            )

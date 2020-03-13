@@ -4,7 +4,6 @@ from ..plot_losses import PlotLosses
 
 class PlotLossesCallback(Callback):
     """Poutyne is a keras-like api framework for pytorch"""
-
     def __init__(self, **kwargs):
         """
         :param kwargs: key-word arguments of PlotLosses
@@ -21,9 +20,6 @@ class PlotLossesCallback(Callback):
 
     def on_epoch_end(self, epoch, logs):
         """Send metrics to livelossplot"""
-        metric_logs = {
-            metric: logs[metric] for metric in self.metrics
-            if metric in logs
-        }
+        metric_logs = {metric: logs[metric] for metric in self.metrics if metric in logs}
         self.liveplot.update(metric_logs, epoch)
         self.liveplot.send()

@@ -6,8 +6,11 @@ from .base_output import BaseOutput
 
 
 class ExtremaPrint(BaseOutput):
-    def __init__(self, massage_template: str = '\t{metric_name:16} \t (min: {min:8.3f},'
-                                               ' max: {max:8.3f}, cur: {current:8.3f})'):
+    def __init__(
+        self,
+        massage_template: str = '\t{metric_name:16} \t (min: {min:8.3f},'
+        ' max: {max:8.3f}, cur: {current:8.3f})'
+    ):
         """
         :param massage_template: you can specify massage which use all or a few values (min, max, current)
         """
@@ -27,9 +30,7 @@ class ExtremaPrint(BaseOutput):
             massages.append(group_name)
             for metric_name, metric_values in group_logs.items():
                 self.update_extrema(metric_name, metric_values)
-                msg = self.massage_template.format(
-                    metric_name=metric_name,
-                    **self.extrema_cache[metric_name])
+                msg = self.massage_template.format(metric_name=metric_name, **self.extrema_cache[metric_name])
                 massages.append(msg)
         return massages
 
