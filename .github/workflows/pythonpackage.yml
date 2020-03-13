@@ -44,5 +44,5 @@ jobs:
       with:
         args: --recursive -i .
     - name: Fail if yapf made changes
-        if: steps.yapf.outputs.exit-code == 2
-        run: exit 1
+      if: steps.yapf.outputs.exit-code == 2
+      run: exit 1
