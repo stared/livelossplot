@@ -1,9 +1,9 @@
-from __future__ import division
 from livelossplot.plot_losses import PlotLosses
 
 
 class _PlotLossesCallback:
     """Base keras callback class for keras and tensorflow.keras"""
+
     def __init__(self, **kwargs):
         self.liveplot = PlotLosses(**kwargs)
 

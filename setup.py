@@ -3,9 +3,11 @@ from setuptools import setup, find_packages
 from os import path
 import re
 
+
 def readme():
     with open('README.md', encoding='utf-8') as f:
         return f.read()
+
 
 def version():
     this_directory = path.abspath(path.dirname(__file__))
@@ -15,6 +17,7 @@ def version():
         version = version_match.group(1)
 
     return version
+
 
 setup(name='livelossplot',
       version=version(),

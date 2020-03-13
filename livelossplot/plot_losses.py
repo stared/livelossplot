@@ -11,6 +11,7 @@ class PlotLosses:
     """
     Class collect metrics from the training engine and send it to plugins, when send is called
     """
+
     def __init__(self, outputs: Tuple[Type[BaseOutput]] = (Matplotlib(), ExtremaPrint()), **kwargs):
         """
         :param outputs: list of callbacks (outputs) which are called with send method

@@ -93,7 +93,6 @@ class Plot2d(BaseSubplot):
         self.cm_bg = plt.cm.RdBu
         self.cm_points = ListedColormap(['#FF0000', '#0000FF'])
 
-        h = .02  # step size in the mesh
         x_min = X[:, 0].min() - margin
         x_max = X[:, 0].max() + margin
 
