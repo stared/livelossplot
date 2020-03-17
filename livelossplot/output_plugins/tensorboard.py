@@ -11,12 +11,12 @@ class TensorboardLogger(BaseOutput):
     """
     Class write logs to tensorboard.
     """
-    def __init__(self, logdir="./tensorboard_logs/"):
+    def __init__(self, logdir="./tensorboard_logs/", run_id=None):
         """
         :param logdir: dir where tensorboard events will be written
         """
-        time_str = datetime.now().isoformat()[:-7].replace("T", " ").replace(":", "_")
-        self._path = path.join(logdir, time_str)
+        run_id = datetime.now().isoformat()[:-7].replace("T", " ").replace(":", "_") if run_id is None else run_id
+        self._path = path.join(logdir, run_id)
         self.writer = tf.summary.create_file_writer(self._path)
 
     def close(self):
