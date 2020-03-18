@@ -22,10 +22,10 @@ setup(name='livelossplot',
       version=version(),
       python_requires=">=3.5",
       install_requires=[
-          'numpy<1.18;python_version<"3.6"',
-          'matplotlib<3.1;python_version<"3.6"',
+          'ipython',
           'matplotlib;python_version>="3.6"',
-          'ipython'
+          'matplotlib<3.1;python_version<"3.6"',
+          'numpy<1.18;python_version<"3.6"'
       ],
       description='Live training loss plot in Jupyter Notebook for Keras, PyTorch and others.',
       long_description=readme(),
