@@ -22,7 +22,7 @@ setup(name='livelossplot',
       version=version(),
       python_requires=">=3.5",
       install_requires=[
-            'matplotlib<=3.1;python_version<"3.6"',
+            'matplotlib<=3.0;python_version<"3.6"',
             'matplotlib;python_version>="3.6"',
             'ipython'
       ],
