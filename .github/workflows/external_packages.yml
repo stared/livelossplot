@@ -33,16 +33,16 @@ jobs:
     - name: Test tensorboard
       run: |
         pip install tensorflow
-        pytest livelossplot/output_plugins/external_test_tensorboard.py
+        pytest tests/external_test_tensorboard.py
     - name: Test keras
       run: |
         pip install keras
-        pytest livelossplot/output_plugins/external_test_keras.py
+        pytest tests/external_test_keras.py
     - name: Test ignite
       run: |
         pip install pytorch-ignite
-        pytest livelossplot/output_plugins/external_test_pytorch_ignite.py
+        pytest tests/external_test_pytorch_ignite.py
     - name: Test notbook
       run: |
         python setup.py install
-        pytest examples/external_test_examples.py
+        pytest tests/external_test_examples.py
