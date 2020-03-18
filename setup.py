@@ -1,4 +1,3 @@
-from io import open
 from setuptools import setup, find_packages
 from os import path
 import re
@@ -40,8 +39,10 @@ setup(name='livelossplot',
           'Topic :: Scientific/Engineering :: Artificial Intelligence',
           'Topic :: Scientific/Engineering :: Visualization',
           'License :: OSI Approved :: MIT License',
-          'Programming Language :: Python :: 2',
           'Programming Language :: Python :: 3'
+          'Programming Language :: Python :: 3.6',
+          'Programming Language :: Python :: 3.7',
+          'Programming Language :: Python :: 3.8',
       ],
       packages=find_packages(),
       zip_safe=False)
