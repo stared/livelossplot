@@ -20,14 +20,19 @@ def version():
 
 setup(name='livelossplot',
       version=version(),
-      install_requires=['matplotlib', 'notebook'],
+      python_requires=">=3.5",
+      install_requires=[
+            'matplotlib<=3.1;python_version<"3.6"',
+            'matplotlib;python_version>="3.6"',
+            'ipython'
+      ],
       description='Live training loss plot in Jupyter Notebook for Keras, PyTorch and others.',
       long_description=readme(),
       long_description_content_type='text/markdown',
       url='https://github.com/stared/livelossplot',
       author='Piotr Migdał',
       author_email='pmigdal@gmail.com',
-      keywords=['keras', 'pytorch', 'plot', 'chart'],
+      keywords=['keras', 'pytorch', 'plot', 'chart', 'deep-learning'],
       license='MIT',
       classifiers=[
           'Development Status :: 3 - Alpha',
@@ -40,6 +45,7 @@ setup(name='livelossplot',
           'Topic :: Scientific/Engineering :: Visualization',
           'License :: OSI Approved :: MIT License',
           'Programming Language :: Python :: 3'
+          'Programming Language :: Python :: 3.5',
           'Programming Language :: Python :: 3.6',
           'Programming Language :: Python :: 3.7',
           'Programming Language :: Python :: 3.8',

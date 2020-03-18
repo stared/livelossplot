@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.5.0] - unreleased
 
 It is a major rewrite, with breaking API changes.
-It requires Python 3.6+.
+It requires Python 3.5+, and ideally 3.6+.
 
 **Work in progress - expect more changes soon.**
 
@@ -36,7 +36,7 @@ It requires Python 3.6+.
 
 - Python 2.7 support. 
 - Python 3.4 support - due to type hints.
-- Python 3.5 support - as it is no longer supported by the current version of matplotlib, 3.2.*, see https://matplotlib.org/3.2.0/users/installing.html. If you want to sue with Python 3.5, just install with an older version of matplotlib.
+- Python 3.5 support priority - as it is no longer supported by the current version of matplotlib, 3.2.*, see https://matplotlib.org/3.2.0/users/installing.html. If you want to sue with Python 3.5, just install with an older version of matplotlib. It may be gone at any moment.
 
 
 ## [0.4.2] - 2020-03-06
