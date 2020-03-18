@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.5]
+        python-version: [3.7]
 
     steps:
     - uses: actions/checkout@v2
@@ -23,26 +23,26 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
+    - name: Install package and dev dependencies
       run: |
         python -m pip install --upgrade pip
+        python setup.py install
         pip install -r requirements-dev.txt
     - name: Test with pytest
       run: |
         pytest
-    - name: Test tensorboard
+    - name: Test TensorBoard output
       run: |
         pip install tensorflow
         pytest tests/external_test_tensorboard.py
-    - name: Test keras
+    - name: Test Keras input
       run: |
         pip install keras
         pytest tests/external_test_keras.py
-    - name: Test ignite
+    - name: Test PyTorch Ignite input
       run: |
         pip install pytorch-ignite
         pytest tests/external_test_pytorch_ignite.py
-    - name: Test notbook
+    - name: Test Jupyter Notebook matplotlib output
       run: |
-        python setup.py install
         pytest tests/external_test_examples.py
