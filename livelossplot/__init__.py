@@ -4,6 +4,8 @@ from importlib.util import find_spec
 
 from .main_logger import MainLogger
 from .plot_losses import PlotLosses
+from . import inputs
+from . import outputs
 from .version import __version__
 
 
@@ -11,6 +13,7 @@ SHORTEN_INPUT_PATHS = [
     'keras',
     'tf_keras',
     'pytorch_ignite',
+    'poutyne',
 ]
 
 

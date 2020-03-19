@@ -1,20 +1,20 @@
 from datetime import datetime
 from os import path
 
-from tensorboard import summary
-
 from livelossplot.main_logger import MainLogger
 from livelossplot.outputs.base_output import BaseOutput
 
 
 class TensorboardLogger(BaseOutput):
     """
-    Class is the same as tensorboard logger, but it use pure tensorboard instead of tensorflow submodule
+    Class write logs to TensorBoard (using pure TensorBoard, not one from TensorFlow).
     """
-    def __init__(self, logdir="./tensorboard_logs/"):
+    def __init__(self, logdir="./tensorboard_logs/", run_id=None):
         """
-        :param logdir: dir where tensorboard events will be written
+        :param logdir: dir where TensorBoard events will be written
+        :param run_id: name for log id, otherwise it usses datetime
         """
+        from tensorboard import summary
         time_str = datetime.now().isoformat()[:-7].replace("T", " ").replace(":", "_")
         self._path = path.join(logdir, time_str)
         self.writer = summary.create_file_writer(self._path)

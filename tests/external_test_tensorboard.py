@@ -3,12 +3,12 @@ import os
 import numpy as np
 
 from livelossplot import plot_losses
-from livelossplot.outputs import tensorboard
+from livelossplot.outputs import TensorboardLogger
 
 
 def test_tensorboard():
     groups = {'acccuracy': ['acc', 'val_acc'], 'log-loss': ['loss', 'val_loss']}
-    logger = tensorboard.TensorboardLogger()
+    logger = TensorboardLogger()
 
     liveplot = plot_losses.PlotLosses(groups=groups, outputs=(logger, ))
 

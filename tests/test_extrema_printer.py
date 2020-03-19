@@ -1,11 +1,11 @@
 from livelossplot.plot_losses import PlotLosses
-from livelossplot.outputs.extrema_print import ExtremaPrint
+from livelossplot.outputs import ExtremaPrinter
 
 
 def test_extrema_print():
     """Test if plugin object cache contains valid values"""
     groups = {'acccuracy': ['acc', 'val_acc'], 'log-loss': ['loss', 'val_loss']}
-    plugin = ExtremaPrint()
+    plugin = ExtremaPrinter()
     outputs = (plugin, )
     liveplot = PlotLosses(outputs=outputs, groups=groups)
     liveplot.update({'acc': 0.5, 'val_acc': 0.4, 'loss': 1.2, 'val_loss': 1.1})

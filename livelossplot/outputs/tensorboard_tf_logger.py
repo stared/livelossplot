@@ -1,23 +1,23 @@
 from datetime import datetime
 from os import path
 
-import tensorflow as tf
-
 from livelossplot.main_logger import MainLogger
 from livelossplot.outputs.base_output import BaseOutput
 
 
-class TensorboardLogger(BaseOutput):
+class TensorboardTFLogger(BaseOutput):
     """
-    Class write logs to tensorboard.
+    Class write logs to TensorBoard (from TensorFlow).
     """
     def __init__(self, logdir="./tensorboard_logs/", run_id=None):
         """
-        :param logdir: dir where tensorboard events will be written
+        :param logdir: dir where TensorBoard events will be written
+        :param run_id: name for log id, otherwise it usses datetime
         """
+        from tensorflow import summary
         run_id = datetime.now().isoformat()[:-7].replace("T", " ").replace(":", "_") if run_id is None else run_id
         self._path = path.join(logdir, run_id)
-        self.writer = tf.summary.create_file_writer(self._path)
+        self.writer = summary.create_file_writer(self._path)
 
     def close(self):
         """Close tensorboard writer"""
@@ -31,7 +31,7 @@ class TensorboardLogger(BaseOutput):
         :return:
         """
         with self.writer.as_default():
-            tf.summary.scalar(name, value, step=global_step)
+            summary.scalar(name, value, step=global_step)
         self.writer.flush()
 
     def send(self, logger: MainLogger):

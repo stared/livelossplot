@@ -9,7 +9,7 @@ from livelossplot.main_logger import MainLogger, LogItem
 from livelossplot.outputs.base_output import BaseOutput
 
 
-class Matplotlib(BaseOutput):
+class MatplotlibPlot(BaseOutput):
     """NOTE: Removed figsize and dynamix_x_axis."""
     def __init__(
         self,

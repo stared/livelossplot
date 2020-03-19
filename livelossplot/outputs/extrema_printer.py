@@ -5,7 +5,7 @@ from livelossplot.main_logger import MainLogger
 from .base_output import BaseOutput
 
 
-class ExtremaPrint(BaseOutput):
+class ExtremaPrinter(BaseOutput):
     def __init__(
         self,
         massage_template: str = '\t{metric_name:16} \t (min: {min:8.3f},'

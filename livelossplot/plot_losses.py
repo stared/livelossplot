@@ -2,16 +2,13 @@ import warnings
 from typing import Type, Tuple
 
 from livelossplot.main_logger import MainLogger
-from livelossplot.outputs.base_output import BaseOutput
-from livelossplot.outputs.matplotlib import Matplotlib
-from livelossplot.outputs.extrema_print import ExtremaPrint
-
+from livelossplot.outputs import BaseOutput, MatplotlibPlot, ExtremaPrinter
 
 class PlotLosses:
     """
     Class collect metrics from the training engine and send it to plugins, when send is called
     """
-    def __init__(self, outputs: Tuple[Type[BaseOutput]] = (Matplotlib(), ExtremaPrint()), **kwargs):
+    def __init__(self, outputs: Tuple[Type[BaseOutput]] = (MatplotlibPlot(), ExtremaPrinter()), **kwargs):
         """
         :param outputs: list of callbacks (outputs) which are called with send method
         :param kwargs: key-arguments which are passed to main logger

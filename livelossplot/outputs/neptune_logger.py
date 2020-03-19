@@ -1,5 +1,3 @@
-import neptune
-
 from livelossplot.main_logger import MainLogger
 from livelossplot.outputs.base_output import BaseOutput
 
@@ -10,6 +8,7 @@ class NeptuneLogger(BaseOutput):
     """
     def __init__(self, api_token: str, project_qualified_name: str):
         """Set secrets and create experiment"""
+        import neptune
         self.neptune = neptune
         self.neptune.init(api_token=api_token, project_qualified_name=project_qualified_name)
         self.neptune.create_experiment()
