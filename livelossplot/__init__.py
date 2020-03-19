@@ -1,20 +1,52 @@
+import sys
 import warnings
+from importlib.util import find_spec
+
+from .main_logger import MainLogger
+from .plot_losses import PlotLosses
 from .version import __version__
 
-from .plot_losses import PlotLosses
-from .main_logger import MainLogger
 
-# TODO 
-# expose keras as before, something like
-# import livelossplot.input_plugins.keras as liveloss.keras
-# or consider undepreciating lines below?
+SHORTEN_INPUT_PATHS = [
+    'keras',
+    'tf_keras',
+    'pytorch_ignite',
+]
 
-def PlotLossesKeras(*args, **kwargs):
-    warnings.warn("From v0.3 onwards, use:\nfrom livelossplot.keras import PlotLossesCallback", DeprecationWarning)
+
+def PlotLossesKeras(**kwargs):
     from .input_plugins.keras import PlotLossesCallback
-    return PlotLossesCallback(*args, **kwargs)
+    return PlotLossesCallback(**kwargs)
 
-def PlotLossesTensorFlowKeras(*args, **kwargs):
-    warnings.warn("New and deprecated at the same time!\nFrom v0.3 onwards, use:\nfrom livelossplot.tf_keras import PlotLossesCallback", DeprecationWarning)
+
+def PlotLossesTensorFlowKeras(**kwargs):
     from .input_plugins.tf_keras import PlotLossesCallback
-    return PlotLossesCallback(*args, **kwargs)
+    return PlotLossesCallback(**kwargs)
+
+
+class OldDependenciesFinder:
+    """
+    Data package module loader finder. This class sits on `sys.meta_path` and returns the
+    loader it knows for a given path, if it knows a compatible loader.
+    """
+
+    @classmethod
+    def find_spec(self, fullname, *_, **__):
+        """
+        This functions is what gets executed by the loader.
+        """
+        parts = fullname.split('.')
+        if len(parts) == 2 and parts[0] == 'livelossplot' and parts[1] in SHORTEN_INPUT_PATHS:
+            warnings.warn(
+                'livelossplot.{} will be deprecated, please use livelossplot.input_plugins.{}'.format(parts[1],
+                                                                                                      parts[1]),
+                DeprecationWarning
+            )
+            fullname = '.'.join(['livelossplot', 'input_plugins', parts[1]])
+            return find_spec(fullname)
+        return None
+
+
+sys.meta_path.append(OldDependenciesFinder())
+
+__all__ = ['PlotLosses']
