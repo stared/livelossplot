@@ -11,7 +11,7 @@ class PlotLosses:
     def __init__(self, outputs: Tuple[Type[BaseOutput]] = (MatplotlibPlot(), ExtremaPrinter()), **kwargs):
         """
         :param outputs: list of callbacks (outputs) which are called with send method
-        :param kwargs: key-arguments which are passed to main logger
+        :param kwargs: key-arguments which are passed to MainLogger
         """
         self.logger = MainLogger(**kwargs)
         self.outputs = outputs
