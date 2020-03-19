@@ -15,6 +15,7 @@ class TensorboardLogger(BaseOutput):
         :param run_id: name for log id, otherwise it usses datetime
         """
         from tensorboard import summary
+        self.summary = summary
         time_str = datetime.now().isoformat()[:-7].replace("T", " ").replace(":", "_")
         self._path = path.join(logdir, time_str)
         self.writer = summary.create_file_writer(self._path)
@@ -31,7 +32,7 @@ class TensorboardLogger(BaseOutput):
         :return:
         """
         with self.writer.as_default():
-            summary.scalar(name, value, step=global_step)
+            self.summary.scalar(name, value, step=global_step)
         self.writer.flush()
 
     def send(self, logger: MainLogger):
