@@ -3,7 +3,7 @@ import os
 import numpy as np
 
 from livelossplot import plot_losses
-from livelossplot.output_plugins import tensorboard
+from livelossplot.outputs import tensorboard
 
 
 def test_tensorboard():

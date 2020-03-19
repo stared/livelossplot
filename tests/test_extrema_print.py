@@ -1,5 +1,5 @@
 from livelossplot.plot_losses import PlotLosses
-from livelossplot.output_plugins.extrema_print import ExtremaPrint
+from livelossplot.outputs.extrema_print import ExtremaPrint
 
 
 def test_extrema_print():

@@ -4,7 +4,7 @@ from os import path
 from tensorboard import summary
 
 from livelossplot.main_logger import MainLogger
-from livelossplot.output_plugins.base_output import BaseOutput
+from livelossplot.outputs.base_output import BaseOutput
 
 
 class TensorboardLogger(BaseOutput):

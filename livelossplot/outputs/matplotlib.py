@@ -6,7 +6,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 from IPython.display import clear_output
 from livelossplot.main_logger import MainLogger, LogItem
-from livelossplot.output_plugins.base_output import BaseOutput
+from livelossplot.outputs.base_output import BaseOutput
 
 
 class Matplotlib(BaseOutput):

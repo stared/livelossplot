@@ -9,7 +9,7 @@ from time import sleep
 
 import numpy as np
 
-from livelossplot.output_plugins.neptune import NeptuneLogger
+from livelossplot.outputs.neptune import NeptuneLogger
 from livelossplot.plot_losses import PlotLosses
 
 

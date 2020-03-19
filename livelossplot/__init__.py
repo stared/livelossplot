@@ -15,12 +15,12 @@ SHORTEN_INPUT_PATHS = [
 
 
 def PlotLossesKeras(**kwargs):
-    from .input_plugins.keras import PlotLossesCallback
+    from .inputs.keras import PlotLossesCallback
     return PlotLossesCallback(**kwargs)
 
 
 def PlotLossesTensorFlowKeras(**kwargs):
-    from .input_plugins.tf_keras import PlotLossesCallback
+    from .inputs.tf_keras import PlotLossesCallback
     return PlotLossesCallback(**kwargs)
 
 
@@ -38,11 +38,11 @@ class OldDependenciesFinder:
         parts = fullname.split('.')
         if len(parts) == 2 and parts[0] == 'livelossplot' and parts[1] in SHORTEN_INPUT_PATHS:
             warnings.warn(
-                'livelossplot.{} will be deprecated, please use livelossplot.input_plugins.{}'.format(parts[1],
+                'livelossplot.{} will be deprecated, please use livelossplot.inputs.{}'.format(parts[1],
                                                                                                       parts[1]),
                 DeprecationWarning
             )
-            fullname = '.'.join(['livelossplot', 'input_plugins', parts[1]])
+            fullname = '.'.join(['livelossplot', 'inputs', parts[1]])
             return find_spec(fullname)
         return None
 

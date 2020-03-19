@@ -2,9 +2,9 @@ import warnings
 from typing import Type, Tuple
 
 from livelossplot.main_logger import MainLogger
-from livelossplot.output_plugins.base_output import BaseOutput
-from livelossplot.output_plugins.matplotlib import Matplotlib
-from livelossplot.output_plugins.extrema_print import ExtremaPrint
+from livelossplot.outputs.base_output import BaseOutput
+from livelossplot.outputs.matplotlib import Matplotlib
+from livelossplot.outputs.extrema_print import ExtremaPrint
 
 
 class PlotLosses:

@@ -5,7 +5,7 @@ from keras.layers import LSTM, Dense
 from numpy import argmax
 from numpy import array
 
-from livelossplot.input_plugins.keras import PlotLossesCallback
+from livelossplot.inputs.keras import PlotLossesCallback
 from livelossplot.main_logger import MainLogger
 
 NUM_OF_GENERATED = 5

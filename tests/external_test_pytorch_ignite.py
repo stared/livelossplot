@@ -3,7 +3,7 @@ from ignite import engine
 from torch import nn, optim
 from torch.utils.data import TensorDataset, DataLoader
 
-from livelossplot.input_plugins.pytorch_ignite import PlotLossesCallback
+from livelossplot.inputs.pytorch_ignite import PlotLossesCallback
 from livelossplot.main_logger import MainLogger
 
 

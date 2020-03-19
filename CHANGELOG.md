@@ -18,14 +18,14 @@ It requires Python 3.5+, and ideally 3.6+.
 - Tests (using pytest).
 - Continuous integration (using GitHub Actions).
 - Type hints.
-- Way to write new output plugins (see `output_plugins` directory).
+- Way to write new output plugins (see `outputs` directory).
 - Examples are readily runable on Colab. 
 
 ### Refactored
 
 - A major refactor of the whole structure.
 - `PlotLosses` is not longer a god object.
-- Organized input plugins in `input_plugins` directory.
+- Organized input plugins in `inputs` directory.
 
 
 ### Fixed

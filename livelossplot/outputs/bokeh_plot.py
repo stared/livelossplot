@@ -3,7 +3,7 @@ from typing import List, Dict
 from bokeh import plotting
 
 from livelossplot.main_logger import MainLogger, LogItem
-from livelossplot.output_plugins.base_output import BaseOutput
+from livelossplot.outputs.base_output import BaseOutput
 
 
 class Bokeh(BaseOutput):
