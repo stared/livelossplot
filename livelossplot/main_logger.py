@@ -41,6 +41,7 @@ class MainLogger:
             self.log_history[k].append(LogItem(step=current_step, value=v))
 
     def _add_new_metric(self, metric_name: str):
+        """Add empty list for a new metric and extend metric name transformations"""
         self.log_history[metric_name] = []
         if not self.metric_to_name.get(metric_name):
             self._auto_generate_metrics_to_name(metric_name)
@@ -53,6 +54,12 @@ class MainLogger:
             (r'^val_', 'Validation '),
         )
     ):
+        """
+        The function generate transforms for metric names base on patterns.
+        For example it can create transformation from val_acc to Validation Accuracy
+        :param metric_name - name of new appended metric
+        :param patterns - a tuple with pairs - pattern and value to replace it with
+        """
         suffix = '_'.join(metric_name.split('_')[1:]) if '_' in metric_name else metric_name
         similar_metric_names = [m for m in self.log_history.keys() if m.endswith(suffix)]
         for name in similar_metric_names:
@@ -93,6 +100,10 @@ class MainLogger:
         return groups
 
     def _auto_generate_groups(self) -> Dict[str, List[str]]:
+        """
+        Auto create groups base on val_ prefix - this step is skipped if groups are set
+        or if group patterns are available
+        """
         groups = {}
         for key in self.log_history.keys():
             abs_key = key.replace('val_', '')
