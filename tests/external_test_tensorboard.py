@@ -2,15 +2,15 @@ import os
 
 import numpy as np
 
-from livelossplot import plot_losses
-from livelossplot.outputs import TensorboardLogger
+from livelossplot import PlotLosses
+from livelossplot.outputs import TensorboardTFLogger
 
 
 def test_tensorboard():
     groups = {'acccuracy': ['acc', 'val_acc'], 'log-loss': ['loss', 'val_loss']}
-    logger = TensorboardLogger()
+    logger = TensorboardTFLogger()
 
-    liveplot = plot_losses.PlotLosses(groups=groups, outputs=(logger, ))
+    liveplot = PlotLosses(groups=groups, outputs=(logger, ))
 
     for i in range(3):
         liveplot.update(
