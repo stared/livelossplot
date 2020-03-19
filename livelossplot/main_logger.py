@@ -3,11 +3,7 @@ from typing import NamedTuple, Dict, List, Pattern
 
 # Value of metrics - for value later, we want to support numpy arrays etc
 LogItem = NamedTuple('LogItem', [('step', int), ('value', float)])
-COMMON_METRICS_SHORTCUTS = {
-    'acc': 'Accuracy',
-    'nll': 'Negative Log Likelyhood',
-    'mse': 'Mean Squared Error'
-}
+COMMON_NAME_SHORTCUTS = {'acc': 'Accuracy', 'nll': 'Negative Log Likelyhood', 'mse': 'Mean Squared Error'}
 
 
 class MainLogger:
@@ -15,15 +11,14 @@ class MainLogger:
     Main logger - the aim of this class is to store every log from training
     Log is a float value with corresponding training engine step
     """
-
     def __init__(
-            self,
-            groups: Dict[str, List[str]] or None = None,
-            group_patterns: Dict[str, Pattern] or None = None,
-            metric_to_name: Dict[str, str] or None = None,
-            current_step: int = -1,
-            auto_generate_groups_if_not_available: bool = True,
-            auto_generate_metric_to_name: bool = True
+        self,
+        groups: Dict[str, List[str]] or None = None,
+        group_patterns: Dict[str, Pattern] or None = None,
+        metric_to_name: Dict[str, str] or None = None,
+        current_step: int = -1,
+        auto_generate_groups_if_not_available: bool = True,
+        auto_generate_metric_to_name: bool = True
     ):
         self._log_history = {}
         self.groups = groups
@@ -64,8 +59,8 @@ class MainLogger:
                 new_name = 'Training {}'.format(name)
             else:
                 new_name = name
-            if suffix in COMMON_METRICS_SHORTCUTS.keys():
-                new_name = new_name.replace(suffix, COMMON_METRICS_SHORTCUTS[suffix])
+            if suffix in COMMON_NAME_SHORTCUTS.keys():
+                new_name = new_name.replace(suffix, COMMON_NAME_SHORTCUTS[suffix])
             self.metric_to_name[name] = new_name
 
     def grouped_log_history(self, raw_names: bool = False) -> Dict[str, Dict[str, List[LogItem]]]:
@@ -79,8 +74,11 @@ class MainLogger:
             self.groups = self._auto_generate_groups()
         ret = {}
         for group_name, names in self.groups.items():
-            ret[group_name] = {name if raw_names else self.metric_to_name.get(name, name): self.log_history[name]
-                               for name in names}
+            group_name = group_name if raw_names else COMMON_NAME_SHORTCUTS.get(group_name, group_name)
+            ret[group_name] = {
+                name if raw_names else self.metric_to_name.get(name, name): self.log_history[name]
+                for name in names
+            }
         return ret
 
     def _generate_groups_with_patterns(self) -> Dict[str, List[str]]:
