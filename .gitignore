@@ -7,3 +7,4 @@ tmp/
 build/
 .vscode
 tensorboard_logs/
+examples/_test*

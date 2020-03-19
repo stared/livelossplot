@@ -5,8 +5,7 @@ from keras.layers import LSTM, Dense
 from numpy import argmax
 from numpy import array
 
-from livelossplot.inputs.keras import PlotLossesCallback
-from livelossplot.main_logger import MainLogger
+from livelossplot import MainLogger, PlotLossesKeras
 
 NUM_OF_GENERATED = 5
 
@@ -45,7 +44,7 @@ def generate_data():
 
 
 def test_keras():
-    callback = PlotLossesCallback(outputs=(CheckOutput(), ))
+    callback = PlotLossesKeras(outputs=(CheckOutput(), ))
     model = Sequential()
     model.add(LSTM(5, input_shape=(1, NUM_OF_GENERATED)))
     model.add(Dense(NUM_OF_GENERATED, activation='softmax'))

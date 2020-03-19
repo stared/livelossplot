@@ -3,8 +3,7 @@ from ignite import engine
 from torch import nn, optim
 from torch.utils.data import TensorDataset, DataLoader
 
-from livelossplot.inputs.pytorch_ignite import PlotLossesCallback
-from livelossplot.main_logger import MainLogger
+from livelossplot import MainLogger, PlotLossesIgnite
 
 
 class CheckOutput:
@@ -30,7 +29,7 @@ def get_random_data():
 
 
 def test_ignite():
-    callback = PlotLossesCallback(outputs=(CheckOutput(), ))
+    callback = PlotLossesIgnite(outputs=(CheckOutput(), ))
     model = Model()
     optimizer = optim.Adam(params=model.parameters(), lr=0.001)
     loss_fn = nn.CrossEntropyLoss()

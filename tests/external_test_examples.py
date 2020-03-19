@@ -22,7 +22,7 @@ def run_notebook(notebook_path):
     proc.allow_errors = True
 
     proc.preprocess(nb, {'metadata': {'path': 'examples/'}})
-    output_path = os.path.join(dirname, '{}_all_output.ipynb'.format(nb_name))
+    output_path = os.path.join(dirname, '_test_{}.ipynb'.format(nb_name))
 
     with open(output_path, mode='wt') as f:
         nbformat.write(nb, f)

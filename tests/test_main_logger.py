@@ -1,6 +1,6 @@
 import re
 
-from livelossplot.main_logger import MainLogger
+from livelossplot import MainLogger
 
 
 def test_main_logger():

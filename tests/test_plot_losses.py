@@ -1,7 +1,6 @@
 import re
 
-from livelossplot.plot_losses import PlotLosses
-from livelossplot.main_logger import MainLogger
+from livelossplot import MainLogger, PlotLosses
 
 
 class CheckOutput:

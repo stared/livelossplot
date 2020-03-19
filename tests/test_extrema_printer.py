@@ -1,4 +1,4 @@
-from livelossplot.plot_losses import PlotLosses
+from livelossplot import PlotLosses
 from livelossplot.outputs import ExtremaPrinter
 
 
