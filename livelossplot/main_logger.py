@@ -1,9 +1,9 @@
 import re
-from typing import NamedTuple, Dict, List, Pattern
+from typing import NamedTuple, Dict, List, Pattern, Tuple
 
 # Value of metrics - for value later, we want to support numpy arrays etc
 LogItem = NamedTuple('LogItem', [('step', int), ('value', float)])
-COMMON_NAME_SHORTCUTS = {'acc': 'Accuracy', 'nll': 'Negative Log Likelyhood', 'mse': 'Mean Squared Error'}
+COMMON_NAME_SHORTCUTS = {'acc': 'Accuracy', 'nll': 'Log Loss', 'mse': 'Mean Squared Error', 'loss': 'Loss'}
 
 
 class MainLogger:
@@ -20,7 +20,7 @@ class MainLogger:
         auto_generate_groups_if_not_available: bool = True,
         auto_generate_metric_to_name: bool = True
     ):
-        self._log_history = {}
+        self.log_history = {}
         self.groups = groups
         self.group_patterns = group_patterns
         self.metric_to_name = metric_to_name if metric_to_name else {}
@@ -45,20 +45,20 @@ class MainLogger:
         if not self.metric_to_name.get(metric_name):
             self._auto_generate_metrics_to_name(metric_name)
 
-    def _auto_generate_metrics_to_name(self, metric_name: str):
+    def _auto_generate_metrics_to_name(
+        self,
+        metric_name: str,
+        patterns: Tuple[Tuple[str, str]] = (
+            (r'^(?!val_)', 'Training '),
+            (r'^val_', 'Validation '),
+        )
+    ):
         suffix = '_'.join(metric_name.split('_')[1:]) if '_' in metric_name else metric_name
         similar_metric_names = [m for m in self.log_history.keys() if m.endswith(suffix)]
-        if len(similar_metric_names) == 1:
-            return
         for name in similar_metric_names:
-            if name.startswith('val_'):
-                new_name = name.replace('val_', 'Validation ')
-            elif name.startswith('train_'):
-                new_name = name.replace('train_', 'Training ')
-            elif name == suffix:
-                new_name = 'Training {}'.format(name)
-            else:
-                new_name = name
+            new_name = name
+            for pattern_to_replace, replace_with in patterns:
+                new_name = re.sub(pattern_to_replace, replace_with, new_name)
             if suffix in COMMON_NAME_SHORTCUTS.keys():
                 new_name = new_name.replace(suffix, COMMON_NAME_SHORTCUTS[suffix])
             self.metric_to_name[name] = new_name
