@@ -3,7 +3,12 @@ from typing import NamedTuple, Dict, List, Pattern, Tuple
 
 # Value of metrics - for value later, we want to support numpy arrays etc
 LogItem = NamedTuple('LogItem', [('step', int), ('value', float)])
-COMMON_NAME_SHORTCUTS = {'acc': 'Accuracy', 'nll': 'Log Loss', 'mse': 'Mean Squared Error', 'loss': 'Loss'}
+COMMON_NAME_SHORTCUTS = {
+    'acc': 'Accuracy',
+    'nll': 'Log Loss (cost function)',
+    'mse': 'Mean Squared Error',
+    'loss': 'Loss'
+}
 
 
 class MainLogger:
@@ -50,8 +55,8 @@ class MainLogger:
         self,
         metric_name: str,
         patterns: Tuple[Tuple[str, str]] = (
-            (r'^(?!val_)', 'Training '),
-            (r'^val_', 'Validation '),
+            (r'^(?!val_).*', 'Training '),
+            (r'^(val_).*', 'Validation '),
         )
     ):
         """
