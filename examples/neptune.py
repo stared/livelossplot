@@ -1,6 +1,5 @@
 # TO START:
-# pip install livelossplot
-# pip install neptune-client
+# pip install neptune-client, livelossplot
 # export environment variables
 # enjoy results
 
@@ -9,8 +8,8 @@ from time import sleep
 
 import numpy as np
 
-from livelossplot.outputs.neptune import NeptuneLogger
-from livelossplot.plot_losses import PlotLosses
+from livelossplot.outputs import NeptuneLogger
+from livelossplot import PlotLosses
 
 
 def main():
