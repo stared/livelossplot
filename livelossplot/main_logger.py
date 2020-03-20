@@ -1,4 +1,5 @@
 import re
+from collections import OrderedDict
 from typing import NamedTuple, Dict, List, Pattern, Tuple
 
 # Value of metrics - for value later, we want to support numpy arrays etc
@@ -99,7 +100,8 @@ class MainLogger:
         elif self.auto_generate_groups:
             self.groups = self._auto_generate_groups()
         ret = {}
-        for group_name, names in self.groups.items():
+        sorted_groups = OrderedDict(sorted(self.groups.items(), key=lambda t: t[0]))
+        for group_name, names in sorted_groups.items():
             group_name = group_name if raw_group_names else COMMON_NAME_SHORTCUTS.get(group_name, group_name)
             ret[group_name] = {
                 name if raw_names else self.metric_to_name.get(name, name): self.log_history[name]
