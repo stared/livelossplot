@@ -6,3 +6,5 @@ dist/
 tmp/
 build/
 .vscode
+tensorboard_logs/
+examples/_test*

@@ -1,25 +1,46 @@
+import sys
 import warnings
-from .core import draw_plot
-from .generic_plot import PlotLosses
+from importlib.util import find_spec
+
+from .main_logger import MainLogger
+from .plot_losses import PlotLosses
+from . import inputs
+from .inputs import *
+from . import outputs
 from .version import __version__
 
-# keras.PlotLossesCallback and poutyne.PlotLossesCallback
-# NOT loaded, as they depend on other libraries
+_input_plugin_dict = {
+    'keras': 'Keras',
+    'tf_keras': 'KerasTF',
+    'pytorch_ignite': 'Ignite',
+    'poutyne': 'Poutyne',
+}
 
-# open question: keep it as deprecated,
-# or as an alternative (but legit) interface?
 
-def PlotLossesKeras(*args, **kwargs):
-    warnings.warn("From v0.3 onwards, use:\nfrom livelossplot.keras import PlotLossesCallback", DeprecationWarning)
-    from .keras import PlotLossesCallback
-    return PlotLossesCallback(*args, **kwargs)
+class OldDependenciesFinder:
+    """
+    Data package module loader finder. This class sits on `sys.meta_path` and returns the
+    loader it knows for a given path, if it knows a compatible loader.
+    """
+    @classmethod
+    def find_spec(self, fullname, *_, **__):
+        """
+        This functions is what gets executed by the loader.
+        """
+        parts = fullname.split('.')
+        if len(parts) == 2 and parts[0] == 'livelossplot' and parts[1] in _input_plugin_dict:
+            name = parts[1]
+            msg = 'livelossplot.{name} will be deprecated, please use livelossplot.inputs.{name}\n'
+            msg += 'or use callback directly: from livelossplot import PlotLosses{new_name}'
+            warnings.warn(msg.format(name=name, new_name=_input_plugin_dict[name]), DeprecationWarning)
+            fullname = 'livelossplot.inputs.{name}'.format(name=name)
+            return find_spec(fullname)
+        return None
 
-def PlotLossesTensorFlowKeras(*args, **kwargs):
-    warnings.warn("New and deprecated at the same time!\nFrom v0.3 onwards, use:\nfrom livelossplot.tf_keras import PlotLossesCallback", DeprecationWarning)
-    from .tf_keras import PlotLossesCallback
-    return PlotLossesCallback(*args, **kwargs)
 
-def PlotLossesPoutyne(*args, **kwargs):
-    warnings.warn("From v0.3 onwards, use:\nfrom livelossplot.poutyne import PlotLossesCallback", DeprecationWarning)
-    from .poutyne import PlotLossesCallback
-    return PlotLossesCallback(*args, **kwargs)
+sys.meta_path.append(OldDependenciesFinder())
+
+__all__ = [
+    'MainLogger', 'inputs', 'outputs', 'PlotLosses', 'PlotLossesKeras', 'PlotLossesKerasTF', 'PlotLossesIgnite',
+    'PlotLossesPoutyne'
+]
