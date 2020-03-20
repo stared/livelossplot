@@ -25,6 +25,16 @@ class MainLogger:
         auto_generate_groups_if_not_available: bool = True,
         auto_generate_metric_to_name: bool = True
     ):
+        """
+        :param groups - dictionary with grouped metrics for example one group can contains
+         one metric in different stages for example Validation, Training etc.:
+        :param group_patterns - you can put there regular expressions to match a few metric names with group:
+        :param metric_to_name - transformation of metric name which can be used to display name:
+        :param current_step - current step of the train engine:
+        :param auto_generate_groups_if_not_available - flag, that enable auto-creation of metric groups:
+        :param auto_generate_metric_to_name - flag, that enable auto-creation of metric long names,
+         based on common shortcuts:
+        """
         self.log_history = {}
         self.groups = groups
         self.group_patterns = group_patterns
