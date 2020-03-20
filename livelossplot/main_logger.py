@@ -74,11 +74,7 @@ class MainLogger:
         :param metric_name - name of new appended metric
         :param patterns - a tuple with pairs - pattern and value to replace it with
         """
-        suffix = None
-        for pattern, _ in self.auto_group_patterns:
-            match = re.match(pattern, metric_name)
-            if match:
-                suffix = match.groups()[-1]
+        suffix = self._find_suffix_with_group_patterns(metric_name)
         if suffix is None and suffix != metric_name:
             return
         similar_metric_names = [m for m in self.log_history.keys() if m.endswith(suffix)]
@@ -133,13 +129,19 @@ class MainLogger:
         """
         groups = {}
         for key in self.log_history.keys():
-            abs_key = key
-            for pattern in group_prefixes:
-                abs_key = re.sub(pattern, '', abs_key)
+            abs_key = self._find_suffix_with_group_patterns(key)
             if not groups.get(abs_key):
                 groups[abs_key] = []
             groups[abs_key].append(key)
         return groups
+
+    def _find_suffix_with_group_patterns(self, metric_name: str) -> str:
+        suffix = metric_name
+        for pattern, _ in self.auto_group_patterns:
+            match = re.match(pattern, metric_name)
+            if match:
+                suffix = match.groups()[-1]
+        return suffix
 
     def reset(self) -> None:
         """Method clears logs, groups and reset step counter"""
