@@ -19,18 +19,21 @@ class ExtremaPrinter(BaseOutput):
 
     def send(self, logger: MainLogger):
         """Create massages with log_history and massage template"""
-        log_groups = logger.grouped_log_history()
-        massages = self._create_massages(log_groups)
+        log_groups = logger.grouped_log_history(raw_names=True)
+        metric_to_name = logger.metric_to_name
+        massages = self._create_massages(log_groups, metric_to_name)
         print('\n'.join(massages))
 
-    def _create_massages(self, log_groups: Dict[str, Dict[str, List[LogItem]]]) -> List[str]:
+    def _create_massages(self, log_groups: Dict[str, Dict[str, List[LogItem]]],
+                         metric_to_name: Dict[str, str]) -> List[str]:
         """Update cache and create massages"""
         massages = []
         for group_name, group_logs in log_groups.items():
             massages.append(group_name)
             for metric_name, metric_values in group_logs.items():
                 self.update_extrema(metric_name, metric_values)
-                msg = self.massage_template.format(metric_name=metric_name, **self.extrema_cache[metric_name])
+                msg = self.massage_template.format(metric_name=metric_to_name.get(metric_name),
+                                                   **self.extrema_cache[metric_name])
                 massages.append(msg)
         return massages
 
