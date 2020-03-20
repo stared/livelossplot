@@ -27,8 +27,8 @@ def test_main_logger_with_groups():
     grouped_log_history = logger.grouped_log_history()
     assert len(grouped_log_history) == 2
     assert len(grouped_log_history['acccuracy']) == 2
-    assert len(grouped_log_history['acccuracy']['Validation ']) == 3
-    assert len(grouped_log_history['log-loss']['Training ']) == 3
+    assert len(grouped_log_history['acccuracy']['validation ']) == 3
+    assert len(grouped_log_history['log-loss']['training ']) == 3
 
 
 def test_main_logger_with_group_patterns():
@@ -45,4 +45,4 @@ def test_main_logger_with_group_patterns():
     grouped_log_history = logger.grouped_log_history()
     assert len(grouped_log_history) == 2
     assert len(grouped_log_history['acccuracy']) == 2
-    assert len(grouped_log_history['acccuracy']['Validation ']) == 3
+    assert len(grouped_log_history['acccuracy']['validation ']) == 3

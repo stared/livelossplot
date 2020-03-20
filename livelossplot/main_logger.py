@@ -28,7 +28,7 @@ class MainLogger:
     ):
         """
         :param groups - dictionary with grouped metrics for example one group can contains
-         one metric in different stages for example Validation, Training etc.:
+         one metric in different stages for example validation, training etc.:
         :param group_patterns - you can put there regular expressions to match a few metric names with group:
         :param metric_to_name - transformation of metric name which can be used to display name:
         :param current_step - current step of the train engine:
@@ -66,8 +66,8 @@ class MainLogger:
         self,
         metric_name: str,
         patterns: Tuple[Tuple[str, str]] = (
-            (r'^(?!val_).*', 'Training '),
-            (r'^(val_).*', 'Validation '),
+            (r'^(?!val_).*', 'training '),
+            (r'^(val_).*', 'validation '),
         )
     ):
         """
@@ -76,7 +76,7 @@ class MainLogger:
         :param metric_name - name of new appended metric
         :param patterns - a tuple with pairs - pattern and value to replace it with
         """
-        suffix = '_'.join(metric_name.split('_')[1:]) if '_' in metric_name else metric_name
+        suffix = re.match(r'(.+)?(_|$)', metric_name).group(1)
         similar_metric_names = [m for m in self.log_history.keys() if m.endswith(suffix)]
         for name in similar_metric_names:
             new_name = name
@@ -120,14 +120,16 @@ class MainLogger:
                     groups[name].append(key)
         return groups
 
-    def _auto_generate_groups(self) -> Dict[str, List[str]]:
+    def _auto_generate_groups(self, group_prefixes: Tuple[Pattern] = (r'^(val_)'),) -> Dict[str, List[str]]:
         """
         Auto create groups base on val_ prefix - this step is skipped if groups are set
         or if group patterns are available
         """
         groups = {}
         for key in self.log_history.keys():
-            abs_key = key.replace('val_', '')
+            abs_key = key
+            for pattern in group_prefixes:
+                abs_key = re.sub(pattern, '', abs_key)
             if not groups.get(abs_key):
                 groups[abs_key] = []
             groups[abs_key].append(key)
