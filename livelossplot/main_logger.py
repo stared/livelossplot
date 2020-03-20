@@ -75,7 +75,8 @@ class MainLogger:
                 new_name = new_name.replace(suffix, COMMON_NAME_SHORTCUTS[suffix])
             self.metric_to_name[name] = new_name
 
-    def grouped_log_history(self, raw_names: bool = False) -> Dict[str, Dict[str, List[LogItem]]]:
+    def grouped_log_history(self, raw_names: bool = False,
+                            raw_group_names: bool = False) -> Dict[str, Dict[str, List[LogItem]]]:
         """
         :return: logs grouped by metric groups - groups are passed in the class constructor
         method use group patterns instead of groups if they are available
@@ -86,7 +87,7 @@ class MainLogger:
             self.groups = self._auto_generate_groups()
         ret = {}
         for group_name, names in self.groups.items():
-            group_name = group_name if raw_names else COMMON_NAME_SHORTCUTS.get(group_name, group_name)
+            group_name = group_name if raw_group_names else COMMON_NAME_SHORTCUTS.get(group_name, group_name)
             ret[group_name] = {
                 name if raw_names else self.metric_to_name.get(name, name): self.log_history[name]
                 for name in names
