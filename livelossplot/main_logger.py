@@ -24,7 +24,11 @@ class MainLogger:
         metric_to_name: Dict[str, str] or None = None,
         current_step: int = -1,
         auto_generate_groups_if_not_available: bool = True,
-        auto_generate_metric_to_name: bool = True
+        auto_generate_metric_to_name: bool = True,
+        auto_group_patterns: Tuple[Tuple[str, str]] = (
+            (r'^(?!val(_|-))(.*)', 'training '),
+            (r'^(val(_|-))(.*)', 'validation '),
+        )
     ):
         """
         :param groups - dictionary with grouped metrics for example one group can contains
@@ -43,6 +47,7 @@ class MainLogger:
         self.current_step = current_step
         self.auto_generate_groups = all((not groups, not group_patterns, auto_generate_groups_if_not_available))
         self.auto_generate_metric_to_name = auto_generate_metric_to_name
+        self.auto_group_patterns = auto_group_patterns
 
     def update(self, logs: dict, current_step: int or None = None) -> None:
         """Update logs - loop step can be controlled outside or inside main logger"""
@@ -62,14 +67,7 @@ class MainLogger:
         if not self.metric_to_name.get(metric_name):
             self._auto_generate_metrics_to_name(metric_name)
 
-    def _auto_generate_metrics_to_name(
-        self,
-        metric_name: str,
-        patterns: Tuple[Tuple[str, str]] = (
-            (r'^(?!val(_|-))(.*)', 'training '),
-            (r'^(val(_|-))(.*)', 'validation '),
-        )
-    ):
+    def _auto_generate_metrics_to_name(self, metric_name: str):
         """
         The function generate transforms for metric names base on patterns.
         For example it can create transformation from val_acc to Validation Accuracy
@@ -77,16 +75,18 @@ class MainLogger:
         :param patterns - a tuple with pairs - pattern and value to replace it with
         """
         suffix = None
-        for pattern, _ in patterns:
+        for pattern, _ in self.auto_group_patterns:
             match = re.match(pattern, metric_name)
             if match:
                 suffix = match.groups()[-1]
         if suffix is None and suffix != metric_name:
             return
         similar_metric_names = [m for m in self.log_history.keys() if m.endswith(suffix)]
+        if len(similar_metric_names) == 1:
+            return
         for name in similar_metric_names:
             new_name = name
-            for pattern_to_replace, replace_with in patterns:
+            for pattern_to_replace, replace_with in self.auto_group_patterns:
                 new_name = re.sub(pattern_to_replace, replace_with, new_name)
             if suffix in COMMON_NAME_SHORTCUTS.keys():
                 new_name = new_name.replace(suffix, COMMON_NAME_SHORTCUTS[suffix])
@@ -126,7 +126,7 @@ class MainLogger:
                     groups[name].append(key)
         return groups
 
-    def _auto_generate_groups(self, group_prefixes: Tuple[Pattern] = (r'^(val(_|-))',)) -> Dict[str, List[str]]:
+    def _auto_generate_groups(self, group_prefixes: Tuple[Pattern] = (r'^(val(_|-))', )) -> Dict[str, List[str]]:
         """
         Auto create groups base on val_ prefix - this step is skipped if groups are set
         or if group patterns are available
