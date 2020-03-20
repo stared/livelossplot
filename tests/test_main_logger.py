@@ -46,3 +46,35 @@ def test_main_logger_with_group_patterns():
     assert len(grouped_log_history) == 2
     assert len(grouped_log_history['acccuracy']) == 2
     assert len(grouped_log_history['acccuracy']['validation ']) == 3
+
+
+def test_main_logger_metrc_to_name():
+    """Test group patterns"""
+    group_patterns = {'acccuracy': re.compile(r'.*acc$'), 'log-loss': re.compile(r'.*loss$')}
+    logger = MainLogger(group_patterns=group_patterns)
+    logger.update({'acc': 0.5, 'val_acc': 0.4, 'loss': 1.2, 'val_loss': 1.1, 'lr': 0.01})
+    logger.update({'acc': 0.55, 'val_acc': 0.45, 'loss': 1.1, 'val_loss': 1.0, 'lr': 0.001})
+    logger.update({'acc': 0.65, 'val_acc': 0.55, 'loss': 1.0, 'val_loss': 0.9, 'lr': 0.0001})
+    metric_to_name = logger.metric_to_name
+    assert 'lr' not in metric_to_name
+    target_metric_to_name = {
+        'acc': 'training ',
+        'val_acc': 'validation ',
+        'loss': 'training ',
+        'val_loss': 'validation ',
+    }
+    for metric, metric_name in metric_to_name.items():
+        assert metric_name == target_metric_to_name.get(metric)
+
+
+def test_main_logger_autogroups():
+    """Test group patterns"""
+    logger = MainLogger()
+    logger.update({'acc': 0.5, 'val_acc': 0.4, 'loss': 1.2, 'val_loss': 1.1, 'lr': 0.01})
+    logger.update({'acc': 0.55, 'val_acc': 0.45, 'loss': 1.1, 'val_loss': 1.0, 'lr': 0.001})
+    logger.update({'acc': 0.65, 'val_acc': 0.55, 'loss': 1.0, 'val_loss': 0.9, 'lr': 0.0001})
+    grouped_log_history = logger.grouped_log_history()
+    target_groups = {'Accuracy': ('validation ', 'training '), 'Loss': ('validation ', 'training '), 'lr': ('lr', )}
+    for target_group, target_metrics in target_groups.items():
+        for m1, m2 in zip(sorted(grouped_log_history[target_group].keys()), sorted(target_metrics)):
+            assert m1 == m2
