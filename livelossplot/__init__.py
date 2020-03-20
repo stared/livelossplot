@@ -9,7 +9,6 @@ from .inputs import *
 from . import outputs
 from .version import __version__
 
-
 _input_plugin_dict = {
     'keras': 'Keras',
     'tf_keras': 'KerasTF',
@@ -17,12 +16,12 @@ _input_plugin_dict = {
     'poutyne': 'Poutyne',
 }
 
+
 class OldDependenciesFinder:
     """
     Data package module loader finder. This class sits on `sys.meta_path` and returns the
     loader it knows for a given path, if it knows a compatible loader.
     """
-
     @classmethod
     def find_spec(self, fullname, *_, **__):
         """
@@ -41,4 +40,7 @@ class OldDependenciesFinder:
 
 sys.meta_path.append(OldDependenciesFinder())
 
-__all__ = ['MainLogger', 'inputs', 'outputs', 'PlotLosses', 'PlotLossesKeras', 'PlotLossesKerasTF', 'PlotLossesIgnite', 'PlotLossesPoutyne']
+__all__ = [
+    'MainLogger', 'inputs', 'outputs', 'PlotLosses', 'PlotLossesKeras', 'PlotLossesKerasTF', 'PlotLossesIgnite',
+    'PlotLossesPoutyne'
+]

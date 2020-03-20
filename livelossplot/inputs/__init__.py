@@ -6,6 +6,7 @@ def PlotLossesKeras(**kwargs):
     from .keras import PlotLossesCallback
     return PlotLossesCallback(**kwargs)
 
+
 def PlotLossesKerasTF(**kwargs):
     """PlotLosses callback for Keras (as a module of TensorFlow).
     Requires tensorflow to be installed.
@@ -14,6 +15,7 @@ def PlotLossesKerasTF(**kwargs):
     from .tf_keras import PlotLossesCallback
     return PlotLossesCallback(**kwargs)
 
+
 def PlotLossesPoutyne(**kwargs):
     """PlotLosses callback for Poutyne, a library for PyTorch.
     Requires poutyne to be installed, https://poutyne.org/.
@@ -21,6 +23,7 @@ def PlotLossesPoutyne(**kwargs):
     """
     from .poutyne import PlotLossesCallback
     return PlotLossesCallback(**kwargs)
+
 
 def PlotLossesIgnite(**kwargs):
     """PlotLosses callback for Poutyne, a library for PyTorch.

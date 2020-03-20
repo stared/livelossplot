@@ -46,8 +46,7 @@ class MainLogger:
         self.current_step = current_step
         self.auto_generate_groups = all((not groups, auto_generate_groups_if_not_available))
         self.auto_generate_metric_to_name = auto_generate_metric_to_name
-        self.group_patterns = tuple((re.compile(pattern), replace_with)
-                                    for pattern, replace_with in group_patterns)
+        self.group_patterns = tuple((re.compile(pattern), replace_with) for pattern, replace_with in group_patterns)
 
     def update(self, logs: dict, current_step: int or None = None) -> None:
         """Update logs - loop step can be controlled outside or inside main logger"""

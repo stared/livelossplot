@@ -4,6 +4,7 @@ from typing import Type, Tuple
 from livelossplot.main_logger import MainLogger
 from livelossplot.outputs import BaseOutput, MatplotlibPlot, ExtremaPrinter
 
+
 class PlotLosses:
     """
     Class collect metrics from the training engine and send it to plugins, when send is called

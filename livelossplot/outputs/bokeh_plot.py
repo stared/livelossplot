@@ -6,12 +6,11 @@ from livelossplot.outputs.base_output import BaseOutput
 
 class BokehPlot(BaseOutput):
     """Simple plugin for a bokeh framework"""
-
     def __init__(
-            self,
-            max_cols: int = 2,
-            skip_first: int = 2,
-            cell_size: (int, int) = (600, 400),
+        self,
+        max_cols: int = 2,
+        skip_first: int = 2,
+        cell_size: (int, int) = (600, 400),
     ):
         from bokeh import plotting
         self.plotting = plotting
@@ -29,12 +28,10 @@ class BokehPlot(BaseOutput):
             if idx % self.max_cols == 0:
                 figures.append(row)
                 row = []
-        grid = self.plotting.gridplot(figures, plot_width=self.plot_width,
-                                 plot_height=self.plot_height)
+        grid = self.plotting.gridplot(figures, plot_width=self.plot_width, plot_height=self.plot_height)
         self.plotting.show(grid)
 
-    def _draw_metric_subplot(self, group_logs: Dict[str, List[LogItem]],
-                             group_name: str = ''):
+    def _draw_metric_subplot(self, group_logs: Dict[str, List[LogItem]], group_name: str = ''):
         # for now, with local imports, no output annotation  -> self.plotting.Figure
         # there used to be skip first part, but I skip it first
         fig = self.plotting.figure(title=group_name)
