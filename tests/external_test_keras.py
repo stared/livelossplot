@@ -13,7 +13,7 @@ NUM_OF_GENERATED = 5
 class CheckOutput:
     def send(self, logger: MainLogger):
         assert isinstance(logger, MainLogger)
-        grouped_log_history = logger.grouped_log_history()
+        grouped_log_history = logger.grouped_log_history(raw_names=True, raw_group_names=True)
         print(grouped_log_history['accuracy'].keys())
         assert len(grouped_log_history['accuracy']) == 2
         assert grouped_log_history['accuracy'].get('val_accuracy') is not None

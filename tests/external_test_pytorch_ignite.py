@@ -10,7 +10,6 @@ class CheckOutput:
     def send(self, logger: MainLogger):
         assert isinstance(logger, MainLogger)
         log_history = logger.log_history
-        print(log_history)
         assert log_history.get('loss') is not None
 
 

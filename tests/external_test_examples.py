@@ -3,7 +3,6 @@ import os
 import nbformat
 from nbconvert.preprocessors import ExecutePreprocessor
 
-
 NOTEBOOKS_TO_TEST = [
     'minimal.ipynb',
 ]
