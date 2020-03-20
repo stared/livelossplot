@@ -19,7 +19,7 @@ class ExtremaPrinter(BaseOutput):
 
     def send(self, logger: MainLogger):
         """Create massages with log_history and massage template"""
-        log_groups = logger.grouped_log_history(raw_names=True)
+        log_groups = logger.grouped_log_history()
         massages = self._create_massages(log_groups)
         print('\n'.join(massages))
 
