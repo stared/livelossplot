@@ -20,12 +20,11 @@ class MainLogger:
     def __init__(
         self,
         groups: Dict[str, List[str]] or None = None,
-        group_patterns: Dict[str, Pattern] or None = None,
         metric_to_name: Dict[str, str] or None = None,
         current_step: int = -1,
         auto_generate_groups_if_not_available: bool = True,
         auto_generate_metric_to_name: bool = True,
-        auto_group_patterns: Tuple[Tuple[str, str]] = (
+        group_patterns: Tuple[Tuple[Pattern, str]] = (
             (r'^(?!val(_|-))(.*)', 'training '),
             (r'^(val(_|-))(.*)', 'validation '),
         )
@@ -33,21 +32,22 @@ class MainLogger:
         """
         :param groups - dictionary with grouped metrics for example one group can contains
          one metric in different stages for example validation, training etc.:
-        :param group_patterns - you can put there regular expressions to match a few metric names with group:
         :param metric_to_name - transformation of metric name which can be used to display name:
         :param current_step - current step of the train engine:
         :param auto_generate_groups_if_not_available - flag, that enable auto-creation of metric groups:
         :param auto_generate_metric_to_name - flag, that enable auto-creation of metric long names,
          based on common shortcuts:
+        :param group_patterns - you can put there regular expressions to match a few metric names with group
+         and replace its name using second value:
         """
         self.log_history = {}
         self.groups = groups
-        self.group_patterns = group_patterns
         self.metric_to_name = metric_to_name if metric_to_name else {}
         self.current_step = current_step
-        self.auto_generate_groups = all((not groups, not group_patterns, auto_generate_groups_if_not_available))
+        self.auto_generate_groups = all((not groups, auto_generate_groups_if_not_available))
         self.auto_generate_metric_to_name = auto_generate_metric_to_name
-        self.auto_group_patterns = auto_group_patterns
+        self.group_patterns = tuple((re.compile(pattern), replace_with)
+                                    for pattern, replace_with in group_patterns)
 
     def update(self, logs: dict, current_step: int or None = None) -> None:
         """Update logs - loop step can be controlled outside or inside main logger"""
@@ -82,7 +82,7 @@ class MainLogger:
             return
         for name in similar_metric_names:
             new_name = name
-            for pattern_to_replace, replace_with in self.auto_group_patterns:
+            for pattern_to_replace, replace_with in self.group_patterns:
                 new_name = re.sub(pattern_to_replace, replace_with, new_name)
             if suffix in COMMON_NAME_SHORTCUTS.keys():
                 new_name = new_name.replace(suffix, COMMON_NAME_SHORTCUTS[suffix])
@@ -97,9 +97,7 @@ class MainLogger:
         :return: logs grouped by metric groups - groups are passed in the class constructor
         method use group patterns instead of groups if they are available
         """
-        if self.group_patterns:
-            self.groups = self._generate_groups_with_patterns()
-        elif self.auto_generate_groups:
+        if self.auto_generate_groups:
             self.groups = self._auto_generate_groups()
         ret = {}
         sorted_groups = OrderedDict(sorted(self.groups.items(), key=lambda t: t[0]))
@@ -111,18 +109,7 @@ class MainLogger:
             }
         return ret
 
-    def _generate_groups_with_patterns(self) -> Dict[str, List[str]]:
-        """
-        :return: grouped metric names
-        """
-        groups = {pattern: [] for pattern in self._group_patterns}
-        for name, pattern in self._group_patterns.items():
-            for key in self.log_history.keys():
-                if re.match(pattern, key):
-                    groups[name].append(key)
-        return groups
-
-    def _auto_generate_groups(self, group_prefixes: Tuple[Pattern] = (r'^(val(_|-))', )) -> Dict[str, List[str]]:
+    def _auto_generate_groups(self) -> Dict[str, List[str]]:
         """
         Auto create groups base on val_ prefix - this step is skipped if groups are set
         or if group patterns are available
@@ -137,7 +124,7 @@ class MainLogger:
 
     def _find_suffix_with_group_patterns(self, metric_name: str) -> str:
         suffix = metric_name
-        for pattern, _ in self.auto_group_patterns:
+        for pattern, _ in self.group_patterns:
             match = re.match(pattern, metric_name)
             if match:
                 suffix = match.groups()[-1]
@@ -172,15 +159,3 @@ class MainLogger:
         if len(value) > 0:
             raise RuntimeError('Cannot overwrite log history with non empty dictionary')
         self._log_history = value
-
-    @property
-    def group_patterns(self) -> Dict[str, Pattern]:
-        """group patterns getter"""
-        return self._group_patterns
-
-    @group_patterns.setter
-    def group_patterns(self, value: Dict[str, Pattern]) -> None:
-        """group patterns setter - patterns should be dictionary"""
-        if value is None:
-            self._group_patterns = {}
-        self._group_patterns = value
