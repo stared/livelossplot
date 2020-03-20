@@ -44,7 +44,7 @@ jobs:
       id: yapf
       uses: diegovalenzuelaiturra/yapf-action@v0.0.1
       with:
-        args: --recursive -i .
+        args: . --recursive --diff
     - name: Fail if yapf made changes
       if: steps.yapf.outputs.exit-code == 2
       run: exit 1
