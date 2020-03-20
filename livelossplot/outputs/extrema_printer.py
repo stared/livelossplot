@@ -20,32 +20,33 @@ class ExtremaPrinter(BaseOutput):
     def send(self, logger: MainLogger):
         """Create massages with log_history and massage template"""
         log_groups = logger.grouped_log_history(raw_names=True)
-        metric_to_name = logger.metric_to_name
-        massages = self._create_massages(log_groups, metric_to_name)
+        massages = self._create_massages(log_groups)
         print('\n'.join(massages))
 
-    def _create_massages(self, log_groups: Dict[str, Dict[str, List[LogItem]]],
-                         metric_to_name: Dict[str, str]) -> List[str]:
+    def _create_massages(self, log_groups: Dict[str, Dict[str, List[LogItem]]]) -> List[str]:
         """Update cache and create massages"""
         massages = []
         for group_name, group_logs in log_groups.items():
             massages.append(group_name)
             for metric_name, metric_values in group_logs.items():
-                self.update_extrema(metric_name, metric_values)
-                msg = self.massage_template.format(metric_name=metric_to_name.get(metric_name),
-                                                   **self.extrema_cache[metric_name])
+                self.update_extrema(metric_name, group_name, metric_values)
+                msg = self.massage_template.format(
+                    metric_name=metric_name, **self.extrema_cache[group_name][metric_name]
+                )
                 massages.append(msg)
         return massages
 
-    def update_extrema(self, metric_name: str, metric_values: List[LogItem]) -> None:
+    def update_extrema(self, metric_name: str, group_name: str, metric_values: List[LogItem]) -> None:
         """Write highest, lower and current value to cache (or initialize if no exist)"""
         current_val = metric_values[-1].value
-        cache = self.extrema_cache.get(metric_name)
+        if not self.extrema_cache.get(group_name):
+            self.extrema_cache[group_name] = {}
+        cache = self.extrema_cache[group_name].get(metric_name)
         if not cache:
             min_val = min(metric_values, key=lambda i: i.value).value
             max_val = max(metric_values, key=lambda i: i.value).value
             current_val = metric_values[-1].value
-            self.extrema_cache[metric_name] = {
+            self.extrema_cache[group_name][metric_name] = {
                 'min': min_val,
                 'max': max_val,
                 'current': current_val,
@@ -58,12 +59,12 @@ class ExtremaPrinter(BaseOutput):
             cache['current'] = current_val
 
     @property
-    def extrema_cache(self) -> Dict[str, Dict[str, float]]:
+    def extrema_cache(self) -> Dict[str, Dict[str, Dict[str, float]]]:
         """Cache getter"""
         return self._extrema_cache
 
     @extrema_cache.setter
-    def extrema_cache(self, value: Dict[str, Dict[str, float]]) -> None:
+    def extrema_cache(self, value: Dict[str, Dict[str, Dict[str, float]]]) -> None:
         """Cache setter - can initialize cache only with empty dictionary"""
         if len(value) > 0:
             raise RuntimeError('Cannot overwrite cache with non empty dictionary')

@@ -75,9 +75,12 @@ class MainLogger:
                 new_name = new_name.replace(suffix, COMMON_NAME_SHORTCUTS[suffix])
             self.metric_to_name[name] = new_name
 
-    def grouped_log_history(self, raw_names: bool = False,
+    def grouped_log_history(self,
+                            raw_names: bool = False,
                             raw_group_names: bool = False) -> Dict[str, Dict[str, List[LogItem]]]:
         """
+        :param raw_names - return raw names instead of transformed by metric to name (as in update() input dictionary):
+        :param raw_group_names - return group names without transforming them with COMMON_NAME_SHORTCUTS:
         :return: logs grouped by metric groups - groups are passed in the class constructor
         method use group patterns instead of groups if they are available
         """
