@@ -1,9 +1,10 @@
 # livelossplot
 
-![PyPI version](https://img.shields.io/pypi/pyversions/livelossplot.svg)
-![PyPI license](https://img.shields.io/pypi/l/livelossplot.svg)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/stared/livelossplot/Python%20package)](https://github.com/stared/livelossplot/actions)
+[![livelossplot version - PyPI](https://img.shields.io/pypi/v/livelossplot)](https://pypi.org/project/livelossplot/)
 ![PyPI status](https://img.shields.io/pypi/status/livelossplot.svg)
+![MIT license - PyPI](https://img.shields.io/pypi/l/livelossplot.svg)
+![Python version - PyPI](https://img.shields.io/pypi/pyversions/livelossplot.svg)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/stared/livelossplot/Python%20package)](https://github.com/stared/livelossplot/actions)
 [![Downloads](http://pepy.tech/badge/livelossplot)](http://pepy.tech/count/livelossplot)
 [![Twitter @pmigdal](https://img.shields.io/twitter/follow/pmigdal)](https://twitter.com/pmigdal)
 
