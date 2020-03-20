@@ -2,7 +2,7 @@
 
 ![PyPI version](https://img.shields.io/pypi/pyversions/livelossplot.svg)
 ![PyPI license](https://img.shields.io/pypi/l/livelossplot.svg)
-[![Actions Status](https://github.com/stared/livelossplot/workflows/pythonpackage/badge.svg)](https://github.com/stared/livelossplot/actions)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/stared/livelossplot/Python package)](https://github.com/stared/livelossplot/actions)
 ![PyPI status](https://img.shields.io/pypi/status/livelossplot.svg)
 [![Downloads](http://pepy.tech/badge/livelossplot)](http://pepy.tech/count/livelossplot)
 [![Twitter @pmigdal](https://img.shields.io/twitter/follow/pmigdal)](https://twitter.com/pmigdal)
