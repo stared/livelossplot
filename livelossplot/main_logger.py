@@ -68,7 +68,8 @@ class MainLogger:
         patterns: Tuple[Tuple[str, str]] = (
             (r'^(?!val_).*', 'training '),
             (r'^(val_).*', 'validation '),
-        )
+        ),
+        suffix_pattern: Pattern = r'^(val(_|-))(.+)$'
     ):
         """
         The function generate transforms for metric names base on patterns.
@@ -76,7 +77,10 @@ class MainLogger:
         :param metric_name - name of new appended metric
         :param patterns - a tuple with pairs - pattern and value to replace it with
         """
-        suffix = re.match(r'(.+)?(_|$)', metric_name).group(1)
+        match = re.match(suffix_pattern, metric_name)
+        if not match:
+            return
+        suffix = match.group(3)
         similar_metric_names = [m for m in self.log_history.keys() if m.endswith(suffix)]
         for name in similar_metric_names:
             new_name = name
@@ -120,7 +124,7 @@ class MainLogger:
                     groups[name].append(key)
         return groups
 
-    def _auto_generate_groups(self, group_prefixes: Tuple[Pattern] = (r'^(val_)'),) -> Dict[str, List[str]]:
+    def _auto_generate_groups(self, group_prefixes: Tuple[Pattern] = (r'^(val(_|-))',)) -> Dict[str, List[str]]:
         """
         Auto create groups base on val_ prefix - this step is skipped if groups are set
         or if group patterns are available
