@@ -66,10 +66,9 @@ class MainLogger:
         self,
         metric_name: str,
         patterns: Tuple[Tuple[str, str]] = (
-            (r'^(?!val_).*', 'training '),
-            (r'^(val_).*', 'validation '),
-        ),
-        suffix_pattern: Pattern = r'^(val(_|-))(.+)$'
+            (r'^(?!val(_|-))(.*)', 'training '),
+            (r'^(val(_|-))(.*)', 'validation '),
+        )
     ):
         """
         The function generate transforms for metric names base on patterns.
@@ -77,10 +76,13 @@ class MainLogger:
         :param metric_name - name of new appended metric
         :param patterns - a tuple with pairs - pattern and value to replace it with
         """
-        match = re.match(suffix_pattern, metric_name)
-        if not match:
+        suffix = None
+        for pattern, _ in patterns:
+            match = re.match(pattern, metric_name)
+            if match:
+                suffix = match.groups()[-1]
+        if suffix is None and suffix != metric_name:
             return
-        suffix = match.group(3)
         similar_metric_names = [m for m in self.log_history.keys() if m.endswith(suffix)]
         for name in similar_metric_names:
             new_name = name
