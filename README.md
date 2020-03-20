@@ -1,15 +1,19 @@
-# Live Loss Plot
+# livelossplot
 
 ![PyPI version](https://img.shields.io/pypi/pyversions/livelossplot.svg)
 ![PyPI license](https://img.shields.io/pypi/l/livelossplot.svg)
+[![Actions Status](https://github.com/stared/livelossplot/workflows/pythonpackage/badge.svg)](https://github.com/stared/livelossplot/actions)
 ![PyPI status](https://img.shields.io/pypi/status/livelossplot.svg)
 [![Downloads](http://pepy.tech/badge/livelossplot)](http://pepy.tech/count/livelossplot)
+[![Twitter @pmigdal](https://img.shields.io/twitter/follow/pmigdal)](https://twitter.com/pmigdal)
 
 Don't train deep learning models blindfolded! Be impatient and look at each epoch of your training!
 
+**🎉 New release 0.5.0 (20 Mar 2020). See [CHANGELOG](CHANGELOG.md) and updated [EXAMPLES IN COLAB](https://colab.research.google.com/github/stared/livelossplot). There are some API changes, to make it better, cleaner, and more modular. 🎉**
+
 A live training loss plot in [Jupyter Notebook](http://jupyter.org/) for [Keras](https://keras.io/), [PyTorch](http://pytorch.org/) and other frameworks. An open-source Python package by [Piotr Migdał](https://p.migdal.pl/), [Bartłomiej Olechno](https://github.com/Bartolo1024/) and [others](https://github.com/stared/livelossplot/graphs/contributors). **Open for collaboration!** (Some tasks are as simple as writing code docstrings, so - no excuses! :))
 
-This project supported by: [Jacek Migdał](http://jacek.migdal.pl/), [Marek Cichy](https://medium.com/@marekkcichy/). [Join the sponsors - show your ❤️ and support, and appear on the list](https://github.com/sponsors/stared)! It will give me time and energy to work on this project.
+This project supported by [Jacek Migdał](http://jacek.migdal.pl/), [Marek Cichy](https://medium.com/@marekkcichy/). [Join the sponsors - show your ❤️ and support, and appear on the list](https://github.com/sponsors/stared)! It will give me time and energy to work on this project.
 
 
 ```
