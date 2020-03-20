@@ -13,7 +13,8 @@ class CheckOutput:
         grouped_log_history = logger.grouped_log_history()
         assert len(grouped_log_history) == 2
         assert len(grouped_log_history['accuracy']) == 2
-        assert len(grouped_log_history['accuracy']['Validation ']) == 2
+        print(grouped_log_history)
+        assert len(grouped_log_history['accuracy']['validation ']) == 2
 
 
 def test_plot_losses():
