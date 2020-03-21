@@ -60,15 +60,49 @@ Look at notebook files with full working [examples](https://github.com/stared/li
 * [torchbearer.ipynb](https://github.com/stared/livelossplot/blob/master/examples/torchbearer.ipynb) - an example using the built in functionality from torchbearer ([torchbearer](https://github.com/ecs-vlc/torchbearer) is a model fitting library for PyTorch)
 * [neptune.py](https://github.com/stared/livelossplot/blob/master/examples/neptune.py)  and [neptune.ipynb](https://github.com/stared/livelossplot/blob/master/examples/neptune.ipynb) - a [Neptune.AI](https://neptune.au/)
 
+You [run examples in Colab](https://colab.research.google.com/github/stared/livelossplot).
+
 ## Overview
 
 Text logs are easy, but it's easy to miss the most crucial information: is it learning, doing nothing or overfitting?
-
 Visual feedback allows us to keep track of the training process. Now there is one for Jupyter.
 
-If you want to get serious - use [TensorBoard](https://www.tensorflow.org/programmers_guide/summaries_and_tensorboard). See `livelossplot.outputs` for loggers, plots and any other outputs.
+If you want to get serious - use [TensorBoard](https://www.tensorflow.org/programmers_guide/summaries_and_tensorboard), . 
+But what if you just want to train a small model in Jupyter Notebook? Here is a way to do so, using `livelossplot` as a plug&play component
 
-But what if you just want to train a small model in Jupyter Notebook? Here is a way to do so, using `livelossplot` as a plug&play component.
+
+### from livelossplot import ...
+
+`PlotLosses` for a generic API.
+
+```{python}
+plotlosses = PlotLosses()
+plotlosses.update({'acc': 0.7, 'val_acc': 0.4, 'loss': 0.9, 'val_loss': 1.1})
+plot.send()  # draw, update logs, etc
+```
+
+There are callbacks for common libraries and frameworks: `PlotLossesKeras`, `PlotLossesKerasTF`, `PlotLossesPoutyne`, `PlotLossesIgnite`.
+
+Feel invited to write, and contribute, your adapter.
+If you want to use a bare logger, there is `MainLogger`.
+
+
+### from livelossplot.outputs import ...
+
+Plots: `MatplotlibPlot`, `BokehPlot`. 
+
+Loggers: `ExtremaPrinter` (to standard output), `TensorboardLogger`, `TensorboardTFLogger`, `NeptuneLogger`.
+
+To use them, initialize PlotLosses with some outputs:
+
+```{python}
+plotlosses = PlotLosses(outputs=[MatplotlibPlot(), TensorboardLogger()])
+```
+
+There are custom `matplotlib` plots in `livelossplot.outputs.matplotlib_subplots` you can pass in `MatplotlibPlot` arguments.
+
+
+## Trivia
 
 It started as [this gist](https://gist.github.com/stared/dfb4dfaf6d9a8501cd1cc8b8cb806d2e). Since it went popular, I decided to rewrite it as a package.
 
