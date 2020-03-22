@@ -1,11 +1,11 @@
 import warnings
 from typing import Type, Tuple, List, Optional, TypeVar
 
-
 from livelossplot.main_logger import MainLogger
 from livelossplot.outputs import BaseOutput, MatplotlibPlot, ExtremaPrinter
 
 BO = TypeVar('BO', bound=BaseOutput)
+
 
 class PlotLosses:
     """
