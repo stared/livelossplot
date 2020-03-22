@@ -1,4 +1,4 @@
-from typing import List
+from typing import Tuple, List, Dict, Optional
 
 import warnings
 
@@ -13,12 +13,12 @@ class MatplotlibPlot(BaseOutput):
     """NOTE: Removed figsize and dynamix_x_axis."""
     def __init__(
         self,
-        cell_size: (int, int) = (6, 4),
+        cell_size: Tuple[int, int] = (6, 4),
         max_cols: int = 2,
         max_epoch: int = None,
         skip_first: int = 2,
         extra_plots=[],
-        figpath: str or None = None
+        figpath: Optional[str] = None
     ):
         self.cell_size = cell_size
         self.max_cols = max_cols
@@ -54,7 +54,7 @@ class MatplotlibPlot(BaseOutput):
             self.file_idx += 1
         plt.show()
 
-    def _draw_metric_subplot(self, group_logs: List[LogItem], group_name: str = ''):
+    def _draw_metric_subplot(self, group_logs: Dict[str, List[LogItem]], group_name: str = ''):
         # there used to be skip first part, but I skip it first
         if self.max_epoch is not None:
             plt.xlim(0, self.max_epoch)

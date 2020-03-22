@@ -24,7 +24,7 @@ class TensorboardLogger(BaseOutput):
         """Close tensorboard writer"""
         self.writer.close()
 
-    def log_scalar(self, name: str, value: int, global_step: float):
+    def log_scalar(self, name: str, value: float, global_step: float):
         """
         :param name: name of metric
         :param value: float value of metric

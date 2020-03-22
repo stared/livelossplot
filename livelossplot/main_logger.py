@@ -1,6 +1,6 @@
 import re
 from collections import OrderedDict
-from typing import NamedTuple, Dict, List, Pattern, Tuple
+from typing import NamedTuple, Dict, List, Pattern, Tuple, Optional
 
 # Value of metrics - for value later, we want to support numpy arrays etc
 LogItem = NamedTuple('LogItem', [('step', int), ('value', float)])
@@ -19,15 +19,15 @@ class MainLogger:
     """
     def __init__(
         self,
-        groups: Dict[str, List[str]] or None = None,
-        metric_to_name: Dict[str, str] or None = None,
+        groups: Optional[Dict[str, List[str]]] = None,
+        metric_to_name: Optional[Dict[str, str]] = None,
         current_step: int = -1,
         auto_generate_groups_if_not_available: bool = True,
         auto_generate_metric_to_name: bool = True,
-        group_patterns: Tuple[Tuple[Pattern, str]] = (
+        group_patterns: List[Tuple[str, str]] = [
             (r'^(?!val(_|-))(.*)', 'training '),
             (r'^(val(_|-))(.*)', 'validation '),
-        )
+        ]
     ):
         """
         :param groups - dictionary with grouped metrics for example one group can contains
@@ -41,14 +41,14 @@ class MainLogger:
          and replace its name using second value:
         """
         self.log_history = {}
-        self.groups = groups
+        self.groups = groups if groups is not None else {}
         self.metric_to_name = metric_to_name if metric_to_name else {}
         self.current_step = current_step
         self.auto_generate_groups = all((not groups, auto_generate_groups_if_not_available))
         self.auto_generate_metric_to_name = auto_generate_metric_to_name
         self.group_patterns = tuple((re.compile(pattern), replace_with) for pattern, replace_with in group_patterns)
 
-    def update(self, logs: dict, current_step: int or None = None) -> None:
+    def update(self, logs: dict, current_step: Optional[int] = None) -> None:
         """Update logs - loop step can be controlled outside or inside main logger"""
         if current_step is None:
             self.current_step += 1

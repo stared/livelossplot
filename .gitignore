@@ -8,3 +8,4 @@ build/
 .vscode
 tensorboard_logs/
 examples/_test*
+.mypy_cache/

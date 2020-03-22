@@ -1,5 +1,8 @@
+from livelossplot.main_logger import MainLogger
+
+
 class BaseOutput:
-    def send(self, *args, **kwargs):
+    def send(self, logger: MainLogger):
         """Abstract method - handle logs for a plugin"""
         raise NotImplementedError()
 

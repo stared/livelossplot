@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import List, Dict, Tuple
 
 from livelossplot.main_logger import MainLogger, LogItem
 from livelossplot.outputs.base_output import BaseOutput
@@ -10,7 +10,7 @@ class BokehPlot(BaseOutput):
         self,
         max_cols: int = 2,
         skip_first: int = 2,
-        cell_size: (int, int) = (600, 400),
+        cell_size: Tuple[int, int] = (600, 400),
     ):
         from bokeh import plotting
         self.plotting = plotting
