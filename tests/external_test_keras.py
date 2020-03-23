@@ -45,7 +45,7 @@ def generate_data():
 
 
 def test_keras():
-    callback = PlotLossesKeras(outputs=(CheckOutput(),))
+    callback = PlotLossesKeras(outputs=(CheckOutput(), ))
     model = Sequential()
     model.add(LSTM(5, input_shape=(1, NUM_OF_GENERATED)))
     model.add(Dense(NUM_OF_GENERATED, activation='softmax'))

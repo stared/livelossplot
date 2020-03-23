@@ -18,7 +18,7 @@ class CheckOutput(BaseOutput):
 
 def test_plot_losses():
     """Test basic usage"""
-    loss_plotter = PlotLosses(outputs=(CheckOutput(),))
+    loss_plotter = PlotLosses(outputs=(CheckOutput(), ))
     loss_plotter.update({'acc': 0.5, 'val_acc': 0.4, 'loss': 1.2, 'val_loss': 1.1})
     loss_plotter.update({
         'acc': 0.55,
