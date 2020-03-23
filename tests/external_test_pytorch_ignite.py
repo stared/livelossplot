@@ -4,9 +4,10 @@ from torch import nn, optim
 from torch.utils.data import TensorDataset, DataLoader
 
 from livelossplot import MainLogger, PlotLossesIgnite
+from livelossplot.outputs import BaseOutput
 
 
-class CheckOutput:
+class CheckOutput(BaseOutput):
     def send(self, logger: MainLogger):
         assert isinstance(logger, MainLogger)
         log_history = logger.log_history
