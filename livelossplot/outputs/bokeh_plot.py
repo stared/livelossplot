@@ -11,33 +11,57 @@ class BokehPlot(BaseOutput):
         max_cols: int = 2,
         skip_first: int = 2,
         cell_size: Tuple[int, int] = (600, 400),
+        output_file: str = '/tmp/bokeh_output.html'
     ):
-        from bokeh import plotting
+        from bokeh import plotting, io
         self.plotting = plotting
+        self.io = io
         self.plot_width, self.plot_height = cell_size
         self.max_cols = max_cols
         self.skip_first = skip_first  # think about it
+        self.figures = {}
+        self.notebook_handle = False
+        self.output_file = output_file
 
     def send(self, logger: MainLogger) -> None:
         """Draw figures with metrics and show"""
         log_groups = logger.grouped_log_history()
-        figures = []
-        row = []
+        new_grid_plot = False
         for idx, (group_name, group_logs) in enumerate(log_groups.items(), start=1):
-            row.append(self._draw_metric_subplot(group_logs, group_name=group_name))
-            if idx % self.max_cols == 0:
-                figures.append(row)
-                row = []
-        grid = self.plotting.gridplot(figures, plot_width=self.plot_width, plot_height=self.plot_height)
-        self.plotting.show(grid)
+            fig = self.figures.get(group_name)
+            if not fig:
+                fig = self.plotting.figure(title=group_name)
+                new_grid_plot = True
+            self.figures[group_name] = self._draw_metric_subplot(fig, group_logs)
+        if new_grid_plot:
+            self._create_grid_plot()
+        if self.notebook_handle:
+            self.io.push_notebook(handle=self.target)
+        else:
+            self.io.output_file(self.output_file)
 
-    def _draw_metric_subplot(self, group_logs: Dict[str, List[LogItem]], group_name: str = ''):
+    def _draw_metric_subplot(self, fig, group_logs: Dict[str, List[LogItem]]):
         # for now, with local imports, no output annotation  -> self.plotting.Figure
         # there used to be skip first part, but I skip it first
-        fig = self.plotting.figure(title=group_name)
         for name, logs in group_logs.items():
             if len(logs) > 0:
                 xs = [log.step for log in logs]
                 ys = [log.value for log in logs]
                 fig.line(xs, ys, legend_label=name)
         return fig
+
+    def _create_grid_plot(self):
+        rows = []
+        row = []
+        for idx, fig in enumerate(self.figures.values(), start=1):
+            row.append(fig)
+            if idx % self.max_cols == 0:
+                rows.append(row)
+                row = []
+        grid = self.plotting.gridplot(rows, plot_width=self.plot_width, plot_height=self.plot_height)
+        self.target = self.plotting.show(grid, notebook_handle=self.notebook_handle)
+
+    def _set_output_mode(self, mode: str):
+        self.notebook_handle = mode == 'notebook'
+        if self.notebook_handle:
+            self.io.output_notebook()
