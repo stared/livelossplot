@@ -28,20 +28,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements-dev.txt
         python setup.py install
-    - name: Lint with flake8
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings.
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=120 --statistics
     - name: Test with pytest
       run: |
         pytest
-    - name: yapf
-      id: yapf
-      uses: diegovalenzuelaiturra/yapf-action@v0.0.1
-      with:
-        args: . --recursive --diff
-    - name: Fail if yapf made changes
-      if: steps.yapf.outputs.exit-code == 2
-      run: exit 1
