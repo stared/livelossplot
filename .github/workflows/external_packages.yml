@@ -46,3 +46,7 @@ jobs:
     - name: Test Jupyter Notebook matplotlib output
       run: |
         pytest tests/external_test_examples.py
+    - name: Test Neptune.ai logger and API
+      run: |
+        pip install neptune-client
+        pytest tests/external_api_test_neptune.py
