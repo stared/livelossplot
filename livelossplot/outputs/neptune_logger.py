@@ -28,4 +28,3 @@ class NeptuneLogger(BaseOutput):
         for name, log_items in logger.log_history.items():
             last_log_item = log_items[-1]
             self.neptune.send_metric(name, x=last_log_item.step, y=last_log_item.value)
-
