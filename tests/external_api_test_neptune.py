@@ -28,7 +28,7 @@ def test_neptune():
 
     assert neptune_logger.experiment.state == 'running'
 
-    neptune_logger.stop()
+    neptune_logger.close()
 
     assert neptune_logger.experiment.state == 'succeed'
 
