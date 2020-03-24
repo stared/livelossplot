@@ -8,11 +8,12 @@ import neptune
 
 def test_neptune():
     neptune_logger = NeptuneLogger(
-        api_token="ANONYMOUS",
-        project_qualified_name="shared/colab-test-run",
-        tags=['livelossplot', 'github-actions'])
+        api_token="ANONYMOUS", project_qualified_name="shared/colab-test-run", tags=['livelossplot', 'github-actions']
+    )
 
-    plotlosses = PlotLosses(groups=groups, outputs=[neptune_logger, ])
+    plotlosses = PlotLosses(groups=groups, outputs=[
+        neptune_logger,
+    ])
 
     assert neptune_logger.experiment.state == 'running'
 
@@ -33,7 +34,6 @@ def test_neptune():
 
     assert neptune_logger.experiment.state == 'succeed'
 
-    url =  neptune.project._get_experiment_link(neptune_logger.experiment)
+    url = neptune.project._get_experiment_link(neptune_logger.experiment)
 
     assert len(url) > 0
-
