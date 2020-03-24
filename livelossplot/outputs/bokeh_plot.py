@@ -38,7 +38,7 @@ class BokehPlot(BaseOutput):
         if self.notebook_handle:
             self.io.push_notebook(handle=self.target)
         else:
-            self.io.output_file(self.output_file)
+            self.plotting.save(self.grid)
 
     def _draw_metric_subplot(self, fig, group_logs: Dict[str, List[LogItem]]):
         # for now, with local imports, no output annotation  -> self.plotting.Figure
@@ -58,10 +58,12 @@ class BokehPlot(BaseOutput):
             if idx % self.max_cols == 0:
                 rows.append(row)
                 row = []
-        grid = self.plotting.gridplot(rows, plot_width=self.plot_width, plot_height=self.plot_height)
-        self.target = self.plotting.show(grid, notebook_handle=self.notebook_handle)
+        self.grid = self.plotting.gridplot(rows, plot_width=self.plot_width, plot_height=self.plot_height)
+        self.target = self.plotting.show(self.grid, notebook_handle=self.notebook_handle)
 
     def _set_output_mode(self, mode: str):
         self.notebook_handle = mode == 'notebook'
         if self.notebook_handle:
             self.io.output_notebook()
+        else:
+            self.io.output_file(self.output_file)
