@@ -11,9 +11,7 @@ def test_neptune():
         api_token="ANONYMOUS", project_qualified_name="shared/colab-test-run", tags=['livelossplot', 'github-actions']
     )
 
-    plotlosses = PlotLosses(groups=groups, outputs=[
-        neptune_logger,
-    ])
+    plotlosses = PlotLosses(outputs=[neptune_logger])
 
     assert neptune_logger.experiment.state == 'running'
 
