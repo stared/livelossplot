@@ -11,7 +11,7 @@ class BokehPlot(BaseOutput):
         max_cols: int = 2,
         skip_first: int = 2,
         cell_size: Tuple[int, int] = (600, 400),
-        output_file: str = '/tmp/bokeh_output.html'
+        output_file: str = './bokeh_output.html'
     ):
         from bokeh import plotting, io
         self.plotting = plotting
@@ -62,6 +62,7 @@ class BokehPlot(BaseOutput):
         self.target = self.plotting.show(self.grid, notebook_handle=self.notebook_handle)
 
     def _set_output_mode(self, mode: str):
+        """Set notebook or script mode"""
         self.notebook_handle = mode == 'notebook'
         if self.notebook_handle:
             self.io.output_notebook()

@@ -19,4 +19,8 @@ class BaseOutput(ABC):
         self._set_output_mode(mode)
 
     def _set_output_mode(self, mode: str):
+        """
+        :param mode: mode for callbacks - some of outputs need to change some behaviors,
+         depending on the working environment (scripts and jupyter notebooks)
+        """
         ...
