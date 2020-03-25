@@ -6,10 +6,10 @@ from livelossplot import PlotLosses
 from livelossplot.outputs import BokehPlot
 
 
-def test_tensorboard():
+def test_bokeh_plot():
     logger = BokehPlot()
 
-    liveplot = PlotLosses(outputs=(logger, ), mode='script')
+    liveplot = PlotLosses(outputs=[logger], mode='script')
 
     for i in range(3):
         liveplot.update(

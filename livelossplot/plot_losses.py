@@ -14,8 +14,8 @@ class PlotLosses:
     def __init__(self, outputs: Optional[List[Type[BO]]] = None, mode: str = 'notebook', **kwargs):
         """
         :param outputs: list of callbacks (outputs) which are called with send method
-        :param mode: mode for callbacks - some of outputs need to change some behaviors,
-         depending on the working environment (scripts and jupyter notebooks)
+        :param mode: Options: 'notebook' or 'script' - some of outputs need to change some behaviors,
+         depending on the working environment
         :param kwargs: key-arguments which are passed to MainLogger
         """
         self.logger = MainLogger(**kwargs)
