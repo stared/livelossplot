@@ -1,9 +1,8 @@
-import re
-
 from livelossplot import MainLogger, PlotLosses
+from livelossplot.outputs import BaseOutput
 
 
-class CheckOutput:
+class CheckOutput(BaseOutput):
     def send(self, logger: MainLogger):
         assert isinstance(logger, MainLogger)
         grouped_log_history = logger.grouped_log_history(raw_names=True, raw_group_names=True)

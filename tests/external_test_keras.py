@@ -6,11 +6,12 @@ from numpy import argmax
 from numpy import array
 
 from livelossplot import MainLogger, PlotLossesKeras
+from livelossplot.outputs import BaseOutput
 
 NUM_OF_GENERATED = 5
 
 
-class CheckOutput:
+class CheckOutput(BaseOutput):
     def send(self, logger: MainLogger):
         assert isinstance(logger, MainLogger)
         grouped_log_history = logger.grouped_log_history(raw_names=True, raw_group_names=True)
