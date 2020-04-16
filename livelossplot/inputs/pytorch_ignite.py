@@ -25,7 +25,7 @@ class PlotLossesCallback:
     def store(self, engine: ignite.engine.Engine):
         """Evaluation engine store state with computed metrics, that will be send to main logger"""
         metrics = {}
-        if not hasattr(engine.state, 'metrics'):
+        if not hasattr(engine.state, 'metrics') or len(engine.state.metrics) == 0:
             return
         kwargs = dict(
             current_step=global_step_from_engine(self.train_engine)
