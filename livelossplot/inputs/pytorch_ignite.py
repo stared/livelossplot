@@ -36,4 +36,3 @@ class PlotLossesCallback:
             metrics[metric_name] = val
         self.liveplot.update(metrics, **kwargs)
         self.liveplot.send()
-
