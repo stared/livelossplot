@@ -19,8 +19,8 @@ class PlotLossesCallback:
         self.liveplot = PlotLosses(**kwargs)
         self.train_engine = train_engine
         if self.train_engine:
-            self.train_engine.add_event_handler(ignite.engine.Events.EPOCH_STARTED, self.store)
-            self.train_engine.add_event_handler(ignite.engine.Events.COMPLETED, self.store)
+            self.train_engine.add_event_handler(ignite.engine.Events.EPOCH_STARTED, self.send)
+            self.train_engine.add_event_handler(ignite.engine.Events.COMPLETED, self.send)
 
     def attach(self, engine: ignite.engine.Engine):
         """Attach callback to ignite engine, attached method will be called on the end of each epoch
