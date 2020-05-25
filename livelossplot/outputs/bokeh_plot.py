@@ -13,7 +13,7 @@ class BokehPlot(BaseOutput):
         cell_size: Tuple[int, int] = (600, 400),
         output_file: str = './bokeh_output.html'
     ):
-        from bokeh import plotting, io
+        from bokeh import plotting, io, palettes
         self.plotting = plotting
         self.io = io
         self.plot_width, self.plot_height = cell_size
@@ -22,6 +22,7 @@ class BokehPlot(BaseOutput):
         self.figures = {}
         self.notebook_handle = False
         self.output_file = output_file
+        self.colors = palettes.Category10[10]
 
     def send(self, logger: MainLogger) -> None:
         """Draw figures with metrics and show"""
@@ -43,11 +44,11 @@ class BokehPlot(BaseOutput):
     def _draw_metric_subplot(self, fig, group_logs: Dict[str, List[LogItem]]):
         # for now, with local imports, no output annotation  -> self.plotting.Figure
         # there used to be skip first part, but I skip it first
-        for name, logs in group_logs.items():
+        for i, (name, logs) in enumerate(group_logs.items()):
             if len(logs) > 0:
                 xs = [log.step for log in logs]
                 ys = [log.value for log in logs]
-                fig.line(xs, ys, legend_label=name)
+                fig.line(xs, ys, color=self.colors[i], legend_label=name)
         return fig
 
     def _create_grid_plot(self):
