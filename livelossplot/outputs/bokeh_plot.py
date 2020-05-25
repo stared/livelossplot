@@ -10,7 +10,7 @@ class BokehPlot(BaseOutput):
         self,
         max_cols: int = 2,
         skip_first: int = 2,
-        cell_size: Tuple[int, int] = (600, 400),
+        cell_size: Tuple[int, int] = (400, 300),
         output_file: str = './bokeh_output.html'
     ):
         from bokeh import plotting, io, palettes
@@ -59,7 +59,9 @@ class BokehPlot(BaseOutput):
             if idx % self.max_cols == 0:
                 rows.append(row)
                 row = []
-        self.grid = self.plotting.gridplot(rows, plot_width=self.plot_width, plot_height=self.plot_height)
+        self.grid = self.plotting.gridplot(
+            rows, sizing_mode='scale_width', plot_width=self.plot_width, plot_height=self.plot_height
+        )
         self.target = self.plotting.show(self.grid, notebook_handle=self.notebook_handle)
 
     def _set_output_mode(self, mode: str):
