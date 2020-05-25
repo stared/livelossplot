@@ -16,6 +16,6 @@ about: Submit a bug report to help us improve livelossplot
 - livelossplot version (e.g., 0.5.0):
 - Version of relevant libraries (e.g. TensorFlow if you use it)
 - OS (e.g., Linux):
-- Environment in which the error occured (e.g. Jupyter Notebook, Jupyter Lab):
+- Environment in which the error occurred (e.g. Jupyter Notebook, Jupyter Lab):
 - Python version (e.g. 3.7.1):
 - Any other relevant information:
