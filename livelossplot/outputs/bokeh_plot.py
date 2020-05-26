@@ -20,7 +20,7 @@ class BokehPlot(BaseOutput):
         self.max_cols = max_cols
         self.skip_first = skip_first  # think about it
         self.figures = {}
-        self.notebook_handle = False
+        self.is_notebook = False
         self.output_file = output_file
         self.colors = palettes.Category10[10]
 
@@ -36,7 +36,7 @@ class BokehPlot(BaseOutput):
             self.figures[group_name] = self._draw_metric_subplot(fig, group_logs)
         if new_grid_plot:
             self._create_grid_plot()
-        if self.notebook_handle:
+        if self.is_notebook:
             self.io.push_notebook(handle=self.target)
         else:
             self.plotting.save(self.grid)
@@ -62,12 +62,12 @@ class BokehPlot(BaseOutput):
         self.grid = self.plotting.gridplot(
             rows, sizing_mode='scale_width', plot_width=self.plot_width, plot_height=self.plot_height
         )
-        self.target = self.plotting.show(self.grid, notebook_handle=self.notebook_handle)
+        self.target = self.plotting.show(self.grid, notebook_handle=self.is_notebook)
 
     def _set_output_mode(self, mode: str):
         """Set notebook or script mode"""
-        self.notebook_handle = mode == 'notebook'
-        if self.notebook_handle:
+        self.is_notebook = mode == 'notebook'
+        if self.is_notebook:
             self.io.output_notebook()
         else:
             self.io.output_file(self.output_file)
