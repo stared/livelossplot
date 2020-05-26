@@ -44,11 +44,30 @@ class BokehPlot(BaseOutput):
     def _draw_metric_subplot(self, fig, group_logs: Dict[str, List[LogItem]]):
         # for now, with local imports, no output annotation  -> self.plotting.Figure
         # there used to be skip first part, but I skip it first
+        from bokeh.models import ColumnDataSource, HoverTool
         for i, (name, logs) in enumerate(group_logs.items()):
             if len(logs) > 0:
-                xs = [log.step for log in logs]
-                ys = [log.value for log in logs]
-                fig.line(xs, ys, color=self.colors[i], legend_label=name)
+                source = ColumnDataSource(
+                    data={
+                        'step': [log.step for log in logs],
+                        'value': [log.value for log in logs],
+                    }
+                )
+                fig.line(x='step', y='value', color=self.colors[i], legend_label=name, source=source)
+
+        fig.add_tools(
+            HoverTool(
+                tooltips=[
+                    ('step', '@step'),
+                    ('value', '@value{0.3f}'),
+                ],
+                formatters={
+                    'step': 'printf',
+                    'value': 'printf',
+                },
+                mode='vline'
+            )
+        )
         return fig
 
     def _create_grid_plot(self):
