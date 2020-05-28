@@ -10,7 +10,7 @@
 
 Don't train deep learning models blindfolded! Be impatient and look at each epoch of your training!
 
-**🎉 New release 0.5.0 (20 Mar 2020). See [CHANGELOG](CHANGELOG.md) and updated [EXAMPLES IN COLAB](https://colab.research.google.com/github/stared/livelossplot). There are some API changes, to make it better, cleaner, and more modular.From 0.5.1 (28 May 2020) there is [Bokeh](https://docs.bokeh.org/en/latest/#) support. 🎉**
+**🎉 New release 0.5.0 (20 Mar 2020). See [CHANGELOG](CHANGELOG.md) and updated [EXAMPLES IN COLAB](https://colab.research.google.com/github/stared/livelossplot). There are some API changes, to make it better, cleaner, and more modular. From 0.5.1 (28 May 2020) there is [Bokeh](https://docs.bokeh.org/en/latest/#) support. 🎉**
 
 A live training loss plot in [Jupyter Notebook](http://jupyter.org/) for [Keras](https://keras.io/), [PyTorch](http://pytorch.org/) and other frameworks. An open-source Python package by [Piotr Migdał](https://p.migdal.pl/), [Bartłomiej Olechno](https://github.com/Bartolo1024/) and [others](https://github.com/stared/livelossplot/graphs/contributors). **Open for collaboration!** (Some tasks are as simple as writing code docstrings, so - no excuses! :))
 
@@ -49,7 +49,7 @@ Look at notebook files with full working [examples](https://github.com/stared/li
 
 - [keras.ipynb](https://github.com/stared/livelossplot/blob/master/examples/keras.ipynb) - a Keras callback
 - [minimal.ipynb](https://github.com/stared/livelossplot/blob/master/examples/minimal.ipynb) - a bare API, to use anywhere
-- [bokeh.ipynb](https://github.com/stared/livelossplot/blob/master/examples/minimal.ipynb) - a bare API, plots with Bokeh
+- [bokeh.ipynb](https://github.com/stared/livelossplot/blob/master/examples/bokeh.ipynb) - a bare API, plots with Bokeh ([open it in Colab to see the plots](https://colab.research.google.com/github/stared/livelossplot/blob/master/examples/bokeh.ipynb))
 - [pytorch.ipynb](https://github.com/stared/livelossplot/blob/master/examples/pytorch.ipynb) - a bare API, as applied to PyTorch
 - [2d_prediction_maps.ipynb](https://github.com/stared/livelossplot/blob/master/examples/2d_prediction_maps.ipynb) - example of custom plots - 2d prediction maps (0.4.1+)
 - [poutyne.ipynb](https://github.com/stared/livelossplot/blob/master/examples/poutyne.ipynb) - a Poutyne callback ([Poutyne](https://poutyne.org/) is a Keras-like framework for PyTorch)
