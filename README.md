@@ -16,8 +16,7 @@ A live training loss plot in [Jupyter Notebook](http://jupyter.org/) for [Keras]
 
 This project supported by [Jacek Migdał](http://jacek.migdal.pl/), [Marek Cichy](https://medium.com/@marekkcichy/). [Join the sponsors - show your ❤️ and support, and appear on the list](https://github.com/sponsors/stared)! It will give me time and energy to work on this project.
 
-
-```
+```python
 from livelossplot import PlotLossesKeras
 
 model.fit(X_train, Y_train,
@@ -31,20 +30,20 @@ model.fit(X_train, Y_train,
 
 So remember, [log your loss](https://twitter.com/pmigdal/status/943764924983017473)!
 
-* (The most FA)Q: Why not TensorBoard?
-* A: Jupyter Notebook compatibility (for exploration and teaching). The simplicity of use.
+- (The most FA)Q: Why not TensorBoard?
+- A: Jupyter Notebook compatibility (for exploration and teaching). The simplicity of use.
 
 ## Installation
 
 To install [this version from PyPI](https://pypi.org/project/livelossplot/), type:
 
-```
+```bash
 pip install livelossplot
 ```
 
 To get the newest one from this repo (note that we are in the alpha stage, so there may be frequent updates), type:
 
-```
+```bash
 pip install git+git://github.com/stared/livelossplot.git
 ```
 
@@ -52,13 +51,13 @@ pip install git+git://github.com/stared/livelossplot.git
 
 Look at notebook files with full working [examples](https://github.com/stared/livelossplot/blob/master/examples/):
 
-* [keras.ipynb](https://github.com/stared/livelossplot/blob/master/examples/keras.ipynb) - a Keras callback
-* [minimal.ipynb](https://github.com/stared/livelossplot/blob/master/examples/minimal.ipynb) - a bare API, to use anywhere
-* [pytorch.ipynb](https://github.com/stared/livelossplot/blob/master/examples/pytorch.ipynb) - a bare API, as applied to PyTorch
-* [2d_prediction_maps.ipynb](https://github.com/stared/livelossplot/blob/master/examples/2d_prediction_maps.ipynb) - example of custom plots - 2d prediction maps (0.4.1+)
-* [poutyne.ipynb](https://github.com/stared/livelossplot/blob/master/examples/poutyne.ipynb) - a Poutyne callback ([Poutyne](https://poutyne.org/) is a Keras-like framework for PyTorch)
-* [torchbearer.ipynb](https://github.com/stared/livelossplot/blob/master/examples/torchbearer.ipynb) - an example using the built in functionality from torchbearer ([torchbearer](https://github.com/ecs-vlc/torchbearer) is a model fitting library for PyTorch)
-* [neptune.py](https://github.com/stared/livelossplot/blob/master/examples/neptune.py)  and [neptune.ipynb](https://github.com/stared/livelossplot/blob/master/examples/neptune.ipynb) - a [Neptune.AI](https://neptune.au/)
+- [keras.ipynb](https://github.com/stared/livelossplot/blob/master/examples/keras.ipynb) - a Keras callback
+- [minimal.ipynb](https://github.com/stared/livelossplot/blob/master/examples/minimal.ipynb) - a bare API, to use anywhere
+- [pytorch.ipynb](https://github.com/stared/livelossplot/blob/master/examples/pytorch.ipynb) - a bare API, as applied to PyTorch
+- [2d_prediction_maps.ipynb](https://github.com/stared/livelossplot/blob/master/examples/2d_prediction_maps.ipynb) - example of custom plots - 2d prediction maps (0.4.1+)
+- [poutyne.ipynb](https://github.com/stared/livelossplot/blob/master/examples/poutyne.ipynb) - a Poutyne callback ([Poutyne](https://poutyne.org/) is a Keras-like framework for PyTorch)
+- [torchbearer.ipynb](https://github.com/stared/livelossplot/blob/master/examples/torchbearer.ipynb) - an example using the built in functionality from torchbearer ([torchbearer](https://github.com/ecs-vlc/torchbearer) is a model fitting library for PyTorch)
+- [neptune.py](https://github.com/stared/livelossplot/blob/master/examples/neptune.py) and [neptune.ipynb](https://github.com/stared/livelossplot/blob/master/examples/neptune.ipynb) - a [Neptune.AI](https://neptune.au/)
 
 You [run examples in Colab](https://colab.research.google.com/github/stared/livelossplot).
 
@@ -67,9 +66,8 @@ You [run examples in Colab](https://colab.research.google.com/github/stared/live
 Text logs are easy, but it's easy to miss the most crucial information: is it learning, doing nothing or overfitting?
 Visual feedback allows us to keep track of the training process. Now there is one for Jupyter.
 
-If you want to get serious - use [TensorBoard](https://www.tensorflow.org/programmers_guide/summaries_and_tensorboard), . 
+If you want to get serious - use [TensorBoard](https://www.tensorflow.org/programmers_guide/summaries_and_tensorboard), .
 But what if you just want to train a small model in Jupyter Notebook? Here is a way to do so, using `livelossplot` as a plug&play component
-
 
 ### from livelossplot import ...
 
@@ -86,10 +84,9 @@ There are callbacks for common libraries and frameworks: `PlotLossesKeras`, `Plo
 Feel invited to write, and contribute, your adapter.
 If you want to use a bare logger, there is `MainLogger`.
 
-
 ### from livelossplot.outputs import ...
 
-Plots: `MatplotlibPlot`, `BokehPlot`. 
+Plots: `MatplotlibPlot`, `BokehPlot`.
 
 Loggers: `ExtremaPrinter` (to standard output), `TensorboardLogger`, `TensorboardTFLogger`, `NeptuneLogger`.
 
@@ -100,7 +97,6 @@ plotlosses = PlotLosses(outputs=[MatplotlibPlot(), TensorboardLogger()])
 ```
 
 There are custom `matplotlib` plots in `livelossplot.outputs.matplotlib_subplots` you can pass in `MatplotlibPlot` arguments.
-
 
 ## Trivia
 
