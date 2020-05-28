@@ -36,7 +36,7 @@ setup(
     keywords=['keras', 'pytorch', 'plot', 'chart', 'deep-learning'],
     license='MIT',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Framework :: Jupyter',
         'Intended Audience :: Developers',
         'Intended Audience :: Education',

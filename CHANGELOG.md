@@ -9,8 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Bokeh colors and scaling.
-- Bokeh hover tooltip.
+- Bokeh colors, scaling, and hover tooltip (see [this PR for screenshots](https://github.com/stared/livelossplot/pull/106)).
 - Tests for Neptune, better tests in general.
 - Nice Issue templates.
 
