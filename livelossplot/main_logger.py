@@ -30,7 +30,7 @@ class MainLogger:
         ]
     ):
         """
-        :param groups - dictionary with grouped metrics for example one group can contains
+        :param groups - dictionary with grouped metrics for example one group can contain
          one metric in different stages for example validation, training etc.:
         :param metric_to_name - transformation of metric name which can be used to display name:
         :param current_step - current step of the train engine:
