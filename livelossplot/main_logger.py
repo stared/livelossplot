@@ -49,11 +49,7 @@ class MainLogger:
         self.auto_generate_groups = all((not groups, auto_generate_groups_if_not_available))
         self.auto_generate_metric_to_name = auto_generate_metric_to_name
         self.group_patterns = tuple((re.compile(pattern), replace_with) for pattern, replace_with in group_patterns)
-        if isinstance(step_names, str):
-            group_names = {name for pattern, name in group_patterns}
-            self.step_names = {n: step_names for n in group_names}
-        else:
-            self.step_names = step_names
+        self._step_names = step_names
 
     def update(self, logs: dict, current_step: Optional[int] = None) -> None:
         """Update logs - loop step can be controlled outside or inside main logger"""
@@ -165,3 +161,9 @@ class MainLogger:
         if len(value) > 0:
             raise RuntimeError('Cannot overwrite log history with non empty dictionary')
         self._log_history = value
+
+    def step_name(self, group_name: str) -> str:
+        if isinstance(self._step_names, str):
+            return self._step_names
+        else:
+            return self._step_names.get(group_name, 'epoch')

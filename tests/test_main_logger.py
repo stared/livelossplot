@@ -76,3 +76,9 @@ def test_main_logger_autogroups():
     for target_group, target_metrics in target_groups.items():
         for m1, m2 in zip(sorted(grouped_log_history[target_group].keys()), sorted(target_metrics)):
             assert m1 == m2
+
+
+def test_main_logger_step_names():
+    logger = MainLogger()
+    print(logger.step_names)
+    assert all(n == 'epoch' for group, n in logger.step_names.items())
