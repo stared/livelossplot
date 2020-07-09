@@ -1,6 +1,6 @@
 import re
 from collections import OrderedDict
-from typing import NamedTuple, Dict, List, Pattern, Tuple, Optional
+from typing import NamedTuple, Dict, List, Pattern, Tuple, Optional, Union
 
 # Value of metrics - for value later, we want to support numpy arrays etc
 LogItem = NamedTuple('LogItem', [('step', int), ('value', float)])
@@ -24,10 +24,11 @@ class MainLogger:
         current_step: int = -1,
         auto_generate_groups_if_not_available: bool = True,
         auto_generate_metric_to_name: bool = True,
-        group_patterns: List[Tuple[str, str]] = [
+        group_patterns: List[Tuple[Pattern, str]] = [
             (r'^(?!val(_|-))(.*)', 'training '),
             (r'^(val(_|-))(.*)', 'validation '),
-        ]
+        ],
+        step_names: Union[str, Dict[str, str]] = 'epoch'
     ):
         """
         :param groups - dictionary with grouped metrics for example one group can contain
@@ -39,6 +40,7 @@ class MainLogger:
          based on common shortcuts:
         :param group_patterns - you can put there regular expressions to match a few metric names with group
          and replace its name using second value:
+        :param step_names list names of x axis for each metrics group or one name for all metrics:
         """
         self.log_history = {}
         self.groups = groups if groups is not None else {}
@@ -47,6 +49,11 @@ class MainLogger:
         self.auto_generate_groups = all((not groups, auto_generate_groups_if_not_available))
         self.auto_generate_metric_to_name = auto_generate_metric_to_name
         self.group_patterns = tuple((re.compile(pattern), replace_with) for pattern, replace_with in group_patterns)
+        if isinstance(step_names, str):
+            group_names = {name for pattern, name in group_patterns}
+            self.step_names = {n: step_names for n in group_names}
+        else:
+            self.step_names = step_names
 
     def update(self, logs: dict, current_step: Optional[int] = None) -> None:
         """Update logs - loop step can be controlled outside or inside main logger"""
