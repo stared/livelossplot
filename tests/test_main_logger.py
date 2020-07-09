@@ -79,6 +79,11 @@ def test_main_logger_autogroups():
 
 
 def test_main_logger_step_names():
-    logger = MainLogger()
-    print(logger.step_names)
-    assert all(n == 'epoch' for group, n in logger.step_names.items())
+    step_names = 'iteration'
+    logger = MainLogger(step_names=step_names)
+    assert logger.step_name('Accuracy') == 'iteration'
+    step_names = {'Accuracy': 'evaluation', 'Loss': 'batch'}
+    logger = MainLogger(step_names=step_names)
+    assert logger.step_name('Accuracy') == 'evaluation'
+    assert logger.step_name('Loss') == 'batch'
+    assert logger.step_name('Epoch Time') == 'epoch'
