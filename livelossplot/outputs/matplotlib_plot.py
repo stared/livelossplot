@@ -56,9 +56,7 @@ class MatplotlibPlot(BaseOutput):
 
         for group_idx, (group_name, group_logs) in enumerate(log_groups.items()):
             plt.subplot(max_rows, self.max_cols, group_idx + 1)
-            self._draw_metric_subplot(
-                group_logs, group_name=group_name, x_label=logger.step_name(group_name)
-            )
+            self._draw_metric_subplot(group_logs, group_name=group_name, x_label=logger.step_name(group_name))
 
         for idx, extra_plot in enumerate(self.extra_plots):
             plt.subplot(max_rows, self.max_cols, idx + len(log_groups) + 1)
