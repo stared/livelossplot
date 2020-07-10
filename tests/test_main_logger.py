@@ -27,7 +27,7 @@ def test_main_logger_with_groups():
     grouped_log_history = logger.grouped_log_history()
     assert len(grouped_log_history) == 2
     assert len(grouped_log_history['acccuracy']) == 2
-    assert len(grouped_log_history['acccuracy']['validation ']) == 3
+    assert len(grouped_log_history['acccuracy']['validation']) == 3
     assert len(grouped_log_history['log-loss']['training']) == 3
 
 
@@ -47,7 +47,7 @@ def test_main_logger_with_default_groups():
     assert len(grouped_log_history['Accuracy']['validation']) == 3
 
 
-def test_main_logger_metrc_to_name():
+def test_main_logger_metric_to_name():
     """Test group patterns"""
     logger = MainLogger()
     logger.update({'acc': 0.5, 'val_acc': 0.4, 'loss': 1.2, 'val_loss': 1.1, 'lr': 0.01})

@@ -14,7 +14,7 @@ def test_extrema_print():
     liveplot.update({'acc': 0.65, 'val_acc': 0.55, 'loss': 1.0, 'val_loss': 0.9})
     liveplot.send()
     assert len(plugin.extrema_cache['log-loss']) == 2
-    assert len(plugin.extrema_cache['log-loss']['training ']) == 3
-    assert plugin.extrema_cache['accuracy']['validation ']['min'] == 0.35
-    assert plugin.extrema_cache['accuracy']['validation ']['max'] == 0.55
-    assert plugin.extrema_cache['accuracy']['validation ']['current'] == 0.55
+    assert len(plugin.extrema_cache['log-loss']['training']) == 3
+    assert plugin.extrema_cache['accuracy']['validation']['min'] == 0.35
+    assert plugin.extrema_cache['accuracy']['validation']['max'] == 0.55
+    assert plugin.extrema_cache['accuracy']['validation']['current'] == 0.55
