@@ -25,8 +25,8 @@ class MainLogger:
         auto_generate_groups_if_not_available: bool = True,
         auto_generate_metric_to_name: bool = True,
         group_patterns: List[Tuple[Pattern, str]] = [
-            (r'^(?!val(_|-))(.*)', 'training '),
-            (r'^(val(_|-))(.*)', 'validation '),
+            (r'^(?!val(_|-))(.*)', 'training'),
+            (r'^(val(_|-))(.*)', 'validation'),
         ],
         step_names: Union[str, Dict[str, str]] = 'epoch'
     ):
