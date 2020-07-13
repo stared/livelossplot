@@ -45,18 +45,18 @@ class MatplotlibPlot(BaseOutput):
         self._before_plots = before_plots if before_plots else self._default_before_plots
         self._after_plots = after_plots if after_plots else self._default_after_plots
 
+
     def send(self, logger: MainLogger):
         """Draw figures with metrics and show"""
         log_groups = logger.grouped_log_history()
 
         max_rows = (len(log_groups) + len(self.extra_plots) + 1) // self.max_cols + 1
 
-        clear_output(wait=True)
         self._before_plots(len(log_groups))
 
         for group_idx, (group_name, group_logs) in enumerate(log_groups.items()):
             plt.subplot(max_rows, self.max_cols, group_idx + 1)
-            self._draw_metric_subplot(group_logs, group_name=group_name, x_label=logger.step_name(group_name))
+            self._draw_metric_subplot(group_logs, group_name=group_name, x_label=logger.step_names[group_name])
 
         for idx, extra_plot in enumerate(self.extra_plots):
             plt.subplot(max_rows, self.max_cols, idx + len(log_groups) + 1)
@@ -77,6 +77,7 @@ class MatplotlibPlot(BaseOutput):
 
     def _default_before_plots(self, num_of_log_groups: int) -> None:
         """Set matplotlib window properties"""
+        clear_output(wait=True)
         figsize_x = self.max_cols * self.cell_size[0]
         figsize_y = ((num_of_log_groups + 1) // self.max_cols + 1) * self.cell_size[1]
         plt.figure(figsize=(figsize_x, figsize_y))

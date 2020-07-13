@@ -1,5 +1,5 @@
 import re
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 from typing import NamedTuple, Dict, List, Pattern, Tuple, Optional, Union
 
 # Value of metrics - for value later, we want to support numpy arrays etc
@@ -49,7 +49,10 @@ class MainLogger:
         self.auto_generate_groups = all((not groups, auto_generate_groups_if_not_available))
         self.auto_generate_metric_to_name = auto_generate_metric_to_name
         self.group_patterns = tuple((re.compile(pattern), replace_with) for pattern, replace_with in group_patterns)
-        self._step_names = step_names
+        if isinstance(step_names, str):
+            self.step_names = defaultdict(lambda: step_names)
+        else:
+            self.step_names = defaultdict(lambda: 'epoch', step_names)
 
     def update(self, logs: dict, current_step: Optional[int] = None) -> None:
         """Update logs - loop step can be controlled outside or inside main logger"""
@@ -161,9 +164,3 @@ class MainLogger:
         if len(value) > 0:
             raise RuntimeError('Cannot overwrite log history with non empty dictionary')
         self._log_history = value
-
-    def step_name(self, group_name: str) -> str:
-        if isinstance(self._step_names, str):
-            return self._step_names
-        else:
-            return self._step_names.get(group_name, 'epoch')
