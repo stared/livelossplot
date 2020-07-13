@@ -44,7 +44,6 @@ class MatplotlibPlot(BaseOutput):
         self._after_subplot = after_subplot if after_subplot else self._default_after_subplot
         self._before_plots = before_plots if before_plots else self._default_before_plots
         self._after_plots = after_plots if after_plots else self._default_after_plots
-        self._axes_shape = None
 
     def send(self, logger: MainLogger):
         """Draw figures with metrics and show"""

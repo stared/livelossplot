@@ -40,7 +40,7 @@ class MainLogger:
          based on common shortcuts:
         :param group_patterns - you can put there regular expressions to match a few metric names with group
          and replace its name using second value:
-        :param step_names list names of x axis for each metrics group or one name for all metrics:
+        :param step_names dictionary with a name of x axis for each metrics group or one name for all metrics:
         """
         self.log_history = {}
         self.groups = groups if groups is not None else {}
