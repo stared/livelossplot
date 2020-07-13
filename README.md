@@ -55,6 +55,7 @@ Look at notebook files with full working [examples](https://github.com/stared/li
 - [poutyne.ipynb](https://github.com/stared/livelossplot/blob/master/examples/poutyne.ipynb) - a Poutyne callback ([Poutyne](https://poutyne.org/) is a Keras-like framework for PyTorch)
 - [torchbearer.ipynb](https://github.com/stared/livelossplot/blob/master/examples/torchbearer.ipynb) - an example using the built in functionality from torchbearer ([torchbearer](https://github.com/ecs-vlc/torchbearer) is a model fitting library for PyTorch)
 - [neptune.py](https://github.com/stared/livelossplot/blob/master/examples/neptune.py) and [neptune.ipynb](https://github.com/stared/livelossplot/blob/master/examples/neptune.ipynb) - a [Neptune.AI](https://neptune.au/)
+- [matplotlib.ipynb](https://github.com/stared/livelossplot/blob/master/examples/matplotlib.ipynb) - a Matplotlib output example 
 
 You [run examples in Colab](https://colab.research.google.com/github/stared/livelossplot).
 
