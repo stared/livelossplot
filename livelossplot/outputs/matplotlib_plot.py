@@ -76,16 +76,16 @@ class MatplotlibPlot(BaseOutput):
         ax.set_xlabel(x_label)
         ax.legend(loc='center right')
 
-    def _default_before_plots(self, figure: plt.Figure, num_of_log_groups: int) -> None:
+    def _default_before_plots(self, fig: plt.Figure, num_of_log_groups: int) -> None:
         """Set matplotlib window properties"""
         clear_output(wait=True)
         figsize_x = self.max_cols * self.cell_size[0]
         figsize_y = ((num_of_log_groups + 1) // self.max_cols + 1) * self.cell_size[1]
-        figure.set_size_inches(figsize_x, figsize_y)
+        fig.set_size_inches(figsize_x, figsize_y)
 
-    def _default_after_plots(self, figure: plt.Figure):
+    def _default_after_plots(self, fig: plt.Figure):
         """Set properties after charts creation"""
-        figure.tight_layout()
+        fig.tight_layout()
 
     def _draw_metric_subplot(self, ax: plt.Axes, group_logs: Dict[str, List[LogItem]], group_name: str, x_label: str):
         # there used to be skip first part, but I skip it first
