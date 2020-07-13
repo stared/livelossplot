@@ -56,6 +56,7 @@ Look at notebook files with full working [examples](https://github.com/stared/li
 - [torchbearer.ipynb](https://github.com/stared/livelossplot/blob/master/examples/torchbearer.ipynb) - an example using the built in functionality from torchbearer ([torchbearer](https://github.com/ecs-vlc/torchbearer) is a model fitting library for PyTorch)
 - [neptune.py](https://github.com/stared/livelossplot/blob/master/examples/neptune.py) and [neptune.ipynb](https://github.com/stared/livelossplot/blob/master/examples/neptune.ipynb) - a [Neptune.AI](https://neptune.au/)
 - [matplotlib.ipynb](https://github.com/stared/livelossplot/blob/master/examples/matplotlib.ipynb) - a Matplotlib output example 
+- [matplotlib.ipynb](https://github.com/stared/livelossplot/blob/master/examples/various_options.ipynb) - an extended API for metrics grouping and custom outputs
 
 You [run examples in Colab](https://colab.research.google.com/github/stared/livelossplot).
 
