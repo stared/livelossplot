@@ -1,0 +1,31 @@
+# This workflow will build docs and push it to branch gh-pages
+# For more information see: https://github.com/marketplace/actions/deploy-to-github-pages-python
+
+name: Generate pdoc3 documentation
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Generate docs
+      run: |
+        pdoc3 --html livelossplot --force --output-dir docs --skip-errors
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs/livelossplot/

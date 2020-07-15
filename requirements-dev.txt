@@ -2,3 +2,4 @@ pytest
 flake8
 yapf
 jupyter
+pdoc3
