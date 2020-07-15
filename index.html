@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.4" />
+<title>livelossplot API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Package <code>livelossplot</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import sys
+import warnings
+from importlib.util import find_spec
+
+from .main_logger import MainLogger
+from .plot_losses import PlotLosses
+from . import inputs
+from .inputs import *
+from . import outputs
+from .version import __version__
+
+_input_plugin_dict = {
+    &#39;keras&#39;: &#39;Keras&#39;,
+    &#39;tf_keras&#39;: &#39;KerasTF&#39;,
+    &#39;pytorch_ignite&#39;: &#39;Ignite&#39;,
+    &#39;poutyne&#39;: &#39;Poutyne&#39;,
+}
+
+
+class OldDependenciesFinder:
+    &#34;&#34;&#34;
+    Data package module loader finder. This class sits on `sys.meta_path` and returns the
+    loader it knows for a given path, if it knows a compatible loader.
+    &#34;&#34;&#34;
+    @classmethod
+    def find_spec(self, fullname, *_, **__):
+        &#34;&#34;&#34;
+        This functions is what gets executed by the loader.
+        &#34;&#34;&#34;
+        parts = fullname.split(&#39;.&#39;)
+        if len(parts) == 2 and parts[0] == &#39;livelossplot&#39; and parts[1] in _input_plugin_dict:
+            name = parts[1]
+            msg = &#39;livelossplot.{name} will be deprecated, please use livelossplot.inputs.{name}\n&#39;
+            msg += &#39;or use callback directly: from livelossplot import PlotLosses{new_name}&#39;
+            warnings.warn(msg.format(name=name, new_name=_input_plugin_dict[name]), DeprecationWarning)
+            fullname = &#39;livelossplot.inputs.{name}&#39;.format(name=name)
+            return find_spec(fullname)
+        return None
+
+
+sys.meta_path.append(OldDependenciesFinder())
+
+__all__ = [
+    &#39;MainLogger&#39;, &#39;inputs&#39;, &#39;outputs&#39;, &#39;PlotLosses&#39;, &#39;PlotLossesKeras&#39;, &#39;PlotLossesKerasTF&#39;, &#39;PlotLossesIgnite&#39;,
+    &#39;PlotLossesPoutyne&#39;
+]</code></pre>
+</details>
+</section>
+<section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="livelossplot.inputs" href="inputs/index.html">livelossplot.inputs</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="livelossplot.main_logger" href="main_logger.html">livelossplot.main_logger</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="livelossplot.outputs" href="outputs/index.html">livelossplot.outputs</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="livelossplot.plot_losses" href="plot_losses.html">livelossplot.plot_losses</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="livelossplot.version" href="version.html">livelossplot.version</a></code></dt>
+<dd>
+<div class="desc"><p>Livelossplot version number</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="livelossplot.PlotLossesIgnite"><code class="name flex">
+<span>def <span class="ident">PlotLossesIgnite</span></span>(<span>**kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>PlotLosses callback for Poutyne, a library for PyTorch.
+Requires pytorch-ignite to be installed, <a href="https://github.com/pytorch/ignite.">https://github.com/pytorch/ignite.</a>
+:param kwargs: key-arguments which are passed to PlotLosses</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def PlotLossesIgnite(**kwargs):
+    &#34;&#34;&#34;PlotLosses callback for Poutyne, a library for PyTorch.
+    Requires pytorch-ignite to be installed, https://github.com/pytorch/ignite.
+    :param kwargs: key-arguments which are passed to PlotLosses
+    &#34;&#34;&#34;
+    from .pytorch_ignite import PlotLossesCallback
+    return PlotLossesCallback(**kwargs)</code></pre>
+</details>
+</dd>
+<dt id="livelossplot.PlotLossesKeras"><code class="name flex">
+<span>def <span class="ident">PlotLossesKeras</span></span>(<span>**kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>PlotLosses callback for Keras (as a standalone library).
+Requires keras to be installed.
+:param kwargs: key-arguments which are passed to PlotLosses</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def PlotLossesKeras(**kwargs):
+    &#34;&#34;&#34;PlotLosses callback for Keras (as a standalone library).
+    Requires keras to be installed.
+    :param kwargs: key-arguments which are passed to PlotLosses
+    &#34;&#34;&#34;
+    from .keras import PlotLossesCallback
+    return PlotLossesCallback(**kwargs)</code></pre>
+</details>
+</dd>
+<dt id="livelossplot.PlotLossesKerasTF"><code class="name flex">
+<span>def <span class="ident">PlotLossesKerasTF</span></span>(<span>**kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>PlotLosses callback for Keras (as a module of TensorFlow).
+Requires tensorflow to be installed.
+:param kwargs: key-arguments which are passed to PlotLosses</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def PlotLossesKerasTF(**kwargs):
+    &#34;&#34;&#34;PlotLosses callback for Keras (as a module of TensorFlow).
+    Requires tensorflow to be installed.
+    :param kwargs: key-arguments which are passed to PlotLosses
+    &#34;&#34;&#34;
+    from .tf_keras import PlotLossesCallback
+    return PlotLossesCallback(**kwargs)</code></pre>
+</details>
+</dd>
+<dt id="livelossplot.PlotLossesPoutyne"><code class="name flex">
+<span>def <span class="ident">PlotLossesPoutyne</span></span>(<span>**kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>PlotLosses callback for Poutyne, a library for PyTorch.
+Requires poutyne to be installed, <a href="https://poutyne.org/.">https://poutyne.org/.</a>
+:param kwargs: key-arguments which are passed to PlotLosses</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def PlotLossesPoutyne(**kwargs):
+    &#34;&#34;&#34;PlotLosses callback for Poutyne, a library for PyTorch.
+    Requires poutyne to be installed, https://poutyne.org/.
+    :param kwargs: key-arguments which are passed to PlotLosses
+    &#34;&#34;&#34;
+    from .poutyne import PlotLossesCallback
+    return PlotLossesCallback(**kwargs)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="livelossplot.MainLogger"><code class="flex name class">
+<span>class <span class="ident">MainLogger</span></span>
+<span>(</span><span>groups: Union[Dict[str, List[str]], NoneType] = None, metric_to_name: Union[Dict[str, str], NoneType] = None, current_step: int = -1, auto_generate_groups_if_not_available: bool = True, auto_generate_metric_to_name: bool = True, group_patterns: List[Tuple[Pattern, str]] = [('^(?!val(_|-))(.*)', 'training'), ('^(val(_|-))(.*)', 'validation')], step_names: Union[str, Dict[str, str]] = 'epoch')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Main logger - the aim of this class is to store every log from training
+Log is a float value with corresponding training engine step</p>
+<p>:param groups - dictionary with grouped metrics for example one group can contain
+one metric in different stages for example validation, training etc.:
+:param metric_to_name - transformation of metric name which can be used to display name:
+:param current_step - current step of the train engine:
+:param auto_generate_groups_if_not_available - flag, that enable auto-creation of metric groups:
+:param auto_generate_metric_to_name - flag, that enable auto-creation of metric long names,
+based on common shortcuts:
+:param group_patterns - you can put there regular expressions to match a few metric names with group
+and replace its name using second value:
+:param step_names dictionary with a name of x axis for each metrics group or one name for all metrics:</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MainLogger:
+    &#34;&#34;&#34;
+    Main logger - the aim of this class is to store every log from training
+    Log is a float value with corresponding training engine step
+    &#34;&#34;&#34;
+    def __init__(
+        self,
+        groups: Optional[Dict[str, List[str]]] = None,
+        metric_to_name: Optional[Dict[str, str]] = None,
+        current_step: int = -1,
+        auto_generate_groups_if_not_available: bool = True,
+        auto_generate_metric_to_name: bool = True,
+        group_patterns: List[Tuple[Pattern, str]] = [
+            (r&#39;^(?!val(_|-))(.*)&#39;, &#39;training&#39;),
+            (r&#39;^(val(_|-))(.*)&#39;, &#39;validation&#39;),
+        ],
+        step_names: Union[str, Dict[str, str]] = &#39;epoch&#39;
+    ):
+        &#34;&#34;&#34;
+        :param groups - dictionary with grouped metrics for example one group can contain
+         one metric in different stages for example validation, training etc.:
+        :param metric_to_name - transformation of metric name which can be used to display name:
+        :param current_step - current step of the train engine:
+        :param auto_generate_groups_if_not_available - flag, that enable auto-creation of metric groups:
+        :param auto_generate_metric_to_name - flag, that enable auto-creation of metric long names,
+         based on common shortcuts:
+        :param group_patterns - you can put there regular expressions to match a few metric names with group
+         and replace its name using second value:
+        :param step_names dictionary with a name of x axis for each metrics group or one name for all metrics:
+        &#34;&#34;&#34;
+        self.log_history = {}
+        self.groups = groups if groups is not None else {}
+        self.metric_to_name = metric_to_name if metric_to_name else {}
+        self.current_step = current_step
+        self.auto_generate_groups = all((not groups, auto_generate_groups_if_not_available))
+        self.auto_generate_metric_to_name = auto_generate_metric_to_name
+        self.group_patterns = tuple((re.compile(pattern), replace_with) for pattern, replace_with in group_patterns)
+        if isinstance(step_names, str):
+            self.step_names = defaultdict(lambda: step_names)
+        else:
+            self.step_names = defaultdict(lambda: &#39;epoch&#39;, step_names)
+
+    def update(self, logs: dict, current_step: Optional[int] = None) -&gt; None:
+        &#34;&#34;&#34;Update logs - loop step can be controlled outside or inside main logger&#34;&#34;&#34;
+        if current_step is None:
+            self.current_step += 1
+            current_step = self.current_step
+        else:
+            self.current_step = current_step
+        for k, v in logs.items():
+            if k not in self.log_history:
+                self._add_new_metric(k)
+            self.log_history[k].append(LogItem(step=current_step, value=v))
+
+    def _add_new_metric(self, metric_name: str):
+        &#34;&#34;&#34;Add empty list for a new metric and extend metric name transformations&#34;&#34;&#34;
+        self.log_history[metric_name] = []
+        if not self.metric_to_name.get(metric_name):
+            self._auto_generate_metrics_to_name(metric_name)
+
+    def _auto_generate_metrics_to_name(self, metric_name: str):
+        &#34;&#34;&#34;
+        The function generate transforms for metric names base on patterns.
+        For example it can create transformation from val_acc to Validation Accuracy
+        :param metric_name - name of new appended metric
+        :param patterns - a tuple with pairs - pattern and value to replace it with
+        &#34;&#34;&#34;
+        suffix = self._find_suffix_with_group_patterns(metric_name)
+        if suffix is None and suffix != metric_name:
+            return
+        similar_metric_names = [m for m in self.log_history.keys() if m.endswith(suffix)]
+        if len(similar_metric_names) == 1:
+            return
+        for name in similar_metric_names:
+            new_name = name
+            for pattern_to_replace, replace_with in self.group_patterns:
+                new_name = re.sub(pattern_to_replace, replace_with, new_name)
+            if suffix in COMMON_NAME_SHORTCUTS.keys():
+                new_name = new_name.replace(suffix, COMMON_NAME_SHORTCUTS[suffix])
+            self.metric_to_name[name] = new_name
+
+    def grouped_log_history(self,
+                            raw_names: bool = False,
+                            raw_group_names: bool = False) -&gt; Dict[str, Dict[str, List[LogItem]]]:
+        &#34;&#34;&#34;
+        :param raw_names - return raw names instead of transformed by metric to name (as in update() input dictionary):
+        :param raw_group_names - return group names without transforming them with COMMON_NAME_SHORTCUTS:
+        :return: logs grouped by metric groups - groups are passed in the class constructor
+        method use group patterns instead of groups if they are available
+        &#34;&#34;&#34;
+        if self.auto_generate_groups:
+            self.groups = self._auto_generate_groups()
+        ret = {}
+        sorted_groups = OrderedDict(sorted(self.groups.items(), key=lambda t: t[0]))
+        for group_name, names in sorted_groups.items():
+            group_name = group_name if raw_group_names else COMMON_NAME_SHORTCUTS.get(group_name, group_name)
+            ret[group_name] = {
+                name if raw_names else self.metric_to_name.get(name, name): self.log_history[name]
+                for name in names
+            }
+        return ret
+
+    def _auto_generate_groups(self) -&gt; Dict[str, List[str]]:
+        &#34;&#34;&#34;
+        Auto create groups base on val_ prefix - this step is skipped if groups are set
+        or if group patterns are available
+        &#34;&#34;&#34;
+        groups = {}
+        for key in self.log_history.keys():
+            abs_key = self._find_suffix_with_group_patterns(key)
+            if not groups.get(abs_key):
+                groups[abs_key] = []
+            groups[abs_key].append(key)
+        return groups
+
+    def _find_suffix_with_group_patterns(self, metric_name: str) -&gt; str:
+        suffix = metric_name
+        for pattern, _ in self.group_patterns:
+            match = re.match(pattern, metric_name)
+            if match:
+                suffix = match.groups()[-1]
+        return suffix
+
+    def reset(self) -&gt; None:
+        &#34;&#34;&#34;Method clears logs, groups and reset step counter&#34;&#34;&#34;
+        self.log_history = {}
+        self.groups = {}
+        self.current_step = -1
+
+    @property
+    def groups(self) -&gt; Dict[str, List[str]]:
+        &#34;&#34;&#34;groups getter&#34;&#34;&#34;
+        return self._groups
+
+    @groups.setter
+    def groups(self, value: Dict[str, List[str]]) -&gt; None:
+        &#34;&#34;&#34;groups setter - groups should be dictionary&#34;&#34;&#34;
+        if value is None:
+            self._groups = {}
+        self._groups = value
+
+    @property
+    def log_history(self) -&gt; Dict[str, List[LogItem]]:
+        &#34;&#34;&#34;logs getter&#34;&#34;&#34;
+        return self._log_history
+
+    @log_history.setter
+    def log_history(self, value: Dict[str, List[LogItem]]) -&gt; None:
+        &#34;&#34;&#34;logs setter - logs can not be overwritten - you can only reset it to empty state&#34;&#34;&#34;
+        if len(value) &gt; 0:
+            raise RuntimeError(&#39;Cannot overwrite log history with non empty dictionary&#39;)
+        self._log_history = value</code></pre>
+</details>
+<h3>Instance variables</h3>
+<dl>
+<dt id="livelossplot.MainLogger.groups"><code class="name">var <span class="ident">groups</span> : Dict[str, List[str]]</code></dt>
+<dd>
+<div class="desc"><p>groups getter</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def groups(self) -&gt; Dict[str, List[str]]:
+    &#34;&#34;&#34;groups getter&#34;&#34;&#34;
+    return self._groups</code></pre>
+</details>
+</dd>
+<dt id="livelossplot.MainLogger.log_history"><code class="name">var <span class="ident">log_history</span> : Dict[str, List[<a title="livelossplot.main_logger.LogItem" href="main_logger.html#livelossplot.main_logger.LogItem">LogItem</a>]]</code></dt>
+<dd>
+<div class="desc"><p>logs getter</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def log_history(self) -&gt; Dict[str, List[LogItem]]:
+    &#34;&#34;&#34;logs getter&#34;&#34;&#34;
+    return self._log_history</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="livelossplot.MainLogger.grouped_log_history"><code class="name flex">
+<span>def <span class="ident">grouped_log_history</span></span>(<span>self, raw_names: bool = False, raw_group_names: bool = False) ‑> Dict[str, Dict[str, List[<a title="livelossplot.main_logger.LogItem" href="main_logger.html#livelossplot.main_logger.LogItem">LogItem</a>]]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>:param raw_names - return raw names instead of transformed by metric to name (as in update() input dictionary):
+:param raw_group_names - return group names without transforming them with COMMON_NAME_SHORTCUTS:
+:return: logs grouped by metric groups - groups are passed in the class constructor
+method use group patterns instead of groups if they are available</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def grouped_log_history(self,
+                        raw_names: bool = False,
+                        raw_group_names: bool = False) -&gt; Dict[str, Dict[str, List[LogItem]]]:
+    &#34;&#34;&#34;
+    :param raw_names - return raw names instead of transformed by metric to name (as in update() input dictionary):
+    :param raw_group_names - return group names without transforming them with COMMON_NAME_SHORTCUTS:
+    :return: logs grouped by metric groups - groups are passed in the class constructor
+    method use group patterns instead of groups if they are available
+    &#34;&#34;&#34;
+    if self.auto_generate_groups:
+        self.groups = self._auto_generate_groups()
+    ret = {}
+    sorted_groups = OrderedDict(sorted(self.groups.items(), key=lambda t: t[0]))
+    for group_name, names in sorted_groups.items():
+        group_name = group_name if raw_group_names else COMMON_NAME_SHORTCUTS.get(group_name, group_name)
+        ret[group_name] = {
+            name if raw_names else self.metric_to_name.get(name, name): self.log_history[name]
+            for name in names
+        }
+    return ret</code></pre>
+</details>
+</dd>
+<dt id="livelossplot.MainLogger.reset"><code class="name flex">
+<span>def <span class="ident">reset</span></span>(<span>self) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method clears logs, groups and reset step counter</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reset(self) -&gt; None:
+    &#34;&#34;&#34;Method clears logs, groups and reset step counter&#34;&#34;&#34;
+    self.log_history = {}
+    self.groups = {}
+    self.current_step = -1</code></pre>
+</details>
+</dd>
+<dt id="livelossplot.MainLogger.update"><code class="name flex">
+<span>def <span class="ident">update</span></span>(<span>self, logs: dict, current_step: Union[int, NoneType] = None) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Update logs - loop step can be controlled outside or inside main logger</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update(self, logs: dict, current_step: Optional[int] = None) -&gt; None:
+    &#34;&#34;&#34;Update logs - loop step can be controlled outside or inside main logger&#34;&#34;&#34;
+    if current_step is None:
+        self.current_step += 1
+        current_step = self.current_step
+    else:
+        self.current_step = current_step
+    for k, v in logs.items():
+        if k not in self.log_history:
+            self._add_new_metric(k)
+        self.log_history[k].append(LogItem(step=current_step, value=v))</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="livelossplot.PlotLosses"><code class="flex name class">
+<span>class <span class="ident">PlotLosses</span></span>
+<span>(</span><span>outputs: Union[List[Type[~BO]], NoneType] = None, mode: str = 'notebook', **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class collect metrics from the training engine and send it to plugins, when send is called</p>
+<p>:param outputs: list of callbacks (outputs) which are called with send method
+:param mode: Options: 'notebook' or 'script' - some of outputs need to change some behaviors,
+depending on the working environment
+:param kwargs: key-arguments which are passed to MainLogger</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PlotLosses:
+    &#34;&#34;&#34;
+    Class collect metrics from the training engine and send it to plugins, when send is called
+    &#34;&#34;&#34;
+    def __init__(self, outputs: Optional[List[Type[BO]]] = None, mode: str = &#39;notebook&#39;, **kwargs):
+        &#34;&#34;&#34;
+        :param outputs: list of callbacks (outputs) which are called with send method
+        :param mode: Options: &#39;notebook&#39; or &#39;script&#39; - some of outputs need to change some behaviors,
+         depending on the working environment
+        :param kwargs: key-arguments which are passed to MainLogger
+        &#34;&#34;&#34;
+        self.logger = MainLogger(**kwargs)
+        self.outputs = outputs if outputs is not None else [MatplotlibPlot(), ExtremaPrinter()]
+        for out in self.outputs:
+            out.set_output_mode(mode)
+
+    def update(self, *args, **kwargs):
+        &#34;&#34;&#34;update logs with arguments that will be passed to main logger&#34;&#34;&#34;
+        self.logger.update(*args, **kwargs)
+
+    def send(self):
+        &#34;&#34;&#34;Method will send logs to every output class&#34;&#34;&#34;
+        for output in self.outputs:
+            output.send(self.logger)
+
+    def draw(self):
+        &#34;&#34;&#34;Send method substitute from old livelossplot api&#34;&#34;&#34;
+        warnings.warn(&#39;draw will be deprecated, please use send method&#39;, PendingDeprecationWarning)
+        self.send()</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="livelossplot.PlotLosses.draw"><code class="name flex">
+<span>def <span class="ident">draw</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Send method substitute from old livelossplot api</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def draw(self):
+    &#34;&#34;&#34;Send method substitute from old livelossplot api&#34;&#34;&#34;
+    warnings.warn(&#39;draw will be deprecated, please use send method&#39;, PendingDeprecationWarning)
+    self.send()</code></pre>
+</details>
+</dd>
+<dt id="livelossplot.PlotLosses.send"><code class="name flex">
+<span>def <span class="ident">send</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method will send logs to every output class</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def send(self):
+    &#34;&#34;&#34;Method will send logs to every output class&#34;&#34;&#34;
+    for output in self.outputs:
+        output.send(self.logger)</code></pre>
+</details>
+</dd>
+<dt id="livelossplot.PlotLosses.update"><code class="name flex">
+<span>def <span class="ident">update</span></span>(<span>self, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>update logs with arguments that will be passed to main logger</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update(self, *args, **kwargs):
+    &#34;&#34;&#34;update logs with arguments that will be passed to main logger&#34;&#34;&#34;
+    self.logger.update(*args, **kwargs)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<ul>
+<li><code><a title="livelossplot.inputs" href="inputs/index.html">livelossplot.inputs</a></code></li>
+<li><code><a title="livelossplot.main_logger" href="main_logger.html">livelossplot.main_logger</a></code></li>
+<li><code><a title="livelossplot.outputs" href="outputs/index.html">livelossplot.outputs</a></code></li>
+<li><code><a title="livelossplot.plot_losses" href="plot_losses.html">livelossplot.plot_losses</a></code></li>
+<li><code><a title="livelossplot.version" href="version.html">livelossplot.version</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="livelossplot.PlotLossesIgnite" href="#livelossplot.PlotLossesIgnite">PlotLossesIgnite</a></code></li>
+<li><code><a title="livelossplot.PlotLossesKeras" href="#livelossplot.PlotLossesKeras">PlotLossesKeras</a></code></li>
+<li><code><a title="livelossplot.PlotLossesKerasTF" href="#livelossplot.PlotLossesKerasTF">PlotLossesKerasTF</a></code></li>
+<li><code><a title="livelossplot.PlotLossesPoutyne" href="#livelossplot.PlotLossesPoutyne">PlotLossesPoutyne</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="livelossplot.MainLogger" href="#livelossplot.MainLogger">MainLogger</a></code></h4>
+<ul class="">
+<li><code><a title="livelossplot.MainLogger.grouped_log_history" href="#livelossplot.MainLogger.grouped_log_history">grouped_log_history</a></code></li>
+<li><code><a title="livelossplot.MainLogger.groups" href="#livelossplot.MainLogger.groups">groups</a></code></li>
+<li><code><a title="livelossplot.MainLogger.log_history" href="#livelossplot.MainLogger.log_history">log_history</a></code></li>
+<li><code><a title="livelossplot.MainLogger.reset" href="#livelossplot.MainLogger.reset">reset</a></code></li>
+<li><code><a title="livelossplot.MainLogger.update" href="#livelossplot.MainLogger.update">update</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="livelossplot.PlotLosses" href="#livelossplot.PlotLosses">PlotLosses</a></code></h4>
+<ul class="">
+<li><code><a title="livelossplot.PlotLosses.draw" href="#livelossplot.PlotLosses.draw">draw</a></code></li>
+<li><code><a title="livelossplot.PlotLosses.send" href="#livelossplot.PlotLosses.send">send</a></code></li>
+<li><code><a title="livelossplot.PlotLosses.update" href="#livelossplot.PlotLosses.update">update</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.4</a>.</p>
+</footer>
+</body>
+</html>
