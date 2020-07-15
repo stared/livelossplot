@@ -16,9 +16,12 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 3.7
-    - name: Install dev dependencies
+    - name: Install livelossplot with dependencies
       run: |
-        pip install -r requirements-dev.txt
+        python setup.py install
+    - name: Install pdoc3
+      run: |
+        pip install pdoc3
     - name: Checkout
       uses: actions/checkout@master
     - name: Generate docs
