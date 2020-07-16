@@ -31,16 +31,19 @@ class MainLogger:
         step_names: Union[str, Dict[str, str]] = 'epoch'
     ):
         """
-        :param groups - dictionary with grouped metrics for example one group can contain
-         one metric in different stages for example validation, training etc.:
-        :param metric_to_name - transformation of metric name which can be used to display name:
-        :param current_step - current step of the train engine:
-        :param auto_generate_groups_if_not_available - flag, that enable auto-creation of metric groups:
-        :param auto_generate_metric_to_name - flag, that enable auto-creation of metric long names,
-         based on common shortcuts:
-        :param group_patterns - you can put there regular expressions to match a few metric names with group
-         and replace its name using second value:
-        :param step_names dictionary with a name of x axis for each metrics group or one name for all metrics:
+        Args:
+            groups: dictionary with grouped metrics for example the group 'accuracy' can contains different stages
+                for example 'validation_accuracy', 'training_accuracy' etc.
+            metric_to_name: transformation of metric name which can be used to display name
+                we can have short name in the code (acc), but full name on charts (Accuracy)
+            current_step: current step of the train loop
+            auto_generate_groups_if_not_available: flag, that enable auto-creation of metric groups
+                base on group patterns
+            auto_generate_metric_to_name: flag, that enable auto-creation of metric long names
+                base on common shortcuts
+            group_patterns: you can put there regular expressions to match a few metric names with group
+                and replace its name using second value
+            step_names: dictionary with a name of x axis for each metrics group or one name for all metrics
         """
         self.log_history = {}
         self.groups = groups if groups is not None else {}
@@ -54,8 +57,15 @@ class MainLogger:
         else:
             self.step_names = defaultdict(lambda: 'epoch', step_names)
 
-    def update(self, logs: dict, current_step: Optional[int] = None) -> None:
-        """Update logs - loop step can be controlled outside or inside main logger"""
+    def update(self, logs: Dict[str, float], current_step: Optional[int] = None) -> None:
+        """
+        Args:
+            logs: dictionary with metric names and values
+            current_step: current step of the training loop
+
+        Notes:
+            Loop step can be controlled outside or inside main logger with autoincrement of self.current_step
+        """
         if current_step is None:
             self.current_step += 1
             current_step = self.current_step
@@ -67,17 +77,21 @@ class MainLogger:
             self.log_history[k].append(LogItem(step=current_step, value=v))
 
     def _add_new_metric(self, metric_name: str):
-        """Add empty list for a new metric and extend metric name transformations"""
+        """Add empty list for a new metric and extend metric name transformations
+        Args:
+            metric_name: name of metric that will be added to log_history as empty list
+        """
         self.log_history[metric_name] = []
         if not self.metric_to_name.get(metric_name):
             self._auto_generate_metrics_to_name(metric_name)
 
     def _auto_generate_metrics_to_name(self, metric_name: str):
-        """
-        The function generate transforms for metric names base on patterns.
-        For example it can create transformation from val_acc to Validation Accuracy
-        :param metric_name - name of new appended metric
-        :param patterns - a tuple with pairs - pattern and value to replace it with
+        """The function generate transforms for metric names base on patterns
+        Args:
+            metric_name: name of new appended metric
+
+        Example:
+            It can create transformation from val_acc to Validation Accuracy
         """
         suffix = self._find_suffix_with_group_patterns(metric_name)
         if suffix is None and suffix != metric_name:
@@ -97,10 +111,15 @@ class MainLogger:
                             raw_names: bool = False,
                             raw_group_names: bool = False) -> Dict[str, Dict[str, List[LogItem]]]:
         """
-        :param raw_names - return raw names instead of transformed by metric to name (as in update() input dictionary):
-        :param raw_group_names - return group names without transforming them with COMMON_NAME_SHORTCUTS:
-        :return: logs grouped by metric groups - groups are passed in the class constructor
-        method use group patterns instead of groups if they are available
+        Args:
+            raw_names: flag, return raw names instead of transformed by metric to name (as in update() input dictionary)
+            raw_group_names: flag, return group names without transforming them with COMMON_NAME_SHORTCUTS
+
+        Returns:
+            logs grouped by metric groups - groups are passed in the class constructor
+
+        Notes:
+            method use group patterns instead of groups if they are available
         """
         if self.auto_generate_groups:
             self.groups = self._auto_generate_groups()
@@ -116,8 +135,12 @@ class MainLogger:
 
     def _auto_generate_groups(self) -> Dict[str, List[str]]:
         """
-        Auto create groups base on val_ prefix - this step is skipped if groups are set
-        or if group patterns are available
+        Returns:
+            groups generated with group patterns
+
+        Notes:
+            Auto create groups base on val_ prefix - this step is skipped if groups are set
+                or if group patterns are available
         """
         groups = {}
         for key in self.log_history.keys():

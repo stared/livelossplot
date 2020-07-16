@@ -11,8 +11,9 @@ class TensorboardTFLogger(BaseOutput):
     """
     def __init__(self, logdir="./tensorboard_logs/", run_id=None):
         """
-        :param logdir: dir where TensorBoard events will be written
-        :param run_id: name for log id, otherwise it usses datetime
+        Args:
+            logdir: dir where TensorBoard events will be written
+            run_id: name for log id, otherwise it usses datetime
         """
         from tensorflow import summary
         self.summary = summary
@@ -26,10 +27,10 @@ class TensorboardTFLogger(BaseOutput):
 
     def log_scalar(self, name: str, value: float, global_step: int):
         """
-        :param name: name of metric
-        :param value: float value of metric
-        :param global_step: current step of the training loop
-        :return:
+        Args:
+            name: name of metric
+            value: float value of metric
+            global_step: current step of the training loop
         """
         with self.writer.as_default():
             self.summary.scalar(name, value, step=global_step)

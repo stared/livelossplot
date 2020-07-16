@@ -8,11 +8,11 @@ class NeptuneLogger(BaseOutput):
     YOUR_API_TOKEN and USERNAME/PROJECT_NAME
     """
     def __init__(self, api_token: Optional[str] = None, project_qualified_name: Optional[str] = None, **kwargs):
-        """
-        Set secrets and create experiment
-        :param api_token - your api token, you can create NEPTUNE_API_TOKEN environment variable instead:
-        :param project_qualified_name - <user>/<project>, you can create NEPTUNE_PROJECT environment variable instead:
-        :param kwargs - keyword args, that will be passed to create_experiment function:
+        """Set secrets and create experiment
+        Args:
+            api_token: your api token, you can create NEPTUNE_API_TOKEN environment variable instead
+            project_qualified_name: <user>/<project>, you can create NEPTUNE_PROJECT environment variable instead
+            kwargs: keyword args, that will be passed to create_experiment function
         """
         import neptune
         self.neptune = neptune

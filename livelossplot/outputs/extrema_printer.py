@@ -12,7 +12,8 @@ class ExtremaPrinter(BaseOutput):
         ' max: {max:8.3f}, cur: {current:8.3f})'
     ):
         """
-        :param massage_template: you can specify massage which use all or a few values (min, max, current)
+        Args:
+            massage_template: you can specify massage which use all or a few values (min, max, current)
         """
         self.massage_template = massage_template
         self.extrema_cache = {}

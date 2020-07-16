@@ -13,6 +13,13 @@ class BokehPlot(BaseOutput):
         cell_size: Tuple[int, int] = (400, 300),
         output_file: str = './bokeh_output.html'
     ):
+        """
+        Args:
+            max_cols: max number of charts in one row
+            skip_first: flag, skip first log
+            cell_size: size of one chart
+            output_file: file to save the output
+        """
         from bokeh import plotting, io, palettes
         self.plotting = plotting
         self.io = io
@@ -42,8 +49,15 @@ class BokehPlot(BaseOutput):
             self.plotting.save(self.grid)
 
     def _draw_metric_subplot(self, fig, group_logs: Dict[str, List[LogItem]]):
-        # for now, with local imports, no output annotation  -> self.plotting.Figure
-        # there used to be skip first part, but I skip it first
+        """
+        Args:
+            fig: bokeh Figure
+            group_logs: groups with list of log items
+
+        Notes:
+            for now, with local imports, no output annotation  -> self.plotting.Figure
+            there used to be skip first part, but I skip it first
+        """
         from bokeh.models import ColumnDataSource, HoverTool
         for i, (name, logs) in enumerate(group_logs.items()):
             if len(logs) > 0:
