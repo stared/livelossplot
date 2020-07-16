@@ -42,8 +42,15 @@ class BokehPlot(BaseOutput):
             self.plotting.save(self.grid)
 
     def _draw_metric_subplot(self, fig, group_logs: Dict[str, List[LogItem]]):
-        # for now, with local imports, no output annotation  -> self.plotting.Figure
-        # there used to be skip first part, but I skip it first
+        """
+        Args:
+            fig: bokeh Figure
+            group_logs: groups with list of log items
+
+        Notes:
+            for now, with local imports, no output annotation  -> self.plotting.Figure
+            there used to be skip first part, but I skip it first
+        """
         from bokeh.models import ColumnDataSource, HoverTool
         for i, (name, logs) in enumerate(group_logs.items()):
             if len(logs) > 0:
