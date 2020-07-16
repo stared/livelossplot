@@ -16,7 +16,7 @@ class PlotLosses:
         Args:
             outputs: list of callbacks (outputs) which are called with send method
             mode: Options: 'notebook' or 'script' - some of outputs need to change some behaviors,
-             depending on the working environment
+                depending on the working environment
             **kwargs: key-arguments which are passed to MainLogger constructor
         """
         self.logger = MainLogger(**kwargs)

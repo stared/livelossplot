@@ -33,16 +33,16 @@ class MainLogger:
         """
         Args:
             groups: dictionary with grouped metrics for example the group 'accuracy' can contains different stages
-             for example 'validation_accuracy', 'training_accuracy' etc.
+                for example 'validation_accuracy', 'training_accuracy' etc.
             metric_to_name: transformation of metric name which can be used to display name
-             we can have short name in the code (acc), but full name on charts (Accuracy)
+                we can have short name in the code (acc), but full name on charts (Accuracy)
             current_step: current step of the train loop
             auto_generate_groups_if_not_available: flag, that enable auto-creation of metric groups
-             base on group patterns
+                base on group patterns
             auto_generate_metric_to_name: flag, that enable auto-creation of metric long names
-             base on common shortcuts
+                base on common shortcuts
             group_patterns: you can put there regular expressions to match a few metric names with group
-             and replace its name using second value
+                and replace its name using second value
             step_names: dictionary with a name of x axis for each metrics group or one name for all metrics
         """
         self.log_history = {}
@@ -140,7 +140,7 @@ class MainLogger:
 
         Notes:
             Auto create groups base on val_ prefix - this step is skipped if groups are set
-            or if group patterns are available
+                or if group patterns are available
         """
         groups = {}
         for key in self.log_history.keys():

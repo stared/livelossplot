@@ -13,6 +13,13 @@ class BokehPlot(BaseOutput):
         cell_size: Tuple[int, int] = (400, 300),
         output_file: str = './bokeh_output.html'
     ):
+        """
+        Args:
+            max_cols: max number of charts in one row
+            skip_first: flag, skip first log
+            cell_size: size of one chart
+            output_file: file to save the output
+        """
         from bokeh import plotting, io, palettes
         self.plotting = plotting
         self.io = io
