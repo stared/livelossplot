@@ -26,16 +26,26 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from livelossplot.plot_losses import PlotLosses
+<pre><code class="python">from typing import Dict
+
+from livelossplot.plot_losses import PlotLosses
 
 
 class _PlotLossesCallback:
     &#34;&#34;&#34;Base keras callback class for keras and tensorflow.keras&#34;&#34;&#34;
     def __init__(self, **kwargs):
+        &#34;&#34;&#34;
+        Args:
+            **kwargs: keyword arguments that will be passed to PlotLosses constructor
+        &#34;&#34;&#34;
         self.liveplot = PlotLosses(**kwargs)
 
-    def on_epoch_end(self, epoch, logs):
-        &#34;&#34;&#34;Send metrics to livelossplot&#34;&#34;&#34;
+    def on_epoch_end(self, epoch: int, logs: Dict[str, float]):
+        &#34;&#34;&#34;Send metrics to livelossplot
+        Args:
+            epoch: epoch number
+            logs: metrics with values
+        &#34;&#34;&#34;
         self.liveplot.update(logs.copy(), epoch)
         self.liveplot.send()</code></pre>
 </details>

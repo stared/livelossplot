@@ -28,6 +28,7 @@
 </summary>
 <pre><code class="python">from datetime import datetime
 from os import path
+from typing import Optional
 
 from livelossplot.main_logger import MainLogger
 from livelossplot.outputs.base_output import BaseOutput
@@ -37,15 +38,16 @@ class TensorboardLogger(BaseOutput):
     &#34;&#34;&#34;
     Class write logs to TensorBoard (using pure TensorBoard, not one from TensorFlow).
     &#34;&#34;&#34;
-    def __init__(self, logdir=&#34;./tensorboard_logs/&#34;, run_id=None):
+    def __init__(self, logdir: str = &#34;./tensorboard_logs/&#34;, run_id: Optional[str] = None):
         &#34;&#34;&#34;
-        :param logdir: dir where TensorBoard events will be written
-        :param run_id: name for log id, otherwise it usses datetime
+        Args:
+            logdir: dir where TensorBoard events will be written
+            run_id: name for log id, otherwise it usses datetime
         &#34;&#34;&#34;
         from tensorboard import summary
         self.summary = summary
-        time_str = datetime.now().isoformat()[:-7].replace(&#34;T&#34;, &#34; &#34;).replace(&#34;:&#34;, &#34;_&#34;)
-        self._path = path.join(logdir, time_str)
+        run_id = datetime.now().isoformat()[:-7].replace(&#34;T&#34;, &#34; &#34;).replace(&#34;:&#34;, &#34;_&#34;) if run_id is None else run_id
+        self._path = path.join(logdir, run_id)
         self.writer = summary.create_file_writer(self._path)
 
     def close(self):
@@ -54,10 +56,10 @@ class TensorboardLogger(BaseOutput):
 
     def log_scalar(self, name: str, value: float, global_step: float):
         &#34;&#34;&#34;
-        :param name: name of metric
-        :param value: float value of metric
-        :param global_step: current step of the training loop
-        :return:
+        Args:
+            name: name of metric
+            value: float value of metric
+            global_step: current step of the training loop
         &#34;&#34;&#34;
         with self.writer.as_default():
             self.summary.scalar(name, value, step=global_step)
@@ -81,12 +83,17 @@ class TensorboardLogger(BaseOutput):
 <dl>
 <dt id="livelossplot.outputs.tensorboard_logger.TensorboardLogger"><code class="flex name class">
 <span>class <span class="ident">TensorboardLogger</span></span>
-<span>(</span><span>logdir='./tensorboard_logs/', run_id=None)</span>
+<span>(</span><span>logdir: str = './tensorboard_logs/', run_id: Union[str, NoneType] = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Class write logs to TensorBoard (using pure TensorBoard, not one from TensorFlow).</p>
-<p>:param logdir: dir where TensorBoard events will be written
-:param run_id: name for log id, otherwise it usses datetime</p></div>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>logdir</code></strong></dt>
+<dd>dir where TensorBoard events will be written</dd>
+<dt><strong><code>run_id</code></strong></dt>
+<dd>name for log id, otherwise it usses datetime</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -95,15 +102,16 @@ class TensorboardLogger(BaseOutput):
     &#34;&#34;&#34;
     Class write logs to TensorBoard (using pure TensorBoard, not one from TensorFlow).
     &#34;&#34;&#34;
-    def __init__(self, logdir=&#34;./tensorboard_logs/&#34;, run_id=None):
+    def __init__(self, logdir: str = &#34;./tensorboard_logs/&#34;, run_id: Optional[str] = None):
         &#34;&#34;&#34;
-        :param logdir: dir where TensorBoard events will be written
-        :param run_id: name for log id, otherwise it usses datetime
+        Args:
+            logdir: dir where TensorBoard events will be written
+            run_id: name for log id, otherwise it usses datetime
         &#34;&#34;&#34;
         from tensorboard import summary
         self.summary = summary
-        time_str = datetime.now().isoformat()[:-7].replace(&#34;T&#34;, &#34; &#34;).replace(&#34;:&#34;, &#34;_&#34;)
-        self._path = path.join(logdir, time_str)
+        run_id = datetime.now().isoformat()[:-7].replace(&#34;T&#34;, &#34; &#34;).replace(&#34;:&#34;, &#34;_&#34;) if run_id is None else run_id
+        self._path = path.join(logdir, run_id)
         self.writer = summary.create_file_writer(self._path)
 
     def close(self):
@@ -112,10 +120,10 @@ class TensorboardLogger(BaseOutput):
 
     def log_scalar(self, name: str, value: float, global_step: float):
         &#34;&#34;&#34;
-        :param name: name of metric
-        :param value: float value of metric
-        :param global_step: current step of the training loop
-        :return:
+        Args:
+            name: name of metric
+            value: float value of metric
+            global_step: current step of the training loop
         &#34;&#34;&#34;
         with self.writer.as_default():
             self.summary.scalar(name, value, step=global_step)
@@ -152,20 +160,25 @@ class TensorboardLogger(BaseOutput):
 <span>def <span class="ident">log_scalar</span></span>(<span>self, name: str, value: float, global_step: float)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>:param name: name of metric
-:param value: float value of metric
-:param global_step: current step of the training loop
-:return:</p></div>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong></dt>
+<dd>name of metric</dd>
+<dt><strong><code>value</code></strong></dt>
+<dd>float value of metric</dd>
+<dt><strong><code>global_step</code></strong></dt>
+<dd>current step of the training loop</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def log_scalar(self, name: str, value: float, global_step: float):
     &#34;&#34;&#34;
-    :param name: name of metric
-    :param value: float value of metric
-    :param global_step: current step of the training loop
-    :return:
+    Args:
+        name: name of metric
+        value: float value of metric
+        global_step: current step of the training loop
     &#34;&#34;&#34;
     with self.writer.as_default():
         self.summary.scalar(name, value, step=global_step)

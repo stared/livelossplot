@@ -40,7 +40,8 @@ class ExtremaPrinter(BaseOutput):
         &#39; max: {max:8.3f}, cur: {current:8.3f})&#39;
     ):
         &#34;&#34;&#34;
-        :param massage_template: you can specify massage which use all or a few values (min, max, current)
+        Args:
+            massage_template: you can specify massage which use all or a few values (min, max, current)
         &#34;&#34;&#34;
         self.massage_template = massage_template
         self.extrema_cache = {}
@@ -119,7 +120,11 @@ class ExtremaPrinter(BaseOutput):
 <dd>
 <div class="desc"><p>Helper class that provides a standard way to create an ABC using
 inheritance.</p>
-<p>:param massage_template: you can specify massage which use all or a few values (min, max, current)</p></div>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>massage_template</code></strong></dt>
+<dd>you can specify massage which use all or a few values (min, max, current)</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -131,7 +136,8 @@ inheritance.</p>
         &#39; max: {max:8.3f}, cur: {current:8.3f})&#39;
     ):
         &#34;&#34;&#34;
-        :param massage_template: you can specify massage which use all or a few values (min, max, current)
+        Args:
+            massage_template: you can specify massage which use all or a few values (min, max, current)
         &#34;&#34;&#34;
         self.massage_template = massage_template
         self.extrema_cache = {}

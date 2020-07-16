@@ -52,15 +52,16 @@ class MatplotlibPlot(BaseOutput):
         after_plots: Optional[Callable[[plt.Figure], None]] = None,
     ):
         &#34;&#34;&#34;
-        :param cell_size size of one chart:
-        :param max_cols maximal number of charts in one row:
-        :param max_epoch maximum epoch on x axis:
-        :param skip_first number of first steps to skip:
-        :param extra_plots extra charts functions:
-        :param figpath path to save figure:
-        :param after_subplot function which will be called after every subplot:
-        :param before_plots function which will be called before all subplots:
-        :param after_plots function which will be called after all subplots:
+        Args:
+            cell_size: size of one chart
+            max_cols: maximal number of charts in one row
+            max_epoch: maximum epoch on x axis
+            skip_first: number of first steps to skip
+            extra_plots: extra charts functions
+            figpath path: to save figure
+            after_subplot: function which will be called after every subplot
+            before_plots: function which will be called before all subplots
+            after_plots: function which will be called after all subplots
         &#34;&#34;&#34;
         self.cell_size = cell_size
         self.max_cols = max_cols
@@ -99,24 +100,43 @@ class MatplotlibPlot(BaseOutput):
         plt.show()
 
     def _default_after_subplot(self, ax: plt.Axes, group_name: str, x_label: str):
-        &#34;&#34;&#34;Add title xlabel and legend to single chart&#34;&#34;&#34;
+        &#34;&#34;&#34;Add title xlabel and legend to single chart
+        Args:
+            ax: matplotlib Axes
+            group_name: name of metrics group (eg. Accuracy, Recall)
+            x_label: label of x axis (eg. epoch, iteration, batch)
+        &#34;&#34;&#34;
         ax.set_title(group_name)
         ax.set_xlabel(x_label)
         ax.legend(loc=&#39;center right&#39;)
 
     def _default_before_plots(self, fig: plt.Figure, num_of_log_groups: int) -&gt; None:
-        &#34;&#34;&#34;Set matplotlib window properties&#34;&#34;&#34;
+        &#34;&#34;&#34;Set matplotlib window properties
+        Args:
+            fig: matplotlib Figure
+            num_of_log_groups: number of log groups
+        &#34;&#34;&#34;
         clear_output(wait=True)
         figsize_x = self.max_cols * self.cell_size[0]
         figsize_y = ((num_of_log_groups + 1) // self.max_cols + 1) * self.cell_size[1]
         fig.set_size_inches(figsize_x, figsize_y)
 
     def _default_after_plots(self, fig: plt.Figure):
-        &#34;&#34;&#34;Set properties after charts creation&#34;&#34;&#34;
+        &#34;&#34;&#34;Set properties after charts creation
+        Args:
+            fig: matplotlib Figure
+        &#34;&#34;&#34;
         fig.tight_layout()
 
     def _draw_metric_subplot(self, ax: plt.Axes, group_logs: Dict[str, List[LogItem]], group_name: str, x_label: str):
-        # there used to be skip first part, but I skip it first
+        &#34;&#34;&#34;
+        Args:
+            ax: matplotlib Axes
+            group_logs: list of log items per each group name
+            group_name: group name
+            x_label: label for the x axis
+        &#34;&#34;&#34;
+        # There used to be skip first part, but I skip it first
         if self.max_epoch is not None:
             ax.set_xlim(0, self.max_epoch)
 
@@ -152,15 +172,26 @@ class MatplotlibPlot(BaseOutput):
 </code></dt>
 <dd>
 <div class="desc"><p>NOTE: Removed figsize and dynamix_x_axis.</p>
-<p>:param cell_size size of one chart:
-:param max_cols maximal number of charts in one row:
-:param max_epoch maximum epoch on x axis:
-:param skip_first number of first steps to skip:
-:param extra_plots extra charts functions:
-:param figpath path to save figure:
-:param after_subplot function which will be called after every subplot:
-:param before_plots function which will be called before all subplots:
-:param after_plots function which will be called after all subplots:</p></div>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>cell_size</code></strong></dt>
+<dd>size of one chart</dd>
+<dt><strong><code>max_cols</code></strong></dt>
+<dd>maximal number of charts in one row</dd>
+<dt><strong><code>max_epoch</code></strong></dt>
+<dd>maximum epoch on x axis</dd>
+<dt><strong><code>skip_first</code></strong></dt>
+<dd>number of first steps to skip</dd>
+<dt><strong><code>extra_plots</code></strong></dt>
+<dd>extra charts functions</dd>
+<dt>figpath path: to save figure</dt>
+<dt><strong><code>after_subplot</code></strong></dt>
+<dd>function which will be called after every subplot</dd>
+<dt><strong><code>before_plots</code></strong></dt>
+<dd>function which will be called before all subplots</dd>
+<dt><strong><code>after_plots</code></strong></dt>
+<dd>function which will be called after all subplots</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -180,15 +211,16 @@ class MatplotlibPlot(BaseOutput):
         after_plots: Optional[Callable[[plt.Figure], None]] = None,
     ):
         &#34;&#34;&#34;
-        :param cell_size size of one chart:
-        :param max_cols maximal number of charts in one row:
-        :param max_epoch maximum epoch on x axis:
-        :param skip_first number of first steps to skip:
-        :param extra_plots extra charts functions:
-        :param figpath path to save figure:
-        :param after_subplot function which will be called after every subplot:
-        :param before_plots function which will be called before all subplots:
-        :param after_plots function which will be called after all subplots:
+        Args:
+            cell_size: size of one chart
+            max_cols: maximal number of charts in one row
+            max_epoch: maximum epoch on x axis
+            skip_first: number of first steps to skip
+            extra_plots: extra charts functions
+            figpath path: to save figure
+            after_subplot: function which will be called after every subplot
+            before_plots: function which will be called before all subplots
+            after_plots: function which will be called after all subplots
         &#34;&#34;&#34;
         self.cell_size = cell_size
         self.max_cols = max_cols
@@ -227,24 +259,43 @@ class MatplotlibPlot(BaseOutput):
         plt.show()
 
     def _default_after_subplot(self, ax: plt.Axes, group_name: str, x_label: str):
-        &#34;&#34;&#34;Add title xlabel and legend to single chart&#34;&#34;&#34;
+        &#34;&#34;&#34;Add title xlabel and legend to single chart
+        Args:
+            ax: matplotlib Axes
+            group_name: name of metrics group (eg. Accuracy, Recall)
+            x_label: label of x axis (eg. epoch, iteration, batch)
+        &#34;&#34;&#34;
         ax.set_title(group_name)
         ax.set_xlabel(x_label)
         ax.legend(loc=&#39;center right&#39;)
 
     def _default_before_plots(self, fig: plt.Figure, num_of_log_groups: int) -&gt; None:
-        &#34;&#34;&#34;Set matplotlib window properties&#34;&#34;&#34;
+        &#34;&#34;&#34;Set matplotlib window properties
+        Args:
+            fig: matplotlib Figure
+            num_of_log_groups: number of log groups
+        &#34;&#34;&#34;
         clear_output(wait=True)
         figsize_x = self.max_cols * self.cell_size[0]
         figsize_y = ((num_of_log_groups + 1) // self.max_cols + 1) * self.cell_size[1]
         fig.set_size_inches(figsize_x, figsize_y)
 
     def _default_after_plots(self, fig: plt.Figure):
-        &#34;&#34;&#34;Set properties after charts creation&#34;&#34;&#34;
+        &#34;&#34;&#34;Set properties after charts creation
+        Args:
+            fig: matplotlib Figure
+        &#34;&#34;&#34;
         fig.tight_layout()
 
     def _draw_metric_subplot(self, ax: plt.Axes, group_logs: Dict[str, List[LogItem]], group_name: str, x_label: str):
-        # there used to be skip first part, but I skip it first
+        &#34;&#34;&#34;
+        Args:
+            ax: matplotlib Axes
+            group_logs: list of log items per each group name
+            group_name: group name
+            x_label: label for the x axis
+        &#34;&#34;&#34;
+        # There used to be skip first part, but I skip it first
         if self.max_epoch is not None:
             ax.set_xlim(0, self.max_epoch)
 

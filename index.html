@@ -51,9 +51,10 @@ class OldDependenciesFinder:
     loader it knows for a given path, if it knows a compatible loader.
     &#34;&#34;&#34;
     @classmethod
-    def find_spec(self, fullname, *_, **__):
-        &#34;&#34;&#34;
-        This functions is what gets executed by the loader.
+    def find_spec(self, fullname: str, *_, **__):
+        &#34;&#34;&#34;This functions is what gets executed by the loader.
+        Args:
+            fullname: name of the called module
         &#34;&#34;&#34;
         parts = fullname.split(&#39;.&#39;)
         if len(parts) == 2 and parts[0] == &#39;livelossplot&#39; and parts[1] in _input_plugin_dict:
@@ -108,17 +109,25 @@ __all__ = [
 <span>def <span class="ident">PlotLossesIgnite</span></span>(<span>**kwargs)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>PlotLosses callback for Poutyne, a library for PyTorch.
-Requires pytorch-ignite to be installed, <a href="https://github.com/pytorch/ignite.">https://github.com/pytorch/ignite.</a>
-:param kwargs: key-arguments which are passed to PlotLosses</p></div>
+<div class="desc"><p>PlotLosses callback for Poutyne, a library for PyTorch.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>kwargs</code></strong></dt>
+<dd>key-arguments which are passed to PlotLosses</dd>
+</dl>
+<h2 id="notes">Notes</h2>
+<p>Requires pytorch-ignite to be installed, <a href="https://github.com/pytorch/ignite.">https://github.com/pytorch/ignite.</a></p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def PlotLossesIgnite(**kwargs):
     &#34;&#34;&#34;PlotLosses callback for Poutyne, a library for PyTorch.
-    Requires pytorch-ignite to be installed, https://github.com/pytorch/ignite.
-    :param kwargs: key-arguments which are passed to PlotLosses
+    Args:
+        kwargs: key-arguments which are passed to PlotLosses
+
+    Notes:
+        Requires pytorch-ignite to be installed, https://github.com/pytorch/ignite.
     &#34;&#34;&#34;
     from .pytorch_ignite import PlotLossesCallback
     return PlotLossesCallback(**kwargs)</code></pre>
@@ -128,17 +137,25 @@ Requires pytorch-ignite to be installed, <a href="https://github.com/pytorch/ign
 <span>def <span class="ident">PlotLossesKeras</span></span>(<span>**kwargs)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>PlotLosses callback for Keras (as a standalone library).
-Requires keras to be installed.
-:param kwargs: key-arguments which are passed to PlotLosses</p></div>
+<div class="desc"><p>PlotLosses callback for Keras (as a standalone library).</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>kwargs</code></strong></dt>
+<dd>key-arguments which are passed to PlotLosses</dd>
+</dl>
+<h2 id="notes">Notes</h2>
+<p>Requires keras to be installed.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def PlotLossesKeras(**kwargs):
     &#34;&#34;&#34;PlotLosses callback for Keras (as a standalone library).
-    Requires keras to be installed.
-    :param kwargs: key-arguments which are passed to PlotLosses
+    Args:
+        kwargs: key-arguments which are passed to PlotLosses
+
+    Notes:
+        Requires keras to be installed.
     &#34;&#34;&#34;
     from .keras import PlotLossesCallback
     return PlotLossesCallback(**kwargs)</code></pre>
@@ -148,17 +165,25 @@ Requires keras to be installed.
 <span>def <span class="ident">PlotLossesKerasTF</span></span>(<span>**kwargs)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>PlotLosses callback for Keras (as a module of TensorFlow).
-Requires tensorflow to be installed.
-:param kwargs: key-arguments which are passed to PlotLosses</p></div>
+<div class="desc"><p>PlotLosses callback for Keras (as a module of TensorFlow).</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>kwargs</code></strong></dt>
+<dd>key-arguments which are passed to PlotLosses</dd>
+</dl>
+<h2 id="notes">Notes</h2>
+<p>Requires tensorflow to be installed.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def PlotLossesKerasTF(**kwargs):
     &#34;&#34;&#34;PlotLosses callback for Keras (as a module of TensorFlow).
-    Requires tensorflow to be installed.
-    :param kwargs: key-arguments which are passed to PlotLosses
+    Args:
+        kwargs: key-arguments which are passed to PlotLosses
+
+    Notes:
+        Requires tensorflow to be installed.
     &#34;&#34;&#34;
     from .tf_keras import PlotLossesCallback
     return PlotLossesCallback(**kwargs)</code></pre>
@@ -168,17 +193,25 @@ Requires tensorflow to be installed.
 <span>def <span class="ident">PlotLossesPoutyne</span></span>(<span>**kwargs)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>PlotLosses callback for Poutyne, a library for PyTorch.
-Requires poutyne to be installed, <a href="https://poutyne.org/.">https://poutyne.org/.</a>
-:param kwargs: key-arguments which are passed to PlotLosses</p></div>
+<div class="desc"><p>PlotLosses callback for Poutyne, a library for PyTorch.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>kwargs</code></strong></dt>
+<dd>key-arguments which are passed to PlotLosses</dd>
+</dl>
+<h2 id="notes">Notes</h2>
+<p>Requires poutyne to be installed, <a href="https://poutyne.org/.">https://poutyne.org/.</a></p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def PlotLossesPoutyne(**kwargs):
     &#34;&#34;&#34;PlotLosses callback for Poutyne, a library for PyTorch.
-    Requires poutyne to be installed, https://poutyne.org/.
-    :param kwargs: key-arguments which are passed to PlotLosses
+    Args:
+        kwargs: key-arguments which are passed to PlotLosses
+
+    Notes:
+        Requires poutyne to be installed, https://poutyne.org/.
     &#34;&#34;&#34;
     from .poutyne import PlotLossesCallback
     return PlotLossesCallback(**kwargs)</code></pre>
@@ -196,16 +229,28 @@ Requires poutyne to be installed, <a href="https://poutyne.org/.">https://poutyn
 <dd>
 <div class="desc"><p>Main logger - the aim of this class is to store every log from training
 Log is a float value with corresponding training engine step</p>
-<p>:param groups - dictionary with grouped metrics for example one group can contain
-one metric in different stages for example validation, training etc.:
-:param metric_to_name - transformation of metric name which can be used to display name:
-:param current_step - current step of the train engine:
-:param auto_generate_groups_if_not_available - flag, that enable auto-creation of metric groups:
-:param auto_generate_metric_to_name - flag, that enable auto-creation of metric long names,
-based on common shortcuts:
-:param group_patterns - you can put there regular expressions to match a few metric names with group
-and replace its name using second value:
-:param step_names dictionary with a name of x axis for each metrics group or one name for all metrics:</p></div>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>groups</code></strong></dt>
+<dd>dictionary with grouped metrics for example the group 'accuracy' can contains different stages
+for example 'validation_accuracy', 'training_accuracy' etc.</dd>
+<dt><strong><code>metric_to_name</code></strong></dt>
+<dd>transformation of metric name which can be used to display name
+we can have short name in the code (acc), but full name on charts (Accuracy)</dd>
+<dt><strong><code>current_step</code></strong></dt>
+<dd>current step of the train loop</dd>
+<dt><strong><code>auto_generate_groups_if_not_available</code></strong></dt>
+<dd>flag, that enable auto-creation of metric groups
+base on group patterns</dd>
+<dt><strong><code>auto_generate_metric_to_name</code></strong></dt>
+<dd>flag, that enable auto-creation of metric long names
+base on common shortcuts</dd>
+<dt><strong><code>group_patterns</code></strong></dt>
+<dd>you can put there regular expressions to match a few metric names with group
+and replace its name using second value</dd>
+<dt><strong><code>step_names</code></strong></dt>
+<dd>dictionary with a name of x axis for each metrics group or one name for all metrics</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -229,16 +274,19 @@ and replace its name using second value:
         step_names: Union[str, Dict[str, str]] = &#39;epoch&#39;
     ):
         &#34;&#34;&#34;
-        :param groups - dictionary with grouped metrics for example one group can contain
-         one metric in different stages for example validation, training etc.:
-        :param metric_to_name - transformation of metric name which can be used to display name:
-        :param current_step - current step of the train engine:
-        :param auto_generate_groups_if_not_available - flag, that enable auto-creation of metric groups:
-        :param auto_generate_metric_to_name - flag, that enable auto-creation of metric long names,
-         based on common shortcuts:
-        :param group_patterns - you can put there regular expressions to match a few metric names with group
-         and replace its name using second value:
-        :param step_names dictionary with a name of x axis for each metrics group or one name for all metrics:
+        Args:
+            groups: dictionary with grouped metrics for example the group &#39;accuracy&#39; can contains different stages
+                for example &#39;validation_accuracy&#39;, &#39;training_accuracy&#39; etc.
+            metric_to_name: transformation of metric name which can be used to display name
+                we can have short name in the code (acc), but full name on charts (Accuracy)
+            current_step: current step of the train loop
+            auto_generate_groups_if_not_available: flag, that enable auto-creation of metric groups
+                base on group patterns
+            auto_generate_metric_to_name: flag, that enable auto-creation of metric long names
+                base on common shortcuts
+            group_patterns: you can put there regular expressions to match a few metric names with group
+                and replace its name using second value
+            step_names: dictionary with a name of x axis for each metrics group or one name for all metrics
         &#34;&#34;&#34;
         self.log_history = {}
         self.groups = groups if groups is not None else {}
@@ -252,8 +300,15 @@ and replace its name using second value:
         else:
             self.step_names = defaultdict(lambda: &#39;epoch&#39;, step_names)
 
-    def update(self, logs: dict, current_step: Optional[int] = None) -&gt; None:
-        &#34;&#34;&#34;Update logs - loop step can be controlled outside or inside main logger&#34;&#34;&#34;
+    def update(self, logs: Dict[str, float], current_step: Optional[int] = None) -&gt; None:
+        &#34;&#34;&#34;
+        Args:
+            logs: dictionary with metric names and values
+            current_step: current step of the training loop
+
+        Notes:
+            Loop step can be controlled outside or inside main logger with autoincrement of self.current_step
+        &#34;&#34;&#34;
         if current_step is None:
             self.current_step += 1
             current_step = self.current_step
@@ -265,17 +320,21 @@ and replace its name using second value:
             self.log_history[k].append(LogItem(step=current_step, value=v))
 
     def _add_new_metric(self, metric_name: str):
-        &#34;&#34;&#34;Add empty list for a new metric and extend metric name transformations&#34;&#34;&#34;
+        &#34;&#34;&#34;Add empty list for a new metric and extend metric name transformations
+        Args:
+            metric_name: name of metric that will be added to log_history as empty list
+        &#34;&#34;&#34;
         self.log_history[metric_name] = []
         if not self.metric_to_name.get(metric_name):
             self._auto_generate_metrics_to_name(metric_name)
 
     def _auto_generate_metrics_to_name(self, metric_name: str):
-        &#34;&#34;&#34;
-        The function generate transforms for metric names base on patterns.
-        For example it can create transformation from val_acc to Validation Accuracy
-        :param metric_name - name of new appended metric
-        :param patterns - a tuple with pairs - pattern and value to replace it with
+        &#34;&#34;&#34;The function generate transforms for metric names base on patterns
+        Args:
+            metric_name: name of new appended metric
+
+        Example:
+            It can create transformation from val_acc to Validation Accuracy
         &#34;&#34;&#34;
         suffix = self._find_suffix_with_group_patterns(metric_name)
         if suffix is None and suffix != metric_name:
@@ -295,10 +354,15 @@ and replace its name using second value:
                             raw_names: bool = False,
                             raw_group_names: bool = False) -&gt; Dict[str, Dict[str, List[LogItem]]]:
         &#34;&#34;&#34;
-        :param raw_names - return raw names instead of transformed by metric to name (as in update() input dictionary):
-        :param raw_group_names - return group names without transforming them with COMMON_NAME_SHORTCUTS:
-        :return: logs grouped by metric groups - groups are passed in the class constructor
-        method use group patterns instead of groups if they are available
+        Args:
+            raw_names: flag, return raw names instead of transformed by metric to name (as in update() input dictionary)
+            raw_group_names: flag, return group names without transforming them with COMMON_NAME_SHORTCUTS
+
+        Returns:
+            logs grouped by metric groups - groups are passed in the class constructor
+
+        Notes:
+            method use group patterns instead of groups if they are available
         &#34;&#34;&#34;
         if self.auto_generate_groups:
             self.groups = self._auto_generate_groups()
@@ -314,8 +378,12 @@ and replace its name using second value:
 
     def _auto_generate_groups(self) -&gt; Dict[str, List[str]]:
         &#34;&#34;&#34;
-        Auto create groups base on val_ prefix - this step is skipped if groups are set
-        or if group patterns are available
+        Returns:
+            groups generated with group patterns
+
+        Notes:
+            Auto create groups base on val_ prefix - this step is skipped if groups are set
+                or if group patterns are available
         &#34;&#34;&#34;
         groups = {}
         for key in self.log_history.keys():
@@ -398,10 +466,17 @@ def log_history(self) -&gt; Dict[str, List[LogItem]]:
 <span>def <span class="ident">grouped_log_history</span></span>(<span>self, raw_names: bool = False, raw_group_names: bool = False) ‑> Dict[str, Dict[str, List[<a title="livelossplot.main_logger.LogItem" href="main_logger.html#livelossplot.main_logger.LogItem">LogItem</a>]]]</span>
 </code></dt>
 <dd>
-<div class="desc"><p>:param raw_names - return raw names instead of transformed by metric to name (as in update() input dictionary):
-:param raw_group_names - return group names without transforming them with COMMON_NAME_SHORTCUTS:
-:return: logs grouped by metric groups - groups are passed in the class constructor
-method use group patterns instead of groups if they are available</p></div>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>raw_names</code></strong></dt>
+<dd>flag, return raw names instead of transformed by metric to name (as in update() input dictionary)</dd>
+<dt><strong><code>raw_group_names</code></strong></dt>
+<dd>flag, return group names without transforming them with COMMON_NAME_SHORTCUTS</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>logs grouped by metric groups - groups are passed in the class constructor</p>
+<h2 id="notes">Notes</h2>
+<p>method use group patterns instead of groups if they are available</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -410,10 +485,15 @@ method use group patterns instead of groups if they are available</p></div>
                         raw_names: bool = False,
                         raw_group_names: bool = False) -&gt; Dict[str, Dict[str, List[LogItem]]]:
     &#34;&#34;&#34;
-    :param raw_names - return raw names instead of transformed by metric to name (as in update() input dictionary):
-    :param raw_group_names - return group names without transforming them with COMMON_NAME_SHORTCUTS:
-    :return: logs grouped by metric groups - groups are passed in the class constructor
-    method use group patterns instead of groups if they are available
+    Args:
+        raw_names: flag, return raw names instead of transformed by metric to name (as in update() input dictionary)
+        raw_group_names: flag, return group names without transforming them with COMMON_NAME_SHORTCUTS
+
+    Returns:
+        logs grouped by metric groups - groups are passed in the class constructor
+
+    Notes:
+        method use group patterns instead of groups if they are available
     &#34;&#34;&#34;
     if self.auto_generate_groups:
         self.groups = self._auto_generate_groups()
@@ -445,16 +525,31 @@ method use group patterns instead of groups if they are available</p></div>
 </details>
 </dd>
 <dt id="livelossplot.MainLogger.update"><code class="name flex">
-<span>def <span class="ident">update</span></span>(<span>self, logs: dict, current_step: Union[int, NoneType] = None) ‑> NoneType</span>
+<span>def <span class="ident">update</span></span>(<span>self, logs: Dict[str, float], current_step: Union[int, NoneType] = None) ‑> NoneType</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Update logs - loop step can be controlled outside or inside main logger</p></div>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>logs</code></strong></dt>
+<dd>dictionary with metric names and values</dd>
+<dt><strong><code>current_step</code></strong></dt>
+<dd>current step of the training loop</dd>
+</dl>
+<h2 id="notes">Notes</h2>
+<p>Loop step can be controlled outside or inside main logger with autoincrement of self.current_step</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def update(self, logs: dict, current_step: Optional[int] = None) -&gt; None:
-    &#34;&#34;&#34;Update logs - loop step can be controlled outside or inside main logger&#34;&#34;&#34;
+<pre><code class="python">def update(self, logs: Dict[str, float], current_step: Optional[int] = None) -&gt; None:
+    &#34;&#34;&#34;
+    Args:
+        logs: dictionary with metric names and values
+        current_step: current step of the training loop
+
+    Notes:
+        Loop step can be controlled outside or inside main logger with autoincrement of self.current_step
+    &#34;&#34;&#34;
     if current_step is None:
         self.current_step += 1
         current_step = self.current_step
@@ -474,10 +569,16 @@ method use group patterns instead of groups if they are available</p></div>
 </code></dt>
 <dd>
 <div class="desc"><p>Class collect metrics from the training engine and send it to plugins, when send is called</p>
-<p>:param outputs: list of callbacks (outputs) which are called with send method
-:param mode: Options: 'notebook' or 'script' - some of outputs need to change some behaviors,
-depending on the working environment
-:param kwargs: key-arguments which are passed to MainLogger</p></div>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>outputs</code></strong></dt>
+<dd>list of callbacks (outputs) which are called with send method</dd>
+<dt><strong><code>mode</code></strong></dt>
+<dd>Options: 'notebook' or 'script' - some of outputs need to change some behaviors,
+depending on the working environment</dd>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>key-arguments which are passed to MainLogger constructor</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -488,10 +589,11 @@ depending on the working environment
     &#34;&#34;&#34;
     def __init__(self, outputs: Optional[List[Type[BO]]] = None, mode: str = &#39;notebook&#39;, **kwargs):
         &#34;&#34;&#34;
-        :param outputs: list of callbacks (outputs) which are called with send method
-        :param mode: Options: &#39;notebook&#39; or &#39;script&#39; - some of outputs need to change some behaviors,
-         depending on the working environment
-        :param kwargs: key-arguments which are passed to MainLogger
+        Args:
+            outputs: list of callbacks (outputs) which are called with send method
+            mode: Options: &#39;notebook&#39; or &#39;script&#39; - some of outputs need to change some behaviors,
+                depending on the working environment
+            **kwargs: key-arguments which are passed to MainLogger constructor
         &#34;&#34;&#34;
         self.logger = MainLogger(**kwargs)
         self.outputs = outputs if outputs is not None else [MatplotlibPlot(), ExtremaPrinter()]

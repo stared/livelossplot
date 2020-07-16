@@ -28,8 +28,11 @@
 </summary>
 <pre><code class="python">def PlotLossesKeras(**kwargs):
     &#34;&#34;&#34;PlotLosses callback for Keras (as a standalone library).
-    Requires keras to be installed.
-    :param kwargs: key-arguments which are passed to PlotLosses
+    Args:
+        kwargs: key-arguments which are passed to PlotLosses
+
+    Notes:
+        Requires keras to be installed.
     &#34;&#34;&#34;
     from .keras import PlotLossesCallback
     return PlotLossesCallback(**kwargs)
@@ -37,8 +40,11 @@
 
 def PlotLossesKerasTF(**kwargs):
     &#34;&#34;&#34;PlotLosses callback for Keras (as a module of TensorFlow).
-    Requires tensorflow to be installed.
-    :param kwargs: key-arguments which are passed to PlotLosses
+    Args:
+        kwargs: key-arguments which are passed to PlotLosses
+
+    Notes:
+        Requires tensorflow to be installed.
     &#34;&#34;&#34;
     from .tf_keras import PlotLossesCallback
     return PlotLossesCallback(**kwargs)
@@ -46,8 +52,11 @@ def PlotLossesKerasTF(**kwargs):
 
 def PlotLossesPoutyne(**kwargs):
     &#34;&#34;&#34;PlotLosses callback for Poutyne, a library for PyTorch.
-    Requires poutyne to be installed, https://poutyne.org/.
-    :param kwargs: key-arguments which are passed to PlotLosses
+    Args:
+        kwargs: key-arguments which are passed to PlotLosses
+
+    Notes:
+        Requires poutyne to be installed, https://poutyne.org/.
     &#34;&#34;&#34;
     from .poutyne import PlotLossesCallback
     return PlotLossesCallback(**kwargs)
@@ -55,8 +64,11 @@ def PlotLossesPoutyne(**kwargs):
 
 def PlotLossesIgnite(**kwargs):
     &#34;&#34;&#34;PlotLosses callback for Poutyne, a library for PyTorch.
-    Requires pytorch-ignite to be installed, https://github.com/pytorch/ignite.
-    :param kwargs: key-arguments which are passed to PlotLosses
+    Args:
+        kwargs: key-arguments which are passed to PlotLosses
+
+    Notes:
+        Requires pytorch-ignite to be installed, https://github.com/pytorch/ignite.
     &#34;&#34;&#34;
     from .pytorch_ignite import PlotLossesCallback
     return PlotLossesCallback(**kwargs)</code></pre>
@@ -80,17 +92,25 @@ def PlotLossesIgnite(**kwargs):
 <span>def <span class="ident">PlotLossesIgnite</span></span>(<span>**kwargs)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>PlotLosses callback for Poutyne, a library for PyTorch.
-Requires pytorch-ignite to be installed, <a href="https://github.com/pytorch/ignite.">https://github.com/pytorch/ignite.</a>
-:param kwargs: key-arguments which are passed to PlotLosses</p></div>
+<div class="desc"><p>PlotLosses callback for Poutyne, a library for PyTorch.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>kwargs</code></strong></dt>
+<dd>key-arguments which are passed to PlotLosses</dd>
+</dl>
+<h2 id="notes">Notes</h2>
+<p>Requires pytorch-ignite to be installed, <a href="https://github.com/pytorch/ignite.">https://github.com/pytorch/ignite.</a></p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def PlotLossesIgnite(**kwargs):
     &#34;&#34;&#34;PlotLosses callback for Poutyne, a library for PyTorch.
-    Requires pytorch-ignite to be installed, https://github.com/pytorch/ignite.
-    :param kwargs: key-arguments which are passed to PlotLosses
+    Args:
+        kwargs: key-arguments which are passed to PlotLosses
+
+    Notes:
+        Requires pytorch-ignite to be installed, https://github.com/pytorch/ignite.
     &#34;&#34;&#34;
     from .pytorch_ignite import PlotLossesCallback
     return PlotLossesCallback(**kwargs)</code></pre>
@@ -100,17 +120,25 @@ Requires pytorch-ignite to be installed, <a href="https://github.com/pytorch/ign
 <span>def <span class="ident">PlotLossesKeras</span></span>(<span>**kwargs)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>PlotLosses callback for Keras (as a standalone library).
-Requires keras to be installed.
-:param kwargs: key-arguments which are passed to PlotLosses</p></div>
+<div class="desc"><p>PlotLosses callback for Keras (as a standalone library).</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>kwargs</code></strong></dt>
+<dd>key-arguments which are passed to PlotLosses</dd>
+</dl>
+<h2 id="notes">Notes</h2>
+<p>Requires keras to be installed.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def PlotLossesKeras(**kwargs):
     &#34;&#34;&#34;PlotLosses callback for Keras (as a standalone library).
-    Requires keras to be installed.
-    :param kwargs: key-arguments which are passed to PlotLosses
+    Args:
+        kwargs: key-arguments which are passed to PlotLosses
+
+    Notes:
+        Requires keras to be installed.
     &#34;&#34;&#34;
     from .keras import PlotLossesCallback
     return PlotLossesCallback(**kwargs)</code></pre>
@@ -120,17 +148,25 @@ Requires keras to be installed.
 <span>def <span class="ident">PlotLossesKerasTF</span></span>(<span>**kwargs)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>PlotLosses callback for Keras (as a module of TensorFlow).
-Requires tensorflow to be installed.
-:param kwargs: key-arguments which are passed to PlotLosses</p></div>
+<div class="desc"><p>PlotLosses callback for Keras (as a module of TensorFlow).</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>kwargs</code></strong></dt>
+<dd>key-arguments which are passed to PlotLosses</dd>
+</dl>
+<h2 id="notes">Notes</h2>
+<p>Requires tensorflow to be installed.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def PlotLossesKerasTF(**kwargs):
     &#34;&#34;&#34;PlotLosses callback for Keras (as a module of TensorFlow).
-    Requires tensorflow to be installed.
-    :param kwargs: key-arguments which are passed to PlotLosses
+    Args:
+        kwargs: key-arguments which are passed to PlotLosses
+
+    Notes:
+        Requires tensorflow to be installed.
     &#34;&#34;&#34;
     from .tf_keras import PlotLossesCallback
     return PlotLossesCallback(**kwargs)</code></pre>
@@ -140,17 +176,25 @@ Requires tensorflow to be installed.
 <span>def <span class="ident">PlotLossesPoutyne</span></span>(<span>**kwargs)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>PlotLosses callback for Poutyne, a library for PyTorch.
-Requires poutyne to be installed, <a href="https://poutyne.org/.">https://poutyne.org/.</a>
-:param kwargs: key-arguments which are passed to PlotLosses</p></div>
+<div class="desc"><p>PlotLosses callback for Poutyne, a library for PyTorch.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>kwargs</code></strong></dt>
+<dd>key-arguments which are passed to PlotLosses</dd>
+</dl>
+<h2 id="notes">Notes</h2>
+<p>Requires poutyne to be installed, <a href="https://poutyne.org/.">https://poutyne.org/.</a></p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def PlotLossesPoutyne(**kwargs):
     &#34;&#34;&#34;PlotLosses callback for Poutyne, a library for PyTorch.
-    Requires poutyne to be installed, https://poutyne.org/.
-    :param kwargs: key-arguments which are passed to PlotLosses
+    Args:
+        kwargs: key-arguments which are passed to PlotLosses
+
+    Notes:
+        Requires poutyne to be installed, https://poutyne.org/.
     &#34;&#34;&#34;
     from .poutyne import PlotLossesCallback
     return PlotLossesCallback(**kwargs)</code></pre>

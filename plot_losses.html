@@ -41,10 +41,11 @@ class PlotLosses:
     &#34;&#34;&#34;
     def __init__(self, outputs: Optional[List[Type[BO]]] = None, mode: str = &#39;notebook&#39;, **kwargs):
         &#34;&#34;&#34;
-        :param outputs: list of callbacks (outputs) which are called with send method
-        :param mode: Options: &#39;notebook&#39; or &#39;script&#39; - some of outputs need to change some behaviors,
-         depending on the working environment
-        :param kwargs: key-arguments which are passed to MainLogger
+        Args:
+            outputs: list of callbacks (outputs) which are called with send method
+            mode: Options: &#39;notebook&#39; or &#39;script&#39; - some of outputs need to change some behaviors,
+                depending on the working environment
+            **kwargs: key-arguments which are passed to MainLogger constructor
         &#34;&#34;&#34;
         self.logger = MainLogger(**kwargs)
         self.outputs = outputs if outputs is not None else [MatplotlibPlot(), ExtremaPrinter()]
@@ -81,10 +82,16 @@ class PlotLosses:
 </code></dt>
 <dd>
 <div class="desc"><p>Class collect metrics from the training engine and send it to plugins, when send is called</p>
-<p>:param outputs: list of callbacks (outputs) which are called with send method
-:param mode: Options: 'notebook' or 'script' - some of outputs need to change some behaviors,
-depending on the working environment
-:param kwargs: key-arguments which are passed to MainLogger</p></div>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>outputs</code></strong></dt>
+<dd>list of callbacks (outputs) which are called with send method</dd>
+<dt><strong><code>mode</code></strong></dt>
+<dd>Options: 'notebook' or 'script' - some of outputs need to change some behaviors,
+depending on the working environment</dd>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>key-arguments which are passed to MainLogger constructor</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -95,10 +102,11 @@ depending on the working environment
     &#34;&#34;&#34;
     def __init__(self, outputs: Optional[List[Type[BO]]] = None, mode: str = &#39;notebook&#39;, **kwargs):
         &#34;&#34;&#34;
-        :param outputs: list of callbacks (outputs) which are called with send method
-        :param mode: Options: &#39;notebook&#39; or &#39;script&#39; - some of outputs need to change some behaviors,
-         depending on the working environment
-        :param kwargs: key-arguments which are passed to MainLogger
+        Args:
+            outputs: list of callbacks (outputs) which are called with send method
+            mode: Options: &#39;notebook&#39; or &#39;script&#39; - some of outputs need to change some behaviors,
+                depending on the working environment
+            **kwargs: key-arguments which are passed to MainLogger constructor
         &#34;&#34;&#34;
         self.logger = MainLogger(**kwargs)
         self.outputs = outputs if outputs is not None else [MatplotlibPlot(), ExtremaPrinter()]

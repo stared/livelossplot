@@ -36,11 +36,11 @@ class NeptuneLogger(BaseOutput):
     YOUR_API_TOKEN and USERNAME/PROJECT_NAME
     &#34;&#34;&#34;
     def __init__(self, api_token: Optional[str] = None, project_qualified_name: Optional[str] = None, **kwargs):
-        &#34;&#34;&#34;
-        Set secrets and create experiment
-        :param api_token - your api token, you can create NEPTUNE_API_TOKEN environment variable instead:
-        :param project_qualified_name - &lt;user&gt;/&lt;project&gt;, you can create NEPTUNE_PROJECT environment variable instead:
-        :param kwargs - keyword args, that will be passed to create_experiment function:
+        &#34;&#34;&#34;Set secrets and create experiment
+        Args:
+            api_token: your api token, you can create NEPTUNE_API_TOKEN environment variable instead
+            project_qualified_name: &lt;user&gt;/&lt;project&gt;, you can create NEPTUNE_PROJECT environment variable instead
+            kwargs: keyword args, that will be passed to create_experiment function
         &#34;&#34;&#34;
         import neptune
         self.neptune = neptune
@@ -74,10 +74,16 @@ class NeptuneLogger(BaseOutput):
 <dd>
 <div class="desc"><p>See: <a href="https://github.com/neptune-ai/neptune-client">https://github.com/neptune-ai/neptune-client</a>
 YOUR_API_TOKEN and USERNAME/PROJECT_NAME</p>
-<p>Set secrets and create experiment
-:param api_token - your api token, you can create NEPTUNE_API_TOKEN environment variable instead:
-:param project_qualified_name - <user>/<project>, you can create NEPTUNE_PROJECT environment variable instead:
-:param kwargs - keyword args, that will be passed to create_experiment function:</p></div>
+<p>Set secrets and create experiment</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>api_token</code></strong></dt>
+<dd>your api token, you can create NEPTUNE_API_TOKEN environment variable instead</dd>
+<dt><strong><code>project_qualified_name</code></strong></dt>
+<dd><user>/<project>, you can create NEPTUNE_PROJECT environment variable instead</dd>
+<dt><strong><code>kwargs</code></strong></dt>
+<dd>keyword args, that will be passed to create_experiment function</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -87,11 +93,11 @@ YOUR_API_TOKEN and USERNAME/PROJECT_NAME</p>
     YOUR_API_TOKEN and USERNAME/PROJECT_NAME
     &#34;&#34;&#34;
     def __init__(self, api_token: Optional[str] = None, project_qualified_name: Optional[str] = None, **kwargs):
-        &#34;&#34;&#34;
-        Set secrets and create experiment
-        :param api_token - your api token, you can create NEPTUNE_API_TOKEN environment variable instead:
-        :param project_qualified_name - &lt;user&gt;/&lt;project&gt;, you can create NEPTUNE_PROJECT environment variable instead:
-        :param kwargs - keyword args, that will be passed to create_experiment function:
+        &#34;&#34;&#34;Set secrets and create experiment
+        Args:
+            api_token: your api token, you can create NEPTUNE_API_TOKEN environment variable instead
+            project_qualified_name: &lt;user&gt;/&lt;project&gt;, you can create NEPTUNE_PROJECT environment variable instead
+            kwargs: keyword args, that will be passed to create_experiment function
         &#34;&#34;&#34;
         import neptune
         self.neptune = neptune

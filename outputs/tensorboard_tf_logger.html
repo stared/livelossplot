@@ -39,8 +39,9 @@ class TensorboardTFLogger(BaseOutput):
     &#34;&#34;&#34;
     def __init__(self, logdir=&#34;./tensorboard_logs/&#34;, run_id=None):
         &#34;&#34;&#34;
-        :param logdir: dir where TensorBoard events will be written
-        :param run_id: name for log id, otherwise it usses datetime
+        Args:
+            logdir: dir where TensorBoard events will be written
+            run_id: name for log id, otherwise it usses datetime
         &#34;&#34;&#34;
         from tensorflow import summary
         self.summary = summary
@@ -54,10 +55,10 @@ class TensorboardTFLogger(BaseOutput):
 
     def log_scalar(self, name: str, value: float, global_step: int):
         &#34;&#34;&#34;
-        :param name: name of metric
-        :param value: float value of metric
-        :param global_step: current step of the training loop
-        :return:
+        Args:
+            name: name of metric
+            value: float value of metric
+            global_step: current step of the training loop
         &#34;&#34;&#34;
         with self.writer.as_default():
             self.summary.scalar(name, value, step=global_step)
@@ -85,8 +86,13 @@ class TensorboardTFLogger(BaseOutput):
 </code></dt>
 <dd>
 <div class="desc"><p>Class write logs to TensorBoard (from TensorFlow).</p>
-<p>:param logdir: dir where TensorBoard events will be written
-:param run_id: name for log id, otherwise it usses datetime</p></div>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>logdir</code></strong></dt>
+<dd>dir where TensorBoard events will be written</dd>
+<dt><strong><code>run_id</code></strong></dt>
+<dd>name for log id, otherwise it usses datetime</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -97,8 +103,9 @@ class TensorboardTFLogger(BaseOutput):
     &#34;&#34;&#34;
     def __init__(self, logdir=&#34;./tensorboard_logs/&#34;, run_id=None):
         &#34;&#34;&#34;
-        :param logdir: dir where TensorBoard events will be written
-        :param run_id: name for log id, otherwise it usses datetime
+        Args:
+            logdir: dir where TensorBoard events will be written
+            run_id: name for log id, otherwise it usses datetime
         &#34;&#34;&#34;
         from tensorflow import summary
         self.summary = summary
@@ -112,10 +119,10 @@ class TensorboardTFLogger(BaseOutput):
 
     def log_scalar(self, name: str, value: float, global_step: int):
         &#34;&#34;&#34;
-        :param name: name of metric
-        :param value: float value of metric
-        :param global_step: current step of the training loop
-        :return:
+        Args:
+            name: name of metric
+            value: float value of metric
+            global_step: current step of the training loop
         &#34;&#34;&#34;
         with self.writer.as_default():
             self.summary.scalar(name, value, step=global_step)
@@ -152,20 +159,25 @@ class TensorboardTFLogger(BaseOutput):
 <span>def <span class="ident">log_scalar</span></span>(<span>self, name: str, value: float, global_step: int)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>:param name: name of metric
-:param value: float value of metric
-:param global_step: current step of the training loop
-:return:</p></div>
+<div class="desc"><h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong></dt>
+<dd>name of metric</dd>
+<dt><strong><code>value</code></strong></dt>
+<dd>float value of metric</dd>
+<dt><strong><code>global_step</code></strong></dt>
+<dd>current step of the training loop</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def log_scalar(self, name: str, value: float, global_step: int):
     &#34;&#34;&#34;
-    :param name: name of metric
-    :param value: float value of metric
-    :param global_step: current step of the training loop
-    :return:
+    Args:
+        name: name of metric
+        value: float value of metric
+        global_step: current step of the training loop
     &#34;&#34;&#34;
     with self.writer.as_default():
         self.summary.scalar(name, value, step=global_step)
