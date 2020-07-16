@@ -23,9 +23,10 @@ class OldDependenciesFinder:
     loader it knows for a given path, if it knows a compatible loader.
     """
     @classmethod
-    def find_spec(self, fullname, *_, **__):
-        """
-        This functions is what gets executed by the loader.
+    def find_spec(self, fullname: str, *_, **__):
+        """This functions is what gets executed by the loader.
+        Args:
+            fullname: name of the called module
         """
         parts = fullname.split('.')
         if len(parts) == 2 and parts[0] == 'livelossplot' and parts[1] in _input_plugin_dict:

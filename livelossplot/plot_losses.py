@@ -13,10 +13,11 @@ class PlotLosses:
     """
     def __init__(self, outputs: Optional[List[Type[BO]]] = None, mode: str = 'notebook', **kwargs):
         """
-        :param outputs: list of callbacks (outputs) which are called with send method
-        :param mode: Options: 'notebook' or 'script' - some of outputs need to change some behaviors,
-         depending on the working environment
-        :param kwargs: key-arguments which are passed to MainLogger
+        Args:
+            outputs: list of callbacks (outputs) which are called with send method
+            mode: Options: 'notebook' or 'script' - some of outputs need to change some behaviors,
+             depending on the working environment
+            **kwargs: key-arguments which are passed to MainLogger constructor
         """
         self.logger = MainLogger(**kwargs)
         self.outputs = outputs if outputs is not None else [MatplotlibPlot(), ExtremaPrinter()]
