@@ -10,7 +10,7 @@
 
 Don't train deep learning models blindfolded! Be impatient and look at each epoch of your training!
 
-**🎉 New release 0.5.0 (20 Mar 2020). See [CHANGELOG](CHANGELOG.md) and updated [EXAMPLES IN COLAB](https://colab.research.google.com/github/stared/livelossplot). There are some API changes, to make it better, cleaner, and more modular. From 0.5.1 (28 May 2020) there is [Bokeh](https://docs.bokeh.org/en/latest/#) support. 🎉**
+([RECENT CHANGES](CHANGELOG.md), [EXAMPLES IN COLAB](https://colab.research.google.com/github/stared/livelossplot), [API LOOKUP](http://p.migdal.pl/livelossplot/))
 
 A live training loss plot in [Jupyter Notebook](http://jupyter.org/) for [Keras](https://keras.io/), [PyTorch](http://pytorch.org/) and other frameworks. An open-source Python package by [Piotr Migdał](https://p.migdal.pl/), [Bartłomiej Olechno](https://github.com/Bartolo1024/) and [others](https://github.com/stared/livelossplot/graphs/contributors). **Open for collaboration!** (Some tasks are as simple as writing code docstrings, so - no excuses! :))
 
@@ -54,8 +54,8 @@ Look at notebook files with full working [examples](https://github.com/stared/li
 - [2d_prediction_maps.ipynb](https://github.com/stared/livelossplot/blob/master/examples/2d_prediction_maps.ipynb) - example of custom plots - 2d prediction maps (0.4.1+)
 - [poutyne.ipynb](https://github.com/stared/livelossplot/blob/master/examples/poutyne.ipynb) - a Poutyne callback ([Poutyne](https://poutyne.org/) is a Keras-like framework for PyTorch)
 - [torchbearer.ipynb](https://github.com/stared/livelossplot/blob/master/examples/torchbearer.ipynb) - an example using the built in functionality from torchbearer ([torchbearer](https://github.com/ecs-vlc/torchbearer) is a model fitting library for PyTorch)
-- [neptune.py](https://github.com/stared/livelossplot/blob/master/examples/neptune.py) and [neptune.ipynb](https://github.com/stared/livelossplot/blob/master/examples/neptune.ipynb) - a [Neptune.AI](https://neptune.au/)
-- [matplotlib.ipynb](https://github.com/stared/livelossplot/blob/master/examples/matplotlib.ipynb) - a Matplotlib output example 
+- [neptune.py](https://github.com/stared/livelossplot/blob/master/examples/neptune.py) and [neptune.ipynb](https://github.com/stared/livelossplot/blob/master/examples/neptune.ipynb) - a [Neptune.AI](https://neptune.ai/)
+- [matplotlib.ipynb](https://github.com/stared/livelossplot/blob/master/examples/matplotlib.ipynb) - a Matplotlib output example
 - [various_options.ipynb](https://github.com/stared/livelossplot/blob/master/examples/various_options.ipynb) - an extended API for metrics grouping and custom outputs
 
 You [run examples in Colab](https://colab.research.google.com/github/stared/livelossplot).
@@ -106,6 +106,8 @@ plotlosses = PlotLosses(outputs=[BokehPlot()])
 ## Sponsors
 
 This project supported by [Jacek Migdał](http://jacek.migdal.pl/), [Marek Cichy](https://medium.com/@marekkcichy/). [Join the sponsors - show your ❤️ and support, and appear on the list](https://github.com/sponsors/stared)! It will give me time and energy to work on this project.
+
+This project is also supported by a European program *Program Operacyjny Inteligentny Rozwój* for [GearShift - building the engine of behavior of wheeled motor vehicles and map’s generation based on artificial intelligence algorithms implemented on the Unreal Engine platform](https://mapadotacji.gov.pl/projekty/874596/?lang=en) lead by ECC Games (NCBR grant GameINN).
 
 ## Trivia
 

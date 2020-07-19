@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.2] - 2020-07-19
+
+### Added
+
+- Auto-generated documentation with [pdoc3](https://pypi.org/project/pdoc3/): <http://p.migdal.pl/livelossplot/>.
+- Option to generate custom matplotlib plot options (e.g. log scale, no legend, etc) with `MatplotlibPlot(after_subplot=...)` and general for display `MatplotlibPlot(after_subplot=..., after_plots=....)`.
+
+### Changed
+
+- Docstrings to Google-style (see [https://stackoverflow.com/questions/3898572/what-is-the-standard-python-docstring-format](https://stackoverflow.com/questions/3898572/what-is-the-standard-python-docstring-format)).
+- Using object-oriented matplotlib API for plots (`ax.` not `plt.`), vide [this issue](https://github.com/stared/livelossplot/issues/16).
+
 ## [0.5.1] - 2020-05-28
 
 ### Added
