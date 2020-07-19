@@ -37,3 +37,30 @@ class PlotLosses:
         """Send method substitute from old livelossplot api"""
         warnings.warn('draw will be deprecated, please use send method', PendingDeprecationWarning)
         self.send()
+
+    def reset_outputs(self) -> PlotLosses:
+        """Resets all outputs.
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        """
+        self.outputs = []
+        return self
+
+    def to_matplotlib(self, *args, **kwargs) -> PlotLosses:
+        """Appends outputs.MatplotlibPlot output, with specified parameters.
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        """
+        self.outputs.append(MatplotlibPlot(*args, **kwargs))
+        return self
+
+    def to_extrema_printer(self, *args, **kwargs) -> PlotLosses:
+        """Appends outputs.ExtremaPrinter output, with specified parameters.
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        """
+        self.outputs.append(ExtremaPrinter(*args, **kwargs))
+        return self
