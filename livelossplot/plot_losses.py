@@ -1,26 +1,32 @@
 import warnings
-from typing import Type, Optional, TypeVar, List
+from typing import Type, TypeVar, List, Union
 
 from livelossplot.main_logger import MainLogger
-from livelossplot.outputs import BaseOutput, MatplotlibPlot, ExtremaPrinter
+from livelossplot import outputs
 
-BO = TypeVar('BO', bound=BaseOutput)
+BO = TypeVar('BO', bound=outputs.BaseOutput)
 
 
 class PlotLosses:
     """
     Class collect metrics from the training engine and send it to plugins, when send is called
     """
-    def __init__(self, outputs: Optional[List[Type[BO]]] = None, mode: str = 'notebook', **kwargs):
+    def __init__(
+        self,
+        outputs: List[Union[Type[BO], str]] = ['MatplotlibPlot', 'ExtremaPrinter'],
+        mode: str = 'notebook',
+        **kwargs
+    ):
         """
         Args:
-            outputs: list of callbacks (outputs) which are called with send method
+            outputs: list of output modules: objects inheriting from BaseOutput
+                or strings for livelossplot built-in output methods with default parameters
             mode: Options: 'notebook' or 'script' - some of outputs need to change some behaviors,
                 depending on the working environment
             **kwargs: key-arguments which are passed to MainLogger constructor
         """
         self.logger = MainLogger(**kwargs)
-        self.outputs = outputs if outputs is not None else [MatplotlibPlot(), ExtremaPrinter()]
+        self.outputs = [getattr(outputs, out)() if isinstance(out, str) else out for out in outputs]
         for out in self.outputs:
             out.set_output_mode(mode)
 
@@ -53,7 +59,7 @@ class PlotLosses:
         Returns:
             Plotlosses object (so it works for chaining)
         """
-        self.outputs.append(MatplotlibPlot(*args, **kwargs))
+        self.outputs.append(outputs.MatplotlibPlot(*args, **kwargs))
         return self
 
     def to_extrema_printer(self, *args, **kwargs) -> 'PlotLosses':
@@ -62,5 +68,5 @@ class PlotLosses:
         Returns:
             Plotlosses object (so it works for chaining)
         """
-        self.outputs.append(ExtremaPrinter(*args, **kwargs))
+        self.outputs.append(outputs.ExtremaPrinter(*args, **kwargs))
         return self
