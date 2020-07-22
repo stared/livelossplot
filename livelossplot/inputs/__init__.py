@@ -28,7 +28,7 @@ def PlotLossesPoutyne(**kwargs):
         **kwargs: key-arguments which are passed to PlotLosses
 
     Notes:
-        Requires poutyne to be installed, https://poutyne.org/.
+        Requires poutyne to be installed, <https://poutyne.org/>.
     """
     from .poutyne import PlotLossesCallback
     return PlotLossesCallback(**kwargs)
