@@ -65,11 +65,6 @@ class MatplotlibPlot(BaseOutput):
             extra_plot(ax, logger)
 
         self._after_plots(fig)
-        if self.figpath is not None:
-            fig.savefig(self.figpath.format(i=self.file_idx))
-            self.file_idx += 1
-
-        plt.show()
 
     def _default_after_subplot(self, ax: plt.Axes, group_name: str, x_label: str):
         """Add title xlabel and legend to single chart
@@ -99,6 +94,10 @@ class MatplotlibPlot(BaseOutput):
             fig: matplotlib Figure
         """
         fig.tight_layout()
+        if self.figpath is not None:
+            fig.savefig(self.figpath.format(i=self.file_idx))
+            self.file_idx += 1
+        plt.show()
 
     def _draw_metric_subplot(self, ax: plt.Axes, group_logs: Dict[str, List[LogItem]], group_name: str, x_label: str):
         """
