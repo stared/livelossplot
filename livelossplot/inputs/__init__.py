@@ -1,7 +1,7 @@
 def PlotLossesKeras(**kwargs):
     """PlotLosses callback for Keras (as a standalone library).
     Args:
-        kwargs: key-arguments which are passed to PlotLosses
+        **kwargs: key-arguments which are passed to PlotLosses
 
     Notes:
         Requires keras to be installed.
@@ -13,7 +13,7 @@ def PlotLossesKeras(**kwargs):
 def PlotLossesKerasTF(**kwargs):
     """PlotLosses callback for Keras (as a module of TensorFlow).
     Args:
-        kwargs: key-arguments which are passed to PlotLosses
+        **kwargs: key-arguments which are passed to PlotLosses
 
     Notes:
         Requires tensorflow to be installed.
@@ -25,7 +25,7 @@ def PlotLossesKerasTF(**kwargs):
 def PlotLossesPoutyne(**kwargs):
     """PlotLosses callback for Poutyne, a library for PyTorch.
     Args:
-        kwargs: key-arguments which are passed to PlotLosses
+        **kwargs: key-arguments which are passed to PlotLosses
 
     Notes:
         Requires poutyne to be installed, https://poutyne.org/.
@@ -37,7 +37,7 @@ def PlotLossesPoutyne(**kwargs):
 def PlotLossesIgnite(**kwargs):
     """PlotLosses callback for Poutyne, a library for PyTorch.
     Args:
-        kwargs: key-arguments which are passed to PlotLosses
+        **kwargs: key-arguments which are passed to PlotLosses
 
     Notes:
         Requires pytorch-ignite to be installed, https://github.com/pytorch/ignite.
