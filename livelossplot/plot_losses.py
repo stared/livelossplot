@@ -53,20 +53,74 @@ class PlotLosses:
         self.outputs = []
         return self
 
-    def to_matplotlib(self, *args, **kwargs) -> 'PlotLosses':
+    def to_matplotlib(self, **kwargs) -> 'PlotLosses':
         """Appends outputs.MatplotlibPlot output, with specified parameters.
 
+        Args:
+            **kwargs: keyword arguments for MatplotlibPlot
+
         Returns:
             Plotlosses object (so it works for chaining)
         """
-        self.outputs.append(outputs.MatplotlibPlot(*args, **kwargs))
+        self.outputs.append(outputs.MatplotlibPlot(**kwargs))
         return self
 
-    def to_extrema_printer(self, *args, **kwargs) -> 'PlotLosses':
+    def to_extrema_printer(self, **kwargs) -> 'PlotLosses':
         """Appends outputs.ExtremaPrinter output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for ExtremaPrinter
 
         Returns:
             Plotlosses object (so it works for chaining)
         """
-        self.outputs.append(outputs.ExtremaPrinter(*args, **kwargs))
+        self.outputs.append(outputs.ExtremaPrinter(**kwargs))
+        return self
+
+    def to_bokeh(self, **kwargs) -> 'PlotLosses':
+        """Appends outputs.BokehPlot output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for BokehPlot
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        """
+        self.outputs.append(outputs.BokehPlot(**kwargs))
+        return self
+
+    def to_neptune(self, **kwargs) -> 'PlotLosses':
+        """Appends outputs.NeptuneLogger output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for NeptuneLogger
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        """
+        self.outputs.append(outputs.NeptuneLogger(**kwargs))
+        return self
+
+    def to_tensorboard(self, **kwargs) -> 'PlotLosses':
+        """Appends outputs.TensorboardLogger output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for TensorboardLogger
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        """
+        self.outputs.append(outputs.TensorboardLogger(**kwargs))
+        return self
+
+    def to_tensorboard_tf(self, **kwargs) -> 'PlotLosses':
+        """Appends outputs.TensorboardTFLogger output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for TensorboardTFLogger
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        """
+        self.outputs.append(outputs.TensorboardTFLogger(**kwargs))
         return self
