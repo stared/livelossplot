@@ -1,7 +1,9 @@
+import math
 from typing import Tuple, List, Dict, Optional, Callable
 
 import warnings
 
+import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 from IPython.display import clear_output
@@ -20,7 +22,7 @@ class MatplotlibPlot(BaseOutput):
         extra_plots: List[Callable[[MainLogger], None]] = [],
         figpath: Optional[str] = None,
         after_subplot: Optional[Callable[[plt.Axes, str, str], None]] = None,
-        before_plots: Optional[Callable[[plt.Figure, int], None]] = None,
+        before_plots: Optional[Callable[[plt.Figure, np.ndarray, int], None]] = None,
         after_plots: Optional[Callable[[plt.Figure], None]] = None,
     ):
         """
@@ -50,11 +52,11 @@ class MatplotlibPlot(BaseOutput):
         """Draw figures with metrics and show"""
         log_groups = logger.grouped_log_history()
 
-        max_rows = (len(log_groups) + len(self.extra_plots)) // self.max_cols
+        max_rows = math.ceil((len(log_groups) + len(self.extra_plots)) / self.max_cols)
 
         fig, axes = plt.subplots(max_rows, self.max_cols)
         axes = axes.reshape(-1, self.max_cols)
-        self._before_plots(fig, len(log_groups))
+        self._before_plots(fig, axes, len(log_groups))
 
         for group_idx, (group_name, group_logs) in enumerate(log_groups.items()):
             ax = axes[group_idx // self.max_cols, group_idx % self.max_cols]
@@ -65,11 +67,6 @@ class MatplotlibPlot(BaseOutput):
             extra_plot(ax, logger)
 
         self._after_plots(fig)
-        if self.figpath is not None:
-            fig.savefig(self.figpath.format(i=self.file_idx))
-            self.file_idx += 1
-
-        plt.show()
 
     def _default_after_subplot(self, ax: plt.Axes, group_name: str, x_label: str):
         """Add title xlabel and legend to single chart
@@ -82,7 +79,7 @@ class MatplotlibPlot(BaseOutput):
         ax.set_xlabel(x_label)
         ax.legend(loc='center right')
 
-    def _default_before_plots(self, fig: plt.Figure, num_of_log_groups: int) -> None:
+    def _default_before_plots(self, fig: plt.Figure, axes: np.ndarray, num_of_log_groups: int) -> None:
         """Set matplotlib window properties
         Args:
             fig: matplotlib Figure
@@ -92,6 +89,10 @@ class MatplotlibPlot(BaseOutput):
         figsize_x = self.max_cols * self.cell_size[0]
         figsize_y = ((num_of_log_groups + 1) // self.max_cols + 1) * self.cell_size[1]
         fig.set_size_inches(figsize_x, figsize_y)
+        if num_of_log_groups < axes.size:
+            for idx, ax in enumerate(axes[-1]):
+                if idx >= (num_of_log_groups + len(self.extra_plots)) % self.max_cols:
+                    ax.set_visible(False)
 
     def _default_after_plots(self, fig: plt.Figure):
         """Set properties after charts creation
@@ -99,6 +100,10 @@ class MatplotlibPlot(BaseOutput):
             fig: matplotlib Figure
         """
         fig.tight_layout()
+        if self.figpath is not None:
+            fig.savefig(self.figpath.format(i=self.file_idx))
+            self.file_idx += 1
+        plt.show()
 
     def _draw_metric_subplot(self, ax: plt.Axes, group_logs: Dict[str, List[LogItem]], group_name: str, x_label: str):
         """
