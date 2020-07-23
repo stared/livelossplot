@@ -91,7 +91,7 @@ class MatplotlibPlot(BaseOutput):
         fig.set_size_inches(figsize_x, figsize_y)
         if num_of_log_groups < axes.size:
             for idx, ax in enumerate(axes[-1]):
-                if idx >= num_of_log_groups % self.max_cols:
+                if idx >= (num_of_log_groups + len(self.extra_plots)) % self.max_cols:
                     ax.set_visible(False)
 
     def _default_after_plots(self, fig: plt.Figure):
