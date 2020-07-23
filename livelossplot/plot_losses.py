@@ -1,6 +1,7 @@
 import warnings
 from typing import Type, TypeVar, List, Union
 
+import livelossplot
 from livelossplot.main_logger import MainLogger
 from livelossplot import outputs
 
@@ -26,7 +27,7 @@ class PlotLosses:
             **kwargs: key-arguments which are passed to MainLogger constructor
         """
         self.logger = MainLogger(**kwargs)
-        self.outputs = [getattr(outputs, out)() if isinstance(out, str) else out for out in outputs]
+        self.outputs = [getattr(livelossplot.outputs, out)() if isinstance(out, str) else out for out in outputs]
         for out in self.outputs:
             out.set_output_mode(mode)
 
