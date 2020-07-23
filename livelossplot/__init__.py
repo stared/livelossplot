@@ -1,3 +1,7 @@
+"""
+.. include:: ../README.md
+"""
+
 import sys
 import warnings
 from importlib.util import find_spec
@@ -8,12 +12,6 @@ from . import inputs
 from .inputs import *
 from . import outputs
 from .version import __version__
-
-
-"""livelossplot
-
-Main repository: <https://github.com/stared/livelossplot>
-"""
 
 _input_plugin_dict = {
     'keras': 'Keras',
