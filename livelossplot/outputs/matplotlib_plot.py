@@ -1,3 +1,4 @@
+import math
 from typing import Tuple, List, Dict, Optional, Callable
 
 import warnings
@@ -50,7 +51,7 @@ class MatplotlibPlot(BaseOutput):
         """Draw figures with metrics and show"""
         log_groups = logger.grouped_log_history()
 
-        max_rows = (len(log_groups) + len(self.extra_plots)) // self.max_cols
+        max_rows = math.ceil((len(log_groups) + len(self.extra_plots)) / self.max_cols)
 
         fig, axes = plt.subplots(max_rows, self.max_cols)
         axes = axes.reshape(-1, self.max_cols)
