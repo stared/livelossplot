@@ -31,7 +31,7 @@
 <a href="http://pepy.tech/count/livelossplot"><img alt="Downloads" src="http://pepy.tech/badge/livelossplot"></a>
 <a href="https://twitter.com/pmigdal"><img alt="Twitter @pmigdal" src="https://img.shields.io/twitter/follow/pmigdal"></a></p>
 <p>Don't train deep learning models blindfolded! Be impatient and look at each epoch of your training!</p>
-<p>(<a href="CHANGELOG.md">RECENT CHANGES</a>, <a href="https://colab.research.google.com/github/stared/livelossplot">EXAMPLES IN COLAB</a>, <a href="http://p.migdal.pl/livelossplot/">API LOOKUP</a>)</p>
+<p>(<a href="CHANGELOG.md">RECENT CHANGES</a>, <a href="https://colab.research.google.com/github/stared/livelossplot">EXAMPLES IN COLAB</a>, <a href="http://p.migdal.pl/livelossplot/">API LOOKUP</a>, <a href="https://github.com/stared/livelossplot">CODE</a>)</p>
 <p>A live training loss plot in <a href="http://jupyter.org/">Jupyter Notebook</a> for <a href="https://keras.io/">Keras</a>, <a href="http://pytorch.org/">PyTorch</a> and other frameworks. An open-source Python package by <a href="https://p.migdal.pl/">Piotr Migdał</a>, <a href="https://github.com/Bartolo1024/">Bartłomiej Olechno</a> and <a href="https://github.com/stared/livelossplot/graphs/contributors">others</a>. <strong>Open for collaboration!</strong> (Some tasks are as simple as writing code docstrings, so - no excuses! :))</p>
 <pre><code class="python">from livelossplot import PlotLossesKeras
 
@@ -41,7 +41,7 @@ model.fit(X_train, Y_train,
           callbacks=[PlotLossesKeras()],
           verbose=0)
 </code></pre>
-<p><img alt="" src="livelossplot.gif"></p>
+<p><img alt="Animated fig for livelossplot tracking log-loss and accuracy" src="https://github.com/stared/livelossplot/blob/master/livelossplot.gif"></p>
 <ul>
 <li>(The most FA)Q: Why not TensorBoard?</li>
 <li>A: Jupyter Notebook compatibility (for exploration and teaching). The simplicity of use.</li>
