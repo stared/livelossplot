@@ -1,3 +1,7 @@
+"""
+.. include:: ../README.md
+"""
+
 import sys
 import warnings
 from importlib.util import find_spec
