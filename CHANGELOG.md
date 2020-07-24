@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.3] - 2020-07-24
+
+## Added
+
+- API to add outputs with strings `PlotLosses(outputs=['MatplotlibPlot', 'TensorboardLogger'])`, in case of default parameters.
+- API to add outputs with chaining `PlotLosses(outputs=[]).to_matplotlib(**kwargs1).to_tensorboard(**kwargs2)`.
+- README in pdoc3 documentation.
+
+## Fixed
+
+- An error introduced in `0.5.2` with empty subplots (i.e. if the total number of subplots is not divisible the number of columns).
+
+## Changed
+
+- `MatplotlibPlot._default_after_plots` contains `plt.show()` and`fig.savefig(...)`, so that display and save options can be altered with `MatplotlibPlot(after_plots=....)`.
+
 ## [0.5.2] - 2020-07-19
 
 ### Added
