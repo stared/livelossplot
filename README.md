@@ -10,7 +10,7 @@
 
 Don't train deep learning models blindfolded! Be impatient and look at each epoch of your training!
 
-([RECENT CHANGES](CHANGELOG.md), [EXAMPLES IN COLAB](https://colab.research.google.com/github/stared/livelossplot), [API LOOKUP](http://p.migdal.pl/livelossplot/))
+([RECENT CHANGES](CHANGELOG.md), [EXAMPLES IN COLAB](https://colab.research.google.com/github/stared/livelossplot), [API LOOKUP](http://p.migdal.pl/livelossplot/), [CODE](https://github.com/stared/livelossplot))
 
 A live training loss plot in [Jupyter Notebook](http://jupyter.org/) for [Keras](https://keras.io/), [PyTorch](http://pytorch.org/) and other frameworks. An open-source Python package by [Piotr Migdał](https://p.migdal.pl/), [Bartłomiej Olechno](https://github.com/Bartolo1024/) and [others](https://github.com/stared/livelossplot/graphs/contributors). **Open for collaboration!** (Some tasks are as simple as writing code docstrings, so - no excuses! :))
 
@@ -24,7 +24,7 @@ model.fit(X_train, Y_train,
           verbose=0)
 ```
 
-![](livelossplot.gif)
+![Animated fig for livelossplot tracking log-loss and accuracy](https://github.com/stared/livelossplot/blob/master/livelossplot.gif)
 
 - (The most FA)Q: Why not TensorBoard?
 - A: Jupyter Notebook compatibility (for exploration and teaching). The simplicity of use.
