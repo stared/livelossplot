@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.8.4" />
 <title>livelossplot API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="livelossplot …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin>
@@ -22,11 +22,97 @@
 <h1 class="title">Package <code>livelossplot</code></h1>
 </header>
 <section id="section-intro">
+<h1 id="livelossplot">livelossplot</h1>
+<p><a href="https://pypi.org/project/livelossplot/"><img alt="livelossplot version - PyPI" src="https://img.shields.io/pypi/v/livelossplot"></a>
+<img alt="PyPI status" src="https://img.shields.io/pypi/status/livelossplot.svg">
+<img alt="MIT license - PyPI" src="https://img.shields.io/pypi/l/livelossplot.svg">
+<img alt="Python version - PyPI" src="https://img.shields.io/pypi/pyversions/livelossplot.svg">
+<a href="https://github.com/stared/livelossplot/actions"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/stared/livelossplot/Python%20package"></a>
+<a href="http://pepy.tech/count/livelossplot"><img alt="Downloads" src="http://pepy.tech/badge/livelossplot"></a>
+<a href="https://twitter.com/pmigdal"><img alt="Twitter @pmigdal" src="https://img.shields.io/twitter/follow/pmigdal"></a></p>
+<p>Don't train deep learning models blindfolded! Be impatient and look at each epoch of your training!</p>
+<p>(<a href="CHANGELOG.md">RECENT CHANGES</a>, <a href="https://colab.research.google.com/github/stared/livelossplot">EXAMPLES IN COLAB</a>, <a href="http://p.migdal.pl/livelossplot/">API LOOKUP</a>)</p>
+<p>A live training loss plot in <a href="http://jupyter.org/">Jupyter Notebook</a> for <a href="https://keras.io/">Keras</a>, <a href="http://pytorch.org/">PyTorch</a> and other frameworks. An open-source Python package by <a href="https://p.migdal.pl/">Piotr Migdał</a>, <a href="https://github.com/Bartolo1024/">Bartłomiej Olechno</a> and <a href="https://github.com/stared/livelossplot/graphs/contributors">others</a>. <strong>Open for collaboration!</strong> (Some tasks are as simple as writing code docstrings, so - no excuses! :))</p>
+<pre><code class="python">from livelossplot import PlotLossesKeras
+
+model.fit(X_train, Y_train,
+          epochs=10,
+          validation_data=(X_test, Y_test),
+          callbacks=[PlotLossesKeras()],
+          verbose=0)
+</code></pre>
+<p><img alt="" src="livelossplot.gif"></p>
+<ul>
+<li>(The most FA)Q: Why not TensorBoard?</li>
+<li>A: Jupyter Notebook compatibility (for exploration and teaching). The simplicity of use.</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p>To install <a href="https://pypi.org/project/livelossplot/">this version from PyPI</a>, type:</p>
+<pre><code class="bash">pip install livelossplot
+</code></pre>
+<p>To get the newest one from this repo (note that we are in the alpha stage, so there may be frequent updates), type:</p>
+<pre><code class="bash">pip install git+git://github.com/stared/livelossplot.git
+</code></pre>
+<h2 id="examples">Examples</h2>
+<p>Look at notebook files with full working <a href="https://github.com/stared/livelossplot/blob/master/examples/">examples</a>:</p>
+<ul>
+<li><a href="https://github.com/stared/livelossplot/blob/master/examples/keras.ipynb">keras.ipynb</a> - a Keras callback</li>
+<li><a href="https://github.com/stared/livelossplot/blob/master/examples/minimal.ipynb">minimal.ipynb</a> - a bare API, to use anywhere</li>
+<li><a href="https://github.com/stared/livelossplot/blob/master/examples/bokeh.ipynb">bokeh.ipynb</a> - a bare API, plots with Bokeh (<a href="https://colab.research.google.com/github/stared/livelossplot/blob/master/examples/bokeh.ipynb">open it in Colab to see the plots</a>)</li>
+<li><a href="https://github.com/stared/livelossplot/blob/master/examples/pytorch.ipynb">pytorch.ipynb</a> - a bare API, as applied to PyTorch</li>
+<li><a href="https://github.com/stared/livelossplot/blob/master/examples/2d_prediction_maps.ipynb">2d_prediction_maps.ipynb</a> - example of custom plots - 2d prediction maps (0.4.1+)</li>
+<li><a href="https://github.com/stared/livelossplot/blob/master/examples/poutyne.ipynb">poutyne.ipynb</a> - a Poutyne callback (<a href="https://poutyne.org/">Poutyne</a> is a Keras-like framework for PyTorch)</li>
+<li><a href="https://github.com/stared/livelossplot/blob/master/examples/torchbearer.ipynb">torchbearer.ipynb</a> - an example using the built in functionality from torchbearer (<a href="https://github.com/ecs-vlc/torchbearer">torchbearer</a> is a model fitting library for PyTorch)</li>
+<li><a href="https://github.com/stared/livelossplot/blob/master/examples/neptune.py">neptune.py</a> and <a href="https://github.com/stared/livelossplot/blob/master/examples/neptune.ipynb">neptune.ipynb</a> - a <a href="https://neptune.ai/">Neptune.AI</a></li>
+<li><a href="https://github.com/stared/livelossplot/blob/master/examples/matplotlib.ipynb">matplotlib.ipynb</a> - a Matplotlib output example</li>
+<li><a href="https://github.com/stared/livelossplot/blob/master/examples/various_options.ipynb">various_options.ipynb</a> - an extended API for metrics grouping and custom outputs</li>
+</ul>
+<p>You <a href="https://colab.research.google.com/github/stared/livelossplot">run examples in Colab</a>.</p>
+<h2 id="overview">Overview</h2>
+<p>Text logs are easy, but it's easy to miss the most crucial information: is it learning, doing nothing or overfitting?
+Visual feedback allows us to keep track of the training process. Now there is one for Jupyter.</p>
+<p>If you want to get serious - use <a href="https://www.tensorflow.org/programmers_guide/summaries_and_tensorboard">TensorBoard</a>, .
+But what if you just want to train a small model in Jupyter Notebook? Here is a way to do so, using <code><a title="livelossplot" href="#livelossplot">livelossplot</a></code> as a plug&amp;play component</p>
+<h3 id="from-livelossplot-import">from livelossplot import &hellip;</h3>
+<p><code><a title="livelossplot.PlotLosses" href="#livelossplot.PlotLosses">PlotLosses</a></code> for a generic API.</p>
+<pre><code class="python">plotlosses = PlotLosses()
+plotlosses.update({'acc': 0.7, 'val_acc': 0.4, 'loss': 0.9, 'val_loss': 1.1})
+plot.send()  # draw, update logs, etc
+</code></pre>
+<p>There are callbacks for common libraries and frameworks: <code><a title="livelossplot.PlotLossesKeras" href="#livelossplot.PlotLossesKeras">PlotLossesKeras()</a></code>, <code><a title="livelossplot.PlotLossesKerasTF" href="#livelossplot.PlotLossesKerasTF">PlotLossesKerasTF()</a></code>, <code><a title="livelossplot.PlotLossesPoutyne" href="#livelossplot.PlotLossesPoutyne">PlotLossesPoutyne()</a></code>, <code><a title="livelossplot.PlotLossesIgnite" href="#livelossplot.PlotLossesIgnite">PlotLossesIgnite()</a></code>.</p>
+<p>Feel invited to write, and contribute, your adapter.
+If you want to use a bare logger, there is <code><a title="livelossplot.MainLogger" href="#livelossplot.MainLogger">MainLogger</a></code>.</p>
+<h3 id="from-livelossplotoutputs-import">from livelossplot.outputs import &hellip;</h3>
+<p>Plots: <code>MatplotlibPlot</code>, <code>BokehPlot</code>.</p>
+<p>Loggers: <code>ExtremaPrinter</code> (to standard output), <code>TensorboardLogger</code>, <code>TensorboardTFLogger</code>, <code>NeptuneLogger</code>.</p>
+<p>To use them, initialize PlotLosses with some outputs:</p>
+<pre><code class="python">plotlosses = PlotLosses(outputs=[MatplotlibPlot(), TensorboardLogger()])
+</code></pre>
+<p>There are custom <code>matplotlib</code> plots in <code><a title="livelossplot.outputs.matplotlib_subplots" href="outputs/matplotlib_subplots.html">livelossplot.outputs.matplotlib_subplots</a></code> you can pass in <code>MatplotlibPlot</code> arguments.</p>
+<p>If you like to plot with <a href="https://docs.bokeh.org/en/latest/">Bokeh</a> instead of <a href="https://matplotlib.org/">matplotlib</a>, use</p>
+<pre><code class="python">plotlosses = PlotLosses(outputs=[BokehPlot()])
+</code></pre>
+<h2 id="sponsors">Sponsors</h2>
+<p>This project supported by <a href="http://jacek.migdal.pl/">Jacek Migdał</a>, <a href="https://medium.com/@marekkcichy/">Marek Cichy</a>. <a href="https://github.com/sponsors/stared">Join the sponsors - show your ❤️ and support, and appear on the list</a>! It will give me time and energy to work on this project.</p>
+<p>This project is also supported by a European program <em>Program Operacyjny Inteligentny Rozwój</em> for <a href="https://mapadotacji.gov.pl/projekty/874596/?lang=en">GearShift - building the engine of behavior of wheeled motor vehicles and map’s generation based on artificial intelligence algorithms implemented on the Unreal Engine platform</a> lead by ECC Games (NCBR grant GameINN).</p>
+<h2 id="trivia">Trivia</h2>
+<p>It started as <a href="https://gist.github.com/stared/dfb4dfaf6d9a8501cd1cc8b8cb806d2e">this gist</a>. Since it went popular, I decided to rewrite it as a package.</p>
+<p>Oh, and I am in general interested in data vis, see <a href="https://medium.com/inbrowserai/simple-diagrams-of-convoluted-neural-networks-39c097d2925b">Simple diagrams of convoluted neural networks</a> (and overview of deep learning architecture diagrams):</p>
+<blockquote>
+<p>A good diagram is worth a thousand equations — let’s create more of these!</p>
+</blockquote>
+<p>&hellip;or <a href="https://p.migdal.pl/projects/">my other data vis projects</a>.</p>
+<h2 id="todo">Todo</h2>
+<p>If you want more functionality - open an <a href="https://github.com/stared/livelossplot/issues">Issue</a> or even better - prepare a <a href="https://github.com/stared/livelossplot/pulls">Pull Request</a>.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">import sys
+<pre><code class="python">&#34;&#34;&#34;
+.. include:: ../README.md
+&#34;&#34;&#34;
+
+import sys
 import warnings
 from importlib.util import find_spec
 
@@ -109,25 +195,25 @@ __all__ = [
 <span>def <span class="ident">PlotLossesIgnite</span></span>(<span>**kwargs)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>PlotLosses callback for Poutyne, a library for PyTorch.</p>
+<div class="desc"><p>PlotLosses callback for PyTorch-Ignite, a library for PyTorch.</p>
 <h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>kwargs</code></strong></dt>
+<dt><strong><code>**kwargs</code></strong></dt>
 <dd>key-arguments which are passed to PlotLosses</dd>
 </dl>
 <h2 id="notes">Notes</h2>
-<p>Requires pytorch-ignite to be installed, <a href="https://github.com/pytorch/ignite.">https://github.com/pytorch/ignite.</a></p></div>
+<p>Requires pytorch-ignite to be installed, <a href="https://github.com/pytorch/ignite">https://github.com/pytorch/ignite</a>.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def PlotLossesIgnite(**kwargs):
-    &#34;&#34;&#34;PlotLosses callback for Poutyne, a library for PyTorch.
+    &#34;&#34;&#34;PlotLosses callback for PyTorch-Ignite, a library for PyTorch.
     Args:
-        kwargs: key-arguments which are passed to PlotLosses
+        **kwargs: key-arguments which are passed to PlotLosses
 
     Notes:
-        Requires pytorch-ignite to be installed, https://github.com/pytorch/ignite.
+        Requires pytorch-ignite to be installed, &lt;https://github.com/pytorch/ignite&gt;.
     &#34;&#34;&#34;
     from .pytorch_ignite import PlotLossesCallback
     return PlotLossesCallback(**kwargs)</code></pre>
@@ -137,10 +223,10 @@ __all__ = [
 <span>def <span class="ident">PlotLossesKeras</span></span>(<span>**kwargs)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>PlotLosses callback for Keras (as a standalone library).</p>
+<div class="desc"><p>PlotLosses callback for Keras (as a standalone library, not a TensorFlow module).</p>
 <h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>kwargs</code></strong></dt>
+<dt><strong><code>**kwargs</code></strong></dt>
 <dd>key-arguments which are passed to PlotLosses</dd>
 </dl>
 <h2 id="notes">Notes</h2>
@@ -150,9 +236,9 @@ __all__ = [
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def PlotLossesKeras(**kwargs):
-    &#34;&#34;&#34;PlotLosses callback for Keras (as a standalone library).
+    &#34;&#34;&#34;PlotLosses callback for Keras (as a standalone library, not a TensorFlow module).
     Args:
-        kwargs: key-arguments which are passed to PlotLosses
+        **kwargs: key-arguments which are passed to PlotLosses
 
     Notes:
         Requires keras to be installed.
@@ -168,7 +254,7 @@ __all__ = [
 <div class="desc"><p>PlotLosses callback for Keras (as a module of TensorFlow).</p>
 <h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>kwargs</code></strong></dt>
+<dt><strong><code>**kwargs</code></strong></dt>
 <dd>key-arguments which are passed to PlotLosses</dd>
 </dl>
 <h2 id="notes">Notes</h2>
@@ -180,7 +266,7 @@ __all__ = [
 <pre><code class="python">def PlotLossesKerasTF(**kwargs):
     &#34;&#34;&#34;PlotLosses callback for Keras (as a module of TensorFlow).
     Args:
-        kwargs: key-arguments which are passed to PlotLosses
+        **kwargs: key-arguments which are passed to PlotLosses
 
     Notes:
         Requires tensorflow to be installed.
@@ -196,11 +282,11 @@ __all__ = [
 <div class="desc"><p>PlotLosses callback for Poutyne, a library for PyTorch.</p>
 <h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>kwargs</code></strong></dt>
+<dt><strong><code>**kwargs</code></strong></dt>
 <dd>key-arguments which are passed to PlotLosses</dd>
 </dl>
 <h2 id="notes">Notes</h2>
-<p>Requires poutyne to be installed, <a href="https://poutyne.org/.">https://poutyne.org/.</a></p></div>
+<p>Requires poutyne to be installed, <a href="https://poutyne.org/">https://poutyne.org/</a>.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -208,10 +294,10 @@ __all__ = [
 <pre><code class="python">def PlotLossesPoutyne(**kwargs):
     &#34;&#34;&#34;PlotLosses callback for Poutyne, a library for PyTorch.
     Args:
-        kwargs: key-arguments which are passed to PlotLosses
+        **kwargs: key-arguments which are passed to PlotLosses
 
     Notes:
-        Requires poutyne to be installed, https://poutyne.org/.
+        Requires poutyne to be installed, &lt;https://poutyne.org/&gt;.
     &#34;&#34;&#34;
     from .poutyne import PlotLossesCallback
     return PlotLossesCallback(**kwargs)</code></pre>
@@ -565,14 +651,15 @@ def log_history(self) -&gt; Dict[str, List[LogItem]]:
 </dd>
 <dt id="livelossplot.PlotLosses"><code class="flex name class">
 <span>class <span class="ident">PlotLosses</span></span>
-<span>(</span><span>outputs: Union[List[Type[~BO]], NoneType] = None, mode: str = 'notebook', **kwargs)</span>
+<span>(</span><span>outputs: List[Union[Type[~BO], str]] = ['MatplotlibPlot', 'ExtremaPrinter'], mode: str = 'notebook', **kwargs)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Class collect metrics from the training engine and send it to plugins, when send is called</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>outputs</code></strong></dt>
-<dd>list of callbacks (outputs) which are called with send method</dd>
+<dd>list of output modules: objects inheriting from BaseOutput
+or strings for livelossplot built-in output methods with default parameters</dd>
 <dt><strong><code>mode</code></strong></dt>
 <dd>Options: 'notebook' or 'script' - some of outputs need to change some behaviors,
 depending on the working environment</dd>
@@ -587,16 +674,22 @@ depending on the working environment</dd>
     &#34;&#34;&#34;
     Class collect metrics from the training engine and send it to plugins, when send is called
     &#34;&#34;&#34;
-    def __init__(self, outputs: Optional[List[Type[BO]]] = None, mode: str = &#39;notebook&#39;, **kwargs):
+    def __init__(
+        self,
+        outputs: List[Union[Type[BO], str]] = [&#39;MatplotlibPlot&#39;, &#39;ExtremaPrinter&#39;],
+        mode: str = &#39;notebook&#39;,
+        **kwargs
+    ):
         &#34;&#34;&#34;
         Args:
-            outputs: list of callbacks (outputs) which are called with send method
+            outputs: list of output modules: objects inheriting from BaseOutput
+                or strings for livelossplot built-in output methods with default parameters
             mode: Options: &#39;notebook&#39; or &#39;script&#39; - some of outputs need to change some behaviors,
                 depending on the working environment
             **kwargs: key-arguments which are passed to MainLogger constructor
         &#34;&#34;&#34;
         self.logger = MainLogger(**kwargs)
-        self.outputs = outputs if outputs is not None else [MatplotlibPlot(), ExtremaPrinter()]
+        self.outputs = [getattr(livelossplot.outputs, out)() if isinstance(out, str) else out for out in outputs]
         for out in self.outputs:
             out.set_output_mode(mode)
 
@@ -612,7 +705,88 @@ depending on the working environment</dd>
     def draw(self):
         &#34;&#34;&#34;Send method substitute from old livelossplot api&#34;&#34;&#34;
         warnings.warn(&#39;draw will be deprecated, please use send method&#39;, PendingDeprecationWarning)
-        self.send()</code></pre>
+        self.send()
+
+    def reset_outputs(self) -&gt; &#39;PlotLosses&#39;:
+        &#34;&#34;&#34;Resets all outputs.
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        &#34;&#34;&#34;
+        self.outputs = []
+        return self
+
+    def to_matplotlib(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+        &#34;&#34;&#34;Appends outputs.MatplotlibPlot output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for MatplotlibPlot
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        &#34;&#34;&#34;
+        self.outputs.append(outputs.MatplotlibPlot(**kwargs))
+        return self
+
+    def to_extrema_printer(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+        &#34;&#34;&#34;Appends outputs.ExtremaPrinter output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for ExtremaPrinter
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        &#34;&#34;&#34;
+        self.outputs.append(outputs.ExtremaPrinter(**kwargs))
+        return self
+
+    def to_bokeh(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+        &#34;&#34;&#34;Appends outputs.BokehPlot output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for BokehPlot
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        &#34;&#34;&#34;
+        self.outputs.append(outputs.BokehPlot(**kwargs))
+        return self
+
+    def to_neptune(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+        &#34;&#34;&#34;Appends outputs.NeptuneLogger output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for NeptuneLogger
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        &#34;&#34;&#34;
+        self.outputs.append(outputs.NeptuneLogger(**kwargs))
+        return self
+
+    def to_tensorboard(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+        &#34;&#34;&#34;Appends outputs.TensorboardLogger output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for TensorboardLogger
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        &#34;&#34;&#34;
+        self.outputs.append(outputs.TensorboardLogger(**kwargs))
+        return self
+
+    def to_tensorboard_tf(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+        &#34;&#34;&#34;Appends outputs.TensorboardTFLogger output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for TensorboardTFLogger
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        &#34;&#34;&#34;
+        self.outputs.append(outputs.TensorboardTFLogger(**kwargs))
+        return self</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
@@ -631,6 +805,27 @@ depending on the working environment</dd>
     self.send()</code></pre>
 </details>
 </dd>
+<dt id="livelossplot.PlotLosses.reset_outputs"><code class="name flex">
+<span>def <span class="ident">reset_outputs</span></span>(<span>self) ‑> <a title="livelossplot.plot_losses.PlotLosses" href="plot_losses.html#livelossplot.plot_losses.PlotLosses">PlotLosses</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Resets all outputs.</p>
+<h2 id="returns">Returns</h2>
+<p>Plotlosses object (so it works for chaining)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reset_outputs(self) -&gt; &#39;PlotLosses&#39;:
+    &#34;&#34;&#34;Resets all outputs.
+
+    Returns:
+        Plotlosses object (so it works for chaining)
+    &#34;&#34;&#34;
+    self.outputs = []
+    return self</code></pre>
+</details>
+</dd>
 <dt id="livelossplot.PlotLosses.send"><code class="name flex">
 <span>def <span class="ident">send</span></span>(<span>self)</span>
 </code></dt>
@@ -644,6 +839,180 @@ depending on the working environment</dd>
     &#34;&#34;&#34;Method will send logs to every output class&#34;&#34;&#34;
     for output in self.outputs:
         output.send(self.logger)</code></pre>
+</details>
+</dd>
+<dt id="livelossplot.PlotLosses.to_bokeh"><code class="name flex">
+<span>def <span class="ident">to_bokeh</span></span>(<span>self, **kwargs) ‑> <a title="livelossplot.plot_losses.PlotLosses" href="plot_losses.html#livelossplot.plot_losses.PlotLosses">PlotLosses</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Appends outputs.BokehPlot output, with specified parameters.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>keyword arguments for BokehPlot</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>Plotlosses object (so it works for chaining)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_bokeh(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+    &#34;&#34;&#34;Appends outputs.BokehPlot output, with specified parameters.
+
+    Args:
+        **kwargs: keyword arguments for BokehPlot
+
+    Returns:
+        Plotlosses object (so it works for chaining)
+    &#34;&#34;&#34;
+    self.outputs.append(outputs.BokehPlot(**kwargs))
+    return self</code></pre>
+</details>
+</dd>
+<dt id="livelossplot.PlotLosses.to_extrema_printer"><code class="name flex">
+<span>def <span class="ident">to_extrema_printer</span></span>(<span>self, **kwargs) ‑> <a title="livelossplot.plot_losses.PlotLosses" href="plot_losses.html#livelossplot.plot_losses.PlotLosses">PlotLosses</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Appends outputs.ExtremaPrinter output, with specified parameters.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>keyword arguments for ExtremaPrinter</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>Plotlosses object (so it works for chaining)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_extrema_printer(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+    &#34;&#34;&#34;Appends outputs.ExtremaPrinter output, with specified parameters.
+
+    Args:
+        **kwargs: keyword arguments for ExtremaPrinter
+
+    Returns:
+        Plotlosses object (so it works for chaining)
+    &#34;&#34;&#34;
+    self.outputs.append(outputs.ExtremaPrinter(**kwargs))
+    return self</code></pre>
+</details>
+</dd>
+<dt id="livelossplot.PlotLosses.to_matplotlib"><code class="name flex">
+<span>def <span class="ident">to_matplotlib</span></span>(<span>self, **kwargs) ‑> <a title="livelossplot.plot_losses.PlotLosses" href="plot_losses.html#livelossplot.plot_losses.PlotLosses">PlotLosses</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Appends outputs.MatplotlibPlot output, with specified parameters.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>keyword arguments for MatplotlibPlot</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>Plotlosses object (so it works for chaining)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_matplotlib(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+    &#34;&#34;&#34;Appends outputs.MatplotlibPlot output, with specified parameters.
+
+    Args:
+        **kwargs: keyword arguments for MatplotlibPlot
+
+    Returns:
+        Plotlosses object (so it works for chaining)
+    &#34;&#34;&#34;
+    self.outputs.append(outputs.MatplotlibPlot(**kwargs))
+    return self</code></pre>
+</details>
+</dd>
+<dt id="livelossplot.PlotLosses.to_neptune"><code class="name flex">
+<span>def <span class="ident">to_neptune</span></span>(<span>self, **kwargs) ‑> <a title="livelossplot.plot_losses.PlotLosses" href="plot_losses.html#livelossplot.plot_losses.PlotLosses">PlotLosses</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Appends outputs.NeptuneLogger output, with specified parameters.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>keyword arguments for NeptuneLogger</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>Plotlosses object (so it works for chaining)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_neptune(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+    &#34;&#34;&#34;Appends outputs.NeptuneLogger output, with specified parameters.
+
+    Args:
+        **kwargs: keyword arguments for NeptuneLogger
+
+    Returns:
+        Plotlosses object (so it works for chaining)
+    &#34;&#34;&#34;
+    self.outputs.append(outputs.NeptuneLogger(**kwargs))
+    return self</code></pre>
+</details>
+</dd>
+<dt id="livelossplot.PlotLosses.to_tensorboard"><code class="name flex">
+<span>def <span class="ident">to_tensorboard</span></span>(<span>self, **kwargs) ‑> <a title="livelossplot.plot_losses.PlotLosses" href="plot_losses.html#livelossplot.plot_losses.PlotLosses">PlotLosses</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Appends outputs.TensorboardLogger output, with specified parameters.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>keyword arguments for TensorboardLogger</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>Plotlosses object (so it works for chaining)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_tensorboard(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+    &#34;&#34;&#34;Appends outputs.TensorboardLogger output, with specified parameters.
+
+    Args:
+        **kwargs: keyword arguments for TensorboardLogger
+
+    Returns:
+        Plotlosses object (so it works for chaining)
+    &#34;&#34;&#34;
+    self.outputs.append(outputs.TensorboardLogger(**kwargs))
+    return self</code></pre>
+</details>
+</dd>
+<dt id="livelossplot.PlotLosses.to_tensorboard_tf"><code class="name flex">
+<span>def <span class="ident">to_tensorboard_tf</span></span>(<span>self, **kwargs) ‑> <a title="livelossplot.plot_losses.PlotLosses" href="plot_losses.html#livelossplot.plot_losses.PlotLosses">PlotLosses</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Appends outputs.TensorboardTFLogger output, with specified parameters.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>keyword arguments for TensorboardTFLogger</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>Plotlosses object (so it works for chaining)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_tensorboard_tf(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+    &#34;&#34;&#34;Appends outputs.TensorboardTFLogger output, with specified parameters.
+
+    Args:
+        **kwargs: keyword arguments for TensorboardTFLogger
+
+    Returns:
+        Plotlosses object (so it works for chaining)
+    &#34;&#34;&#34;
+    self.outputs.append(outputs.TensorboardTFLogger(**kwargs))
+    return self</code></pre>
 </details>
 </dd>
 <dt id="livelossplot.PlotLosses.update"><code class="name flex">
@@ -668,7 +1037,21 @@ depending on the working environment</dd>
 <nav id="sidebar">
 <h1>Index</h1>
 <div class="toc">
-<ul></ul>
+<ul>
+<li><a href="#livelossplot">livelossplot</a><ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#examples">Examples</a></li>
+<li><a href="#overview">Overview</a><ul>
+<li><a href="#from-livelossplot-import">from livelossplot import &hellip;</a></li>
+<li><a href="#from-livelossplotoutputs-import">from livelossplot.outputs import &hellip;</a></li>
+</ul>
+</li>
+<li><a href="#sponsors">Sponsors</a></li>
+<li><a href="#trivia">Trivia</a></li>
+<li><a href="#todo">Todo</a></li>
+</ul>
+</li>
+</ul>
 </div>
 <ul id="index">
 <li><h3><a href="#header-submodules">Sub-modules</a></h3>
@@ -702,9 +1085,16 @@ depending on the working environment</dd>
 </li>
 <li>
 <h4><code><a title="livelossplot.PlotLosses" href="#livelossplot.PlotLosses">PlotLosses</a></code></h4>
-<ul class="">
+<ul class="two-column">
 <li><code><a title="livelossplot.PlotLosses.draw" href="#livelossplot.PlotLosses.draw">draw</a></code></li>
+<li><code><a title="livelossplot.PlotLosses.reset_outputs" href="#livelossplot.PlotLosses.reset_outputs">reset_outputs</a></code></li>
 <li><code><a title="livelossplot.PlotLosses.send" href="#livelossplot.PlotLosses.send">send</a></code></li>
+<li><code><a title="livelossplot.PlotLosses.to_bokeh" href="#livelossplot.PlotLosses.to_bokeh">to_bokeh</a></code></li>
+<li><code><a title="livelossplot.PlotLosses.to_extrema_printer" href="#livelossplot.PlotLosses.to_extrema_printer">to_extrema_printer</a></code></li>
+<li><code><a title="livelossplot.PlotLosses.to_matplotlib" href="#livelossplot.PlotLosses.to_matplotlib">to_matplotlib</a></code></li>
+<li><code><a title="livelossplot.PlotLosses.to_neptune" href="#livelossplot.PlotLosses.to_neptune">to_neptune</a></code></li>
+<li><code><a title="livelossplot.PlotLosses.to_tensorboard" href="#livelossplot.PlotLosses.to_tensorboard">to_tensorboard</a></code></li>
+<li><code><a title="livelossplot.PlotLosses.to_tensorboard_tf" href="#livelossplot.PlotLosses.to_tensorboard_tf">to_tensorboard_tf</a></code></li>
 <li><code><a title="livelossplot.PlotLosses.update" href="#livelossplot.PlotLosses.update">update</a></code></li>
 </ul>
 </li>

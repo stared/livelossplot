@@ -27,28 +27,35 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">import warnings
-from typing import Type, Optional, TypeVar, List
+from typing import Type, TypeVar, List, Union
 
+import livelossplot
 from livelossplot.main_logger import MainLogger
-from livelossplot.outputs import BaseOutput, MatplotlibPlot, ExtremaPrinter
+from livelossplot import outputs
 
-BO = TypeVar(&#39;BO&#39;, bound=BaseOutput)
+BO = TypeVar(&#39;BO&#39;, bound=outputs.BaseOutput)
 
 
 class PlotLosses:
     &#34;&#34;&#34;
     Class collect metrics from the training engine and send it to plugins, when send is called
     &#34;&#34;&#34;
-    def __init__(self, outputs: Optional[List[Type[BO]]] = None, mode: str = &#39;notebook&#39;, **kwargs):
+    def __init__(
+        self,
+        outputs: List[Union[Type[BO], str]] = [&#39;MatplotlibPlot&#39;, &#39;ExtremaPrinter&#39;],
+        mode: str = &#39;notebook&#39;,
+        **kwargs
+    ):
         &#34;&#34;&#34;
         Args:
-            outputs: list of callbacks (outputs) which are called with send method
+            outputs: list of output modules: objects inheriting from BaseOutput
+                or strings for livelossplot built-in output methods with default parameters
             mode: Options: &#39;notebook&#39; or &#39;script&#39; - some of outputs need to change some behaviors,
                 depending on the working environment
             **kwargs: key-arguments which are passed to MainLogger constructor
         &#34;&#34;&#34;
         self.logger = MainLogger(**kwargs)
-        self.outputs = outputs if outputs is not None else [MatplotlibPlot(), ExtremaPrinter()]
+        self.outputs = [getattr(livelossplot.outputs, out)() if isinstance(out, str) else out for out in outputs]
         for out in self.outputs:
             out.set_output_mode(mode)
 
@@ -64,7 +71,88 @@ class PlotLosses:
     def draw(self):
         &#34;&#34;&#34;Send method substitute from old livelossplot api&#34;&#34;&#34;
         warnings.warn(&#39;draw will be deprecated, please use send method&#39;, PendingDeprecationWarning)
-        self.send()</code></pre>
+        self.send()
+
+    def reset_outputs(self) -&gt; &#39;PlotLosses&#39;:
+        &#34;&#34;&#34;Resets all outputs.
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        &#34;&#34;&#34;
+        self.outputs = []
+        return self
+
+    def to_matplotlib(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+        &#34;&#34;&#34;Appends outputs.MatplotlibPlot output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for MatplotlibPlot
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        &#34;&#34;&#34;
+        self.outputs.append(outputs.MatplotlibPlot(**kwargs))
+        return self
+
+    def to_extrema_printer(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+        &#34;&#34;&#34;Appends outputs.ExtremaPrinter output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for ExtremaPrinter
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        &#34;&#34;&#34;
+        self.outputs.append(outputs.ExtremaPrinter(**kwargs))
+        return self
+
+    def to_bokeh(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+        &#34;&#34;&#34;Appends outputs.BokehPlot output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for BokehPlot
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        &#34;&#34;&#34;
+        self.outputs.append(outputs.BokehPlot(**kwargs))
+        return self
+
+    def to_neptune(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+        &#34;&#34;&#34;Appends outputs.NeptuneLogger output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for NeptuneLogger
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        &#34;&#34;&#34;
+        self.outputs.append(outputs.NeptuneLogger(**kwargs))
+        return self
+
+    def to_tensorboard(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+        &#34;&#34;&#34;Appends outputs.TensorboardLogger output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for TensorboardLogger
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        &#34;&#34;&#34;
+        self.outputs.append(outputs.TensorboardLogger(**kwargs))
+        return self
+
+    def to_tensorboard_tf(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+        &#34;&#34;&#34;Appends outputs.TensorboardTFLogger output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for TensorboardTFLogger
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        &#34;&#34;&#34;
+        self.outputs.append(outputs.TensorboardTFLogger(**kwargs))
+        return self</code></pre>
 </details>
 </section>
 <section>
@@ -78,14 +166,15 @@ class PlotLosses:
 <dl>
 <dt id="livelossplot.plot_losses.PlotLosses"><code class="flex name class">
 <span>class <span class="ident">PlotLosses</span></span>
-<span>(</span><span>outputs: Union[List[Type[~BO]], NoneType] = None, mode: str = 'notebook', **kwargs)</span>
+<span>(</span><span>outputs: List[Union[Type[~BO], str]] = ['MatplotlibPlot', 'ExtremaPrinter'], mode: str = 'notebook', **kwargs)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Class collect metrics from the training engine and send it to plugins, when send is called</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>outputs</code></strong></dt>
-<dd>list of callbacks (outputs) which are called with send method</dd>
+<dd>list of output modules: objects inheriting from BaseOutput
+or strings for livelossplot built-in output methods with default parameters</dd>
 <dt><strong><code>mode</code></strong></dt>
 <dd>Options: 'notebook' or 'script' - some of outputs need to change some behaviors,
 depending on the working environment</dd>
@@ -100,16 +189,22 @@ depending on the working environment</dd>
     &#34;&#34;&#34;
     Class collect metrics from the training engine and send it to plugins, when send is called
     &#34;&#34;&#34;
-    def __init__(self, outputs: Optional[List[Type[BO]]] = None, mode: str = &#39;notebook&#39;, **kwargs):
+    def __init__(
+        self,
+        outputs: List[Union[Type[BO], str]] = [&#39;MatplotlibPlot&#39;, &#39;ExtremaPrinter&#39;],
+        mode: str = &#39;notebook&#39;,
+        **kwargs
+    ):
         &#34;&#34;&#34;
         Args:
-            outputs: list of callbacks (outputs) which are called with send method
+            outputs: list of output modules: objects inheriting from BaseOutput
+                or strings for livelossplot built-in output methods with default parameters
             mode: Options: &#39;notebook&#39; or &#39;script&#39; - some of outputs need to change some behaviors,
                 depending on the working environment
             **kwargs: key-arguments which are passed to MainLogger constructor
         &#34;&#34;&#34;
         self.logger = MainLogger(**kwargs)
-        self.outputs = outputs if outputs is not None else [MatplotlibPlot(), ExtremaPrinter()]
+        self.outputs = [getattr(livelossplot.outputs, out)() if isinstance(out, str) else out for out in outputs]
         for out in self.outputs:
             out.set_output_mode(mode)
 
@@ -125,7 +220,88 @@ depending on the working environment</dd>
     def draw(self):
         &#34;&#34;&#34;Send method substitute from old livelossplot api&#34;&#34;&#34;
         warnings.warn(&#39;draw will be deprecated, please use send method&#39;, PendingDeprecationWarning)
-        self.send()</code></pre>
+        self.send()
+
+    def reset_outputs(self) -&gt; &#39;PlotLosses&#39;:
+        &#34;&#34;&#34;Resets all outputs.
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        &#34;&#34;&#34;
+        self.outputs = []
+        return self
+
+    def to_matplotlib(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+        &#34;&#34;&#34;Appends outputs.MatplotlibPlot output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for MatplotlibPlot
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        &#34;&#34;&#34;
+        self.outputs.append(outputs.MatplotlibPlot(**kwargs))
+        return self
+
+    def to_extrema_printer(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+        &#34;&#34;&#34;Appends outputs.ExtremaPrinter output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for ExtremaPrinter
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        &#34;&#34;&#34;
+        self.outputs.append(outputs.ExtremaPrinter(**kwargs))
+        return self
+
+    def to_bokeh(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+        &#34;&#34;&#34;Appends outputs.BokehPlot output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for BokehPlot
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        &#34;&#34;&#34;
+        self.outputs.append(outputs.BokehPlot(**kwargs))
+        return self
+
+    def to_neptune(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+        &#34;&#34;&#34;Appends outputs.NeptuneLogger output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for NeptuneLogger
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        &#34;&#34;&#34;
+        self.outputs.append(outputs.NeptuneLogger(**kwargs))
+        return self
+
+    def to_tensorboard(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+        &#34;&#34;&#34;Appends outputs.TensorboardLogger output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for TensorboardLogger
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        &#34;&#34;&#34;
+        self.outputs.append(outputs.TensorboardLogger(**kwargs))
+        return self
+
+    def to_tensorboard_tf(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+        &#34;&#34;&#34;Appends outputs.TensorboardTFLogger output, with specified parameters.
+
+        Args:
+            **kwargs: keyword arguments for TensorboardTFLogger
+
+        Returns:
+            Plotlosses object (so it works for chaining)
+        &#34;&#34;&#34;
+        self.outputs.append(outputs.TensorboardTFLogger(**kwargs))
+        return self</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
@@ -144,6 +320,27 @@ depending on the working environment</dd>
     self.send()</code></pre>
 </details>
 </dd>
+<dt id="livelossplot.plot_losses.PlotLosses.reset_outputs"><code class="name flex">
+<span>def <span class="ident">reset_outputs</span></span>(<span>self) ‑> <a title="livelossplot.plot_losses.PlotLosses" href="#livelossplot.plot_losses.PlotLosses">PlotLosses</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Resets all outputs.</p>
+<h2 id="returns">Returns</h2>
+<p>Plotlosses object (so it works for chaining)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reset_outputs(self) -&gt; &#39;PlotLosses&#39;:
+    &#34;&#34;&#34;Resets all outputs.
+
+    Returns:
+        Plotlosses object (so it works for chaining)
+    &#34;&#34;&#34;
+    self.outputs = []
+    return self</code></pre>
+</details>
+</dd>
 <dt id="livelossplot.plot_losses.PlotLosses.send"><code class="name flex">
 <span>def <span class="ident">send</span></span>(<span>self)</span>
 </code></dt>
@@ -157,6 +354,180 @@ depending on the working environment</dd>
     &#34;&#34;&#34;Method will send logs to every output class&#34;&#34;&#34;
     for output in self.outputs:
         output.send(self.logger)</code></pre>
+</details>
+</dd>
+<dt id="livelossplot.plot_losses.PlotLosses.to_bokeh"><code class="name flex">
+<span>def <span class="ident">to_bokeh</span></span>(<span>self, **kwargs) ‑> <a title="livelossplot.plot_losses.PlotLosses" href="#livelossplot.plot_losses.PlotLosses">PlotLosses</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Appends outputs.BokehPlot output, with specified parameters.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>keyword arguments for BokehPlot</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>Plotlosses object (so it works for chaining)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_bokeh(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+    &#34;&#34;&#34;Appends outputs.BokehPlot output, with specified parameters.
+
+    Args:
+        **kwargs: keyword arguments for BokehPlot
+
+    Returns:
+        Plotlosses object (so it works for chaining)
+    &#34;&#34;&#34;
+    self.outputs.append(outputs.BokehPlot(**kwargs))
+    return self</code></pre>
+</details>
+</dd>
+<dt id="livelossplot.plot_losses.PlotLosses.to_extrema_printer"><code class="name flex">
+<span>def <span class="ident">to_extrema_printer</span></span>(<span>self, **kwargs) ‑> <a title="livelossplot.plot_losses.PlotLosses" href="#livelossplot.plot_losses.PlotLosses">PlotLosses</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Appends outputs.ExtremaPrinter output, with specified parameters.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>keyword arguments for ExtremaPrinter</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>Plotlosses object (so it works for chaining)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_extrema_printer(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+    &#34;&#34;&#34;Appends outputs.ExtremaPrinter output, with specified parameters.
+
+    Args:
+        **kwargs: keyword arguments for ExtremaPrinter
+
+    Returns:
+        Plotlosses object (so it works for chaining)
+    &#34;&#34;&#34;
+    self.outputs.append(outputs.ExtremaPrinter(**kwargs))
+    return self</code></pre>
+</details>
+</dd>
+<dt id="livelossplot.plot_losses.PlotLosses.to_matplotlib"><code class="name flex">
+<span>def <span class="ident">to_matplotlib</span></span>(<span>self, **kwargs) ‑> <a title="livelossplot.plot_losses.PlotLosses" href="#livelossplot.plot_losses.PlotLosses">PlotLosses</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Appends outputs.MatplotlibPlot output, with specified parameters.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>keyword arguments for MatplotlibPlot</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>Plotlosses object (so it works for chaining)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_matplotlib(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+    &#34;&#34;&#34;Appends outputs.MatplotlibPlot output, with specified parameters.
+
+    Args:
+        **kwargs: keyword arguments for MatplotlibPlot
+
+    Returns:
+        Plotlosses object (so it works for chaining)
+    &#34;&#34;&#34;
+    self.outputs.append(outputs.MatplotlibPlot(**kwargs))
+    return self</code></pre>
+</details>
+</dd>
+<dt id="livelossplot.plot_losses.PlotLosses.to_neptune"><code class="name flex">
+<span>def <span class="ident">to_neptune</span></span>(<span>self, **kwargs) ‑> <a title="livelossplot.plot_losses.PlotLosses" href="#livelossplot.plot_losses.PlotLosses">PlotLosses</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Appends outputs.NeptuneLogger output, with specified parameters.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>keyword arguments for NeptuneLogger</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>Plotlosses object (so it works for chaining)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_neptune(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+    &#34;&#34;&#34;Appends outputs.NeptuneLogger output, with specified parameters.
+
+    Args:
+        **kwargs: keyword arguments for NeptuneLogger
+
+    Returns:
+        Plotlosses object (so it works for chaining)
+    &#34;&#34;&#34;
+    self.outputs.append(outputs.NeptuneLogger(**kwargs))
+    return self</code></pre>
+</details>
+</dd>
+<dt id="livelossplot.plot_losses.PlotLosses.to_tensorboard"><code class="name flex">
+<span>def <span class="ident">to_tensorboard</span></span>(<span>self, **kwargs) ‑> <a title="livelossplot.plot_losses.PlotLosses" href="#livelossplot.plot_losses.PlotLosses">PlotLosses</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Appends outputs.TensorboardLogger output, with specified parameters.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>keyword arguments for TensorboardLogger</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>Plotlosses object (so it works for chaining)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_tensorboard(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+    &#34;&#34;&#34;Appends outputs.TensorboardLogger output, with specified parameters.
+
+    Args:
+        **kwargs: keyword arguments for TensorboardLogger
+
+    Returns:
+        Plotlosses object (so it works for chaining)
+    &#34;&#34;&#34;
+    self.outputs.append(outputs.TensorboardLogger(**kwargs))
+    return self</code></pre>
+</details>
+</dd>
+<dt id="livelossplot.plot_losses.PlotLosses.to_tensorboard_tf"><code class="name flex">
+<span>def <span class="ident">to_tensorboard_tf</span></span>(<span>self, **kwargs) ‑> <a title="livelossplot.plot_losses.PlotLosses" href="#livelossplot.plot_losses.PlotLosses">PlotLosses</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Appends outputs.TensorboardTFLogger output, with specified parameters.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>keyword arguments for TensorboardTFLogger</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>Plotlosses object (so it works for chaining)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_tensorboard_tf(self, **kwargs) -&gt; &#39;PlotLosses&#39;:
+    &#34;&#34;&#34;Appends outputs.TensorboardTFLogger output, with specified parameters.
+
+    Args:
+        **kwargs: keyword arguments for TensorboardTFLogger
+
+    Returns:
+        Plotlosses object (so it works for chaining)
+    &#34;&#34;&#34;
+    self.outputs.append(outputs.TensorboardTFLogger(**kwargs))
+    return self</code></pre>
 </details>
 </dd>
 <dt id="livelossplot.plot_losses.PlotLosses.update"><code class="name flex">
@@ -193,9 +564,16 @@ depending on the working environment</dd>
 <ul>
 <li>
 <h4><code><a title="livelossplot.plot_losses.PlotLosses" href="#livelossplot.plot_losses.PlotLosses">PlotLosses</a></code></h4>
-<ul class="">
+<ul class="two-column">
 <li><code><a title="livelossplot.plot_losses.PlotLosses.draw" href="#livelossplot.plot_losses.PlotLosses.draw">draw</a></code></li>
+<li><code><a title="livelossplot.plot_losses.PlotLosses.reset_outputs" href="#livelossplot.plot_losses.PlotLosses.reset_outputs">reset_outputs</a></code></li>
 <li><code><a title="livelossplot.plot_losses.PlotLosses.send" href="#livelossplot.plot_losses.PlotLosses.send">send</a></code></li>
+<li><code><a title="livelossplot.plot_losses.PlotLosses.to_bokeh" href="#livelossplot.plot_losses.PlotLosses.to_bokeh">to_bokeh</a></code></li>
+<li><code><a title="livelossplot.plot_losses.PlotLosses.to_extrema_printer" href="#livelossplot.plot_losses.PlotLosses.to_extrema_printer">to_extrema_printer</a></code></li>
+<li><code><a title="livelossplot.plot_losses.PlotLosses.to_matplotlib" href="#livelossplot.plot_losses.PlotLosses.to_matplotlib">to_matplotlib</a></code></li>
+<li><code><a title="livelossplot.plot_losses.PlotLosses.to_neptune" href="#livelossplot.plot_losses.PlotLosses.to_neptune">to_neptune</a></code></li>
+<li><code><a title="livelossplot.plot_losses.PlotLosses.to_tensorboard" href="#livelossplot.plot_losses.PlotLosses.to_tensorboard">to_tensorboard</a></code></li>
+<li><code><a title="livelossplot.plot_losses.PlotLosses.to_tensorboard_tf" href="#livelossplot.plot_losses.PlotLosses.to_tensorboard_tf">to_tensorboard_tf</a></code></li>
 <li><code><a title="livelossplot.plot_losses.PlotLosses.update" href="#livelossplot.plot_losses.PlotLosses.update">update</a></code></li>
 </ul>
 </li>

@@ -40,7 +40,7 @@ class NeptuneLogger(BaseOutput):
         Args:
             api_token: your api token, you can create NEPTUNE_API_TOKEN environment variable instead
             project_qualified_name: &lt;user&gt;/&lt;project&gt;, you can create NEPTUNE_PROJECT environment variable instead
-            kwargs: keyword args, that will be passed to create_experiment function
+            **kwargs: keyword args, that will be passed to create_experiment function
         &#34;&#34;&#34;
         import neptune
         self.neptune = neptune
@@ -81,7 +81,7 @@ YOUR_API_TOKEN and USERNAME/PROJECT_NAME</p>
 <dd>your api token, you can create NEPTUNE_API_TOKEN environment variable instead</dd>
 <dt><strong><code>project_qualified_name</code></strong></dt>
 <dd><user>/<project>, you can create NEPTUNE_PROJECT environment variable instead</dd>
-<dt><strong><code>kwargs</code></strong></dt>
+<dt><strong><code>**kwargs</code></strong></dt>
 <dd>keyword args, that will be passed to create_experiment function</dd>
 </dl></div>
 <details class="source">
@@ -97,7 +97,7 @@ YOUR_API_TOKEN and USERNAME/PROJECT_NAME</p>
         Args:
             api_token: your api token, you can create NEPTUNE_API_TOKEN environment variable instead
             project_qualified_name: &lt;user&gt;/&lt;project&gt;, you can create NEPTUNE_PROJECT environment variable instead
-            kwargs: keyword args, that will be passed to create_experiment function
+            **kwargs: keyword args, that will be passed to create_experiment function
         &#34;&#34;&#34;
         import neptune
         self.neptune = neptune
