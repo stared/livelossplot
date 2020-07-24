@@ -24,7 +24,7 @@ model.fit(X_train, Y_train,
           verbose=0)
 ```
 
-![Animated fig for livelossplot tracking log-loss and accuracy](https://github.com/stared/livelossplot/blob/master/livelossplot.gif)
+![Animated fig for livelossplot tracking log-loss and accuracy](https://raw.githubusercontent.com/stared/livelossplot/master/livelossplot.gif)
 
 - (The most FA)Q: Why not TensorBoard?
 - A: Jupyter Notebook compatibility (for exploration and teaching). The simplicity of use.
