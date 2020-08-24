@@ -19,6 +19,7 @@ class MatplotlibPlot(BaseOutput):
         max_cols: int = 2,
         max_epoch: int = None,
         skip_first: int = 2,
+        start_epoch: int = 0,
         extra_plots: List[Callable[[MainLogger], None]] = [],
         figpath: Optional[str] = None,
         after_subplot: Optional[Callable[[plt.Axes, str, str], None]] = None,
@@ -31,6 +32,7 @@ class MatplotlibPlot(BaseOutput):
             max_cols: maximal number of charts in one row
             max_epoch: maximum epoch on x axis
             skip_first: number of first steps to skip
+            start_epoch: start chart from the given epoch, can be used for sliding chart if value is negative
             extra_plots: extra charts functions
             figpath path: to save figure
             after_subplot: function which will be called after every subplot
@@ -40,6 +42,7 @@ class MatplotlibPlot(BaseOutput):
         self.cell_size = cell_size
         self.max_cols = max_cols
         self.skip_first = skip_first  # think about it
+        self.start_epoch = start_epoch
         self.extra_plots = extra_plots
         self.max_epoch = max_epoch
         self.figpath = figpath
@@ -120,7 +123,9 @@ class MatplotlibPlot(BaseOutput):
         for name, logs in group_logs.items():
             if len(logs) > 0:
                 xs = [log.step for log in logs]
+                xs = xs[min(self.start_epoch, len(xs) - self.start_epoch):]
                 ys = [log.value for log in logs]
+                ys = ys[min(self.start_epoch, len(ys) - self.start_epoch):]
                 ax.plot(xs, ys, label=name)
 
         self._after_subplot(ax, group_name, x_label)
