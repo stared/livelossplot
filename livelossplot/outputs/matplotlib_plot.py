@@ -123,11 +123,10 @@ class MatplotlibPlot(BaseOutput):
         for name, logs in group_logs.items():
             if len(logs) > 0:
                 xs = [log.step for log in logs]
-                x_first = min(self.from_epoch, len(xs) - self.from_epoch)
-                xs = xs[x_first:]
                 ys = [log.value for log in logs]
-                y_first = min(self.from_epoch, len(ys) - self.from_epoch)
-                ys = ys[y_first:]
+                first_step = min(self.from_epoch, len(xs) - self.from_epoch)
+                xs = xs[first_step:]
+                ys = ys[first_step:]
                 ax.plot(xs, ys, label=name)
 
         self._after_subplot(ax, group_name, x_label)
