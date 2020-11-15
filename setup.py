@@ -21,10 +21,9 @@ def version():
 setup(
     name='livelossplot',
     version=version(),
-    python_requires=">=3.5",
+    python_requires=">=3.6",
     install_requires=[
-        'ipython', 'matplotlib;python_version>="3.6"', 'matplotlib<3.1;python_version<"3.6"',
-        'numpy<1.18;python_version<"3.6"', 'bokeh;python_version>="3.6"', 'bokeh<=1.4.0;python_version<"3.6"'
+        'ipython', 'matplotlib', 'bokeh',
     ],
     description='Live training loss plot in Jupyter Notebook for Keras, PyTorch and others.',
     long_description=readme(),
@@ -45,7 +44,6 @@ setup(
         'Topic :: Scientific/Engineering :: Visualization',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
