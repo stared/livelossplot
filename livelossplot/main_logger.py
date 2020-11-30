@@ -17,7 +17,6 @@ class MainLogger:
     Main logger - the aim of this class is to store every log from training
     Log is a float value with corresponding training engine step
     """
-
     def __init__(
         self,
         groups: Optional[Dict[str, List[str]]] = None,
