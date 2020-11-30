@@ -16,13 +16,13 @@ class ExtremaPrinter(BaseOutput):
             massage_template: you can specify massage which use all or a few values (min, max, current)
         """
         self.massage_template = massage_template
-        self.extrema_cache = {}
+        self.last_message = ""
 
     def send(self, logger: MainLogger):
         """Create massages with log_history and massage template"""
         log_groups = logger.grouped_log_history()
-        massages = self._create_massages(log_groups)
-        print('\n'.join(massages))
+        self.last_message = '\n'.join(self._create_massages(log_groups))
+        print(self.last_message)
 
     def _create_massages(self, log_groups: Dict[str, Dict[str, List[LogItem]]]) -> List[str]:
         """Create massages"""
