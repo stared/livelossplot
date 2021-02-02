@@ -1,6 +1,6 @@
 import re
 from collections import OrderedDict, defaultdict
-from typing import NamedTuple, Dict, List, Pattern, Tuple, Optional, Union
+from typing import NamedTuple, Dict, Iterable, List, Pattern, Tuple, Optional, Union
 
 # Value of metrics - for value later, we want to support numpy arrays etc
 LogItem = NamedTuple('LogItem', [('step', int), ('value', float)])
@@ -25,10 +25,10 @@ class MainLogger:
         current_step: int = -1,
         auto_generate_groups_if_not_available: bool = True,
         auto_generate_metric_to_name: bool = True,
-        group_patterns: List[Tuple[Pattern, str]] = [
+        group_patterns: Iterable[Tuple[Pattern, str]] = (
             (r'^(?!val(_|-))(.*)', 'training'),
             (r'^(val(_|-))(.*)', 'validation'),
-        ],
+        ),
         step_names: Union[str, Dict[str, str]] = 'epoch'
     ):
         """
@@ -146,9 +146,9 @@ class MainLogger:
             a list of log items
         """
         log_metrics = self.log_history[name]
-        if (full or self.from_step == 0):
+        if full or self.from_step == 0:
             return log_metrics
-        elif (self.from_step > 0):
+        elif self.from_step > 0:
             return [x for x in log_metrics if x.step >= self.from_step]
         else:
             current_from_step = self.current_step + self.from_step
