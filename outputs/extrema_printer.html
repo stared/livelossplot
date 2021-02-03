@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.9.1" />
+<meta name="generator" content="pdoc 0.9.2" />
 <title>livelossplot.outputs.extrema_printer API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
@@ -44,64 +44,32 @@ class ExtremaPrinter(BaseOutput):
             massage_template: you can specify massage which use all or a few values (min, max, current)
         &#34;&#34;&#34;
         self.massage_template = massage_template
-        self.extrema_cache = {}
+        self.last_message = &#34;&#34;
 
     def send(self, logger: MainLogger):
         &#34;&#34;&#34;Create massages with log_history and massage template&#34;&#34;&#34;
         log_groups = logger.grouped_log_history()
-        massages = self._create_massages(log_groups)
-        print(&#39;\n&#39;.join(massages))
+        self.last_message = &#39;\n&#39;.join(self._create_massages(log_groups))
+        print(self.last_message)
 
     def _create_massages(self, log_groups: Dict[str, Dict[str, List[LogItem]]]) -&gt; List[str]:
-        &#34;&#34;&#34;Update cache and create massages&#34;&#34;&#34;
+        &#34;&#34;&#34;Create massages&#34;&#34;&#34;
         massages = []
         for group_name, group_logs in log_groups.items():
             massages.append(group_name)
-            for metric_name, metric_values in group_logs.items():
-                self.update_extrema(metric_name, group_name, metric_values)
-                msg = self.massage_template.format(
-                    metric_name=metric_name, **self.extrema_cache[group_name][metric_name]
-                )
+            for metric_name, log_items in group_logs.items():
+                if len(log_items) == 0:
+                    msg = &#39;\t{metric_name:16} \t (no values!)&#39;.format(metric_name=metric_name)
+                else:
+                    values = [log_item.value for log_item in log_items]
+                    min_val = min(values)
+                    max_val = max(values)
+                    current_val = values[-1]
+                    msg = self.massage_template.format(
+                        metric_name=metric_name, min=min_val, max=max_val, current=current_val
+                    )
                 massages.append(msg)
-        return massages
-
-    def update_extrema(self, metric_name: str, group_name: str, metric_values: List[LogItem]) -&gt; None:
-        &#34;&#34;&#34;Write highest, lower and current value to cache (or initialize if no exist)&#34;&#34;&#34;
-        current_val = metric_values[-1].value
-        if not self.extrema_cache.get(group_name):
-            self.extrema_cache[group_name] = {}
-        cache = self.extrema_cache[group_name].get(metric_name)
-        if not cache:
-            min_val = min(metric_values, key=lambda i: i.value).value
-            max_val = max(metric_values, key=lambda i: i.value).value
-            current_val = metric_values[-1].value
-            self.extrema_cache[group_name][metric_name] = {
-                &#39;min&#39;: min_val,
-                &#39;max&#39;: max_val,
-                &#39;current&#39;: current_val,
-            }
-        else:
-            min_val = min(cache[&#39;min&#39;], current_val)
-            max_val = max(cache[&#39;max&#39;], current_val)
-            cache[&#39;min&#39;] = min_val
-            cache[&#39;max&#39;] = max_val
-            cache[&#39;current&#39;] = current_val
-
-    @property
-    def extrema_cache(self) -&gt; Dict[str, Dict[str, Dict[str, float]]]:
-        &#34;&#34;&#34;Cache getter&#34;&#34;&#34;
-        return self._extrema_cache
-
-    @extrema_cache.setter
-    def extrema_cache(self, value: Dict[str, Dict[str, Dict[str, float]]]) -&gt; None:
-        &#34;&#34;&#34;Cache setter - can initialize cache only with empty dictionary&#34;&#34;&#34;
-        if len(value) &gt; 0:
-            raise RuntimeError(&#39;Cannot overwrite cache with non empty dictionary&#39;)
-        self._extrema_cache = value
-
-    def close(self):
-        &#34;&#34;&#34;Clear cache&#34;&#34;&#34;
-        self.extrema_cache = {}</code></pre>
+        return massages</code></pre>
 </details>
 </section>
 <section>
@@ -140,102 +108,40 @@ inheritance.</p>
             massage_template: you can specify massage which use all or a few values (min, max, current)
         &#34;&#34;&#34;
         self.massage_template = massage_template
-        self.extrema_cache = {}
+        self.last_message = &#34;&#34;
 
     def send(self, logger: MainLogger):
         &#34;&#34;&#34;Create massages with log_history and massage template&#34;&#34;&#34;
         log_groups = logger.grouped_log_history()
-        massages = self._create_massages(log_groups)
-        print(&#39;\n&#39;.join(massages))
+        self.last_message = &#39;\n&#39;.join(self._create_massages(log_groups))
+        print(self.last_message)
 
     def _create_massages(self, log_groups: Dict[str, Dict[str, List[LogItem]]]) -&gt; List[str]:
-        &#34;&#34;&#34;Update cache and create massages&#34;&#34;&#34;
+        &#34;&#34;&#34;Create massages&#34;&#34;&#34;
         massages = []
         for group_name, group_logs in log_groups.items():
             massages.append(group_name)
-            for metric_name, metric_values in group_logs.items():
-                self.update_extrema(metric_name, group_name, metric_values)
-                msg = self.massage_template.format(
-                    metric_name=metric_name, **self.extrema_cache[group_name][metric_name]
-                )
+            for metric_name, log_items in group_logs.items():
+                if len(log_items) == 0:
+                    msg = &#39;\t{metric_name:16} \t (no values!)&#39;.format(metric_name=metric_name)
+                else:
+                    values = [log_item.value for log_item in log_items]
+                    min_val = min(values)
+                    max_val = max(values)
+                    current_val = values[-1]
+                    msg = self.massage_template.format(
+                        metric_name=metric_name, min=min_val, max=max_val, current=current_val
+                    )
                 massages.append(msg)
-        return massages
-
-    def update_extrema(self, metric_name: str, group_name: str, metric_values: List[LogItem]) -&gt; None:
-        &#34;&#34;&#34;Write highest, lower and current value to cache (or initialize if no exist)&#34;&#34;&#34;
-        current_val = metric_values[-1].value
-        if not self.extrema_cache.get(group_name):
-            self.extrema_cache[group_name] = {}
-        cache = self.extrema_cache[group_name].get(metric_name)
-        if not cache:
-            min_val = min(metric_values, key=lambda i: i.value).value
-            max_val = max(metric_values, key=lambda i: i.value).value
-            current_val = metric_values[-1].value
-            self.extrema_cache[group_name][metric_name] = {
-                &#39;min&#39;: min_val,
-                &#39;max&#39;: max_val,
-                &#39;current&#39;: current_val,
-            }
-        else:
-            min_val = min(cache[&#39;min&#39;], current_val)
-            max_val = max(cache[&#39;max&#39;], current_val)
-            cache[&#39;min&#39;] = min_val
-            cache[&#39;max&#39;] = max_val
-            cache[&#39;current&#39;] = current_val
-
-    @property
-    def extrema_cache(self) -&gt; Dict[str, Dict[str, Dict[str, float]]]:
-        &#34;&#34;&#34;Cache getter&#34;&#34;&#34;
-        return self._extrema_cache
-
-    @extrema_cache.setter
-    def extrema_cache(self, value: Dict[str, Dict[str, Dict[str, float]]]) -&gt; None:
-        &#34;&#34;&#34;Cache setter - can initialize cache only with empty dictionary&#34;&#34;&#34;
-        if len(value) &gt; 0:
-            raise RuntimeError(&#39;Cannot overwrite cache with non empty dictionary&#39;)
-        self._extrema_cache = value
-
-    def close(self):
-        &#34;&#34;&#34;Clear cache&#34;&#34;&#34;
-        self.extrema_cache = {}</code></pre>
+        return massages</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="livelossplot.outputs.base_output.BaseOutput" href="base_output.html#livelossplot.outputs.base_output.BaseOutput">BaseOutput</a></li>
 <li>abc.ABC</li>
 </ul>
-<h3>Instance variables</h3>
-<dl>
-<dt id="livelossplot.outputs.extrema_printer.ExtremaPrinter.extrema_cache"><code class="name">var <span class="ident">extrema_cache</span> : Dict[str, Dict[str, Dict[str, float]]]</code></dt>
-<dd>
-<div class="desc"><p>Cache getter</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@property
-def extrema_cache(self) -&gt; Dict[str, Dict[str, Dict[str, float]]]:
-    &#34;&#34;&#34;Cache getter&#34;&#34;&#34;
-    return self._extrema_cache</code></pre>
-</details>
-</dd>
-</dl>
 <h3>Methods</h3>
 <dl>
-<dt id="livelossplot.outputs.extrema_printer.ExtremaPrinter.close"><code class="name flex">
-<span>def <span class="ident">close</span></span>(<span>self)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Clear cache</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def close(self):
-    &#34;&#34;&#34;Clear cache&#34;&#34;&#34;
-    self.extrema_cache = {}</code></pre>
-</details>
-</dd>
 <dt id="livelossplot.outputs.extrema_printer.ExtremaPrinter.send"><code class="name flex">
 <span>def <span class="ident">send</span></span>(<span>self, logger: <a title="livelossplot.main_logger.MainLogger" href="../main_logger.html#livelossplot.main_logger.MainLogger">MainLogger</a>)</span>
 </code></dt>
@@ -248,40 +154,8 @@ def extrema_cache(self) -&gt; Dict[str, Dict[str, Dict[str, float]]]:
 <pre><code class="python">def send(self, logger: MainLogger):
     &#34;&#34;&#34;Create massages with log_history and massage template&#34;&#34;&#34;
     log_groups = logger.grouped_log_history()
-    massages = self._create_massages(log_groups)
-    print(&#39;\n&#39;.join(massages))</code></pre>
-</details>
-</dd>
-<dt id="livelossplot.outputs.extrema_printer.ExtremaPrinter.update_extrema"><code class="name flex">
-<span>def <span class="ident">update_extrema</span></span>(<span>self, metric_name: str, group_name: str, metric_values: List[<a title="livelossplot.main_logger.LogItem" href="../main_logger.html#livelossplot.main_logger.LogItem">LogItem</a>]) ‑> NoneType</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Write highest, lower and current value to cache (or initialize if no exist)</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def update_extrema(self, metric_name: str, group_name: str, metric_values: List[LogItem]) -&gt; None:
-    &#34;&#34;&#34;Write highest, lower and current value to cache (or initialize if no exist)&#34;&#34;&#34;
-    current_val = metric_values[-1].value
-    if not self.extrema_cache.get(group_name):
-        self.extrema_cache[group_name] = {}
-    cache = self.extrema_cache[group_name].get(metric_name)
-    if not cache:
-        min_val = min(metric_values, key=lambda i: i.value).value
-        max_val = max(metric_values, key=lambda i: i.value).value
-        current_val = metric_values[-1].value
-        self.extrema_cache[group_name][metric_name] = {
-            &#39;min&#39;: min_val,
-            &#39;max&#39;: max_val,
-            &#39;current&#39;: current_val,
-        }
-    else:
-        min_val = min(cache[&#39;min&#39;], current_val)
-        max_val = max(cache[&#39;max&#39;], current_val)
-        cache[&#39;min&#39;] = min_val
-        cache[&#39;max&#39;] = max_val
-        cache[&#39;current&#39;] = current_val</code></pre>
+    self.last_message = &#39;\n&#39;.join(self._create_massages(log_groups))
+    print(self.last_message)</code></pre>
 </details>
 </dd>
 </dl>
@@ -289,6 +163,7 @@ def extrema_cache(self) -&gt; Dict[str, Dict[str, Dict[str, float]]]:
 <ul class="hlist">
 <li><code><b><a title="livelossplot.outputs.base_output.BaseOutput" href="base_output.html#livelossplot.outputs.base_output.BaseOutput">BaseOutput</a></b></code>:
 <ul class="hlist">
+<li><code><a title="livelossplot.outputs.base_output.BaseOutput.close" href="base_output.html#livelossplot.outputs.base_output.BaseOutput.close">close</a></code></li>
 <li><code><a title="livelossplot.outputs.base_output.BaseOutput.set_output_mode" href="base_output.html#livelossplot.outputs.base_output.BaseOutput.set_output_mode">set_output_mode</a></code></li>
 </ul>
 </li>
@@ -313,10 +188,7 @@ def extrema_cache(self) -&gt; Dict[str, Dict[str, Dict[str, float]]]:
 <li>
 <h4><code><a title="livelossplot.outputs.extrema_printer.ExtremaPrinter" href="#livelossplot.outputs.extrema_printer.ExtremaPrinter">ExtremaPrinter</a></code></h4>
 <ul class="">
-<li><code><a title="livelossplot.outputs.extrema_printer.ExtremaPrinter.close" href="#livelossplot.outputs.extrema_printer.ExtremaPrinter.close">close</a></code></li>
-<li><code><a title="livelossplot.outputs.extrema_printer.ExtremaPrinter.extrema_cache" href="#livelossplot.outputs.extrema_printer.ExtremaPrinter.extrema_cache">extrema_cache</a></code></li>
 <li><code><a title="livelossplot.outputs.extrema_printer.ExtremaPrinter.send" href="#livelossplot.outputs.extrema_printer.ExtremaPrinter.send">send</a></code></li>
-<li><code><a title="livelossplot.outputs.extrema_printer.ExtremaPrinter.update_extrema" href="#livelossplot.outputs.extrema_printer.ExtremaPrinter.update_extrema">update_extrema</a></code></li>
 </ul>
 </li>
 </ul>
@@ -325,7 +197,7 @@ def extrema_cache(self) -&gt; Dict[str, Dict[str, Dict[str, float]]]:
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.1</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
 </footer>
 </body>
 </html>
