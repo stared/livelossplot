@@ -1,6 +1,6 @@
 import re
 from collections import OrderedDict, defaultdict
-from typing import NamedTuple, Dict, List, Pattern, Tuple, Optional, Union
+from typing import NamedTuple, Dict, Iterable, List, Pattern, Tuple, Optional, Union
 
 # Value of metrics - for value later, we want to support numpy arrays etc
 LogItem = NamedTuple('LogItem', [('step', int), ('value', float)])
@@ -21,13 +21,14 @@ class MainLogger:
         self,
         groups: Optional[Dict[str, List[str]]] = None,
         metric_to_name: Optional[Dict[str, str]] = None,
+        from_step: int = 0,
         current_step: int = -1,
         auto_generate_groups_if_not_available: bool = True,
         auto_generate_metric_to_name: bool = True,
-        group_patterns: List[Tuple[Pattern, str]] = [
+        group_patterns: Iterable[Tuple[Pattern, str]] = (
             (r'^(?!val(_|-))(.*)', 'training'),
             (r'^(val(_|-))(.*)', 'validation'),
-        ],
+        ),
         step_names: Union[str, Dict[str, str]] = 'epoch'
     ):
         """
@@ -36,6 +37,7 @@ class MainLogger:
                 for example 'validation_accuracy', 'training_accuracy' etc.
             metric_to_name: transformation of metric name which can be used to display name
                 we can have short name in the code (acc), but full name on charts (Accuracy)
+            from_step: step to show in plots (positive: show steps from this one, negative: show only this many last steps)
             current_step: current step of the train loop
             auto_generate_groups_if_not_available: flag, that enable auto-creation of metric groups
                 base on group patterns
@@ -48,6 +50,7 @@ class MainLogger:
         self.log_history = {}
         self.groups = groups if groups is not None else {}
         self.metric_to_name = metric_to_name if metric_to_name else {}
+        self.from_step = from_step
         self.current_step = current_step
         self.auto_generate_groups = all((not groups, auto_generate_groups_if_not_available))
         self.auto_generate_metric_to_name = auto_generate_metric_to_name
@@ -128,10 +131,28 @@ class MainLogger:
         for group_name, names in sorted_groups.items():
             group_name = group_name if raw_group_names else COMMON_NAME_SHORTCUTS.get(group_name, group_name)
             ret[group_name] = {
-                name if raw_names else self.metric_to_name.get(name, name): self.log_history[name]
+                name if raw_names else self.metric_to_name.get(name, name): self.history_shorter(name)
                 for name in names
             }
         return ret
+
+    def history_shorter(self, name: str, full: bool = False) -> List[LogItem]:
+        """
+        Args:
+            name: metrics name, e.g. 'val_acc' or 'loss'
+            full: flag, if True return all, otherwise as specified by the from_step parameter
+
+        Returns:
+            a list of log items
+        """
+        log_metrics = self.log_history[name]
+        if full or self.from_step == 0:
+            return log_metrics
+        elif self.from_step > 0:
+            return [x for x in log_metrics if x.step >= self.from_step]
+        else:
+            current_from_step = self.current_step + self.from_step
+            return [x for x in log_metrics if x.step >= current_from_step]
 
     def _auto_generate_groups(self) -> Dict[str, List[str]]:
         """

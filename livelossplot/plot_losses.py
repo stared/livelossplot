@@ -1,5 +1,8 @@
+import os
 import warnings
 from typing import Type, TypeVar, List, Union
+
+from IPython.display import clear_output
 
 import livelossplot
 from livelossplot.main_logger import MainLogger
@@ -30,6 +33,7 @@ class PlotLosses:
         self.outputs = [getattr(livelossplot.outputs, out)() if isinstance(out, str) else out for out in outputs]
         for out in self.outputs:
             out.set_output_mode(mode)
+        self.mode = mode
 
     def update(self, *args, **kwargs):
         """update logs with arguments that will be passed to main logger"""
@@ -37,8 +41,15 @@ class PlotLosses:
 
     def send(self):
         """Method will send logs to every output class"""
+        self.flush()
         for output in self.outputs:
             output.send(self.logger)
+
+    def flush(self):
+        if self.mode == 'notebook':
+            clear_output(wait=True)
+        else:
+            os.system('cls' if os.name == 'nt' else 'clear')
 
     def draw(self):
         """Send method substitute from old livelossplot api"""

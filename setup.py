@@ -24,6 +24,7 @@ setup(
     python_requires=">=3.6",
     install_requires=[
         'ipython', 'matplotlib', 'bokeh',
+        'numpy<1.20;python_version<"3.7"',
     ],
     description='Live training loss plot in Jupyter Notebook for Keras, PyTorch and others.',
     long_description=readme(),
