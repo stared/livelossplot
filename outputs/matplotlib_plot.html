@@ -88,7 +88,8 @@ class MatplotlibPlot(BaseOutput):
 
         for group_idx, (group_name, group_logs) in enumerate(log_groups.items()):
             ax = axes[group_idx // self.max_cols, group_idx % self.max_cols]
-            self._draw_metric_subplot(ax, group_logs, group_name=group_name, x_label=logger.step_names[group_name])
+            if any(len(logs) &gt; 0 for name, logs in group_logs.items()):
+                self._draw_metric_subplot(ax, group_logs, group_name=group_name, x_label=logger.step_names[group_name])
 
         for idx, extra_plot in enumerate(self.extra_plots):
             ax = axes[(len(log_groups) + idx) // self.max_cols, (len(log_groups) + idx) % self.max_cols]
@@ -250,7 +251,8 @@ class MatplotlibPlot(BaseOutput):
 
         for group_idx, (group_name, group_logs) in enumerate(log_groups.items()):
             ax = axes[group_idx // self.max_cols, group_idx % self.max_cols]
-            self._draw_metric_subplot(ax, group_logs, group_name=group_name, x_label=logger.step_names[group_name])
+            if any(len(logs) &gt; 0 for name, logs in group_logs.items()):
+                self._draw_metric_subplot(ax, group_logs, group_name=group_name, x_label=logger.step_names[group_name])
 
         for idx, extra_plot in enumerate(self.extra_plots):
             ax = axes[(len(log_groups) + idx) // self.max_cols, (len(log_groups) + idx) % self.max_cols]
@@ -351,7 +353,8 @@ class MatplotlibPlot(BaseOutput):
 
     for group_idx, (group_name, group_logs) in enumerate(log_groups.items()):
         ax = axes[group_idx // self.max_cols, group_idx % self.max_cols]
-        self._draw_metric_subplot(ax, group_logs, group_name=group_name, x_label=logger.step_names[group_name])
+        if any(len(logs) &gt; 0 for name, logs in group_logs.items()):
+            self._draw_metric_subplot(ax, group_logs, group_name=group_name, x_label=logger.step_names[group_name])
 
     for idx, extra_plot in enumerate(self.extra_plots):
         ax = axes[(len(log_groups) + idx) // self.max_cols, (len(log_groups) + idx) % self.max_cols]

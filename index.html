@@ -441,8 +441,7 @@ and replace its name using second value</dd>
                 new_name = new_name.replace(suffix, COMMON_NAME_SHORTCUTS[suffix])
             self.metric_to_name[name] = new_name
 
-    def grouped_log_history(self,
-                            raw_names: bool = False,
+    def grouped_log_history(self, raw_names: bool = False,
                             raw_group_names: bool = False) -&gt; Dict[str, Dict[str, List[LogItem]]]:
         &#34;&#34;&#34;
         Args:
@@ -590,8 +589,7 @@ def log_history(self) -&gt; Dict[str, List[LogItem]]:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def grouped_log_history(self,
-                        raw_names: bool = False,
+<pre><code class="python">def grouped_log_history(self, raw_names: bool = False,
                         raw_group_names: bool = False) -&gt; Dict[str, Dict[str, List[LogItem]]]:
     &#34;&#34;&#34;
     Args:
@@ -751,7 +749,6 @@ depending on the working environment</dd>
         self.outputs = [getattr(livelossplot.outputs, out)() if isinstance(out, str) else out for out in outputs]
         for out in self.outputs:
             out.set_output_mode(mode)
-        self.mode = mode
 
     def update(self, *args, **kwargs):
         &#34;&#34;&#34;update logs with arguments that will be passed to main logger&#34;&#34;&#34;
@@ -759,15 +756,8 @@ depending on the working environment</dd>
 
     def send(self):
         &#34;&#34;&#34;Method will send logs to every output class&#34;&#34;&#34;
-        self.flush()
         for output in self.outputs:
             output.send(self.logger)
-
-    def flush(self):
-        if self.mode == &#39;notebook&#39;:
-            clear_output(wait=True)
-        else:
-            os.system(&#39;cls&#39; if os.name == &#39;nt&#39; else &#39;clear&#39;)
 
     def draw(self):
         &#34;&#34;&#34;Send method substitute from old livelossplot api&#34;&#34;&#34;
@@ -872,22 +862,6 @@ depending on the working environment</dd>
     self.send()</code></pre>
 </details>
 </dd>
-<dt id="livelossplot.PlotLosses.flush"><code class="name flex">
-<span>def <span class="ident">flush</span></span>(<span>self)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def flush(self):
-    if self.mode == &#39;notebook&#39;:
-        clear_output(wait=True)
-    else:
-        os.system(&#39;cls&#39; if os.name == &#39;nt&#39; else &#39;clear&#39;)</code></pre>
-</details>
-</dd>
 <dt id="livelossplot.PlotLosses.reset_outputs"><code class="name flex">
 <span>def <span class="ident">reset_outputs</span></span>(<span>self) ‑> <a title="livelossplot.plot_losses.PlotLosses" href="plot_losses.html#livelossplot.plot_losses.PlotLosses">PlotLosses</a></span>
 </code></dt>
@@ -920,7 +894,6 @@ depending on the working environment</dd>
 </summary>
 <pre><code class="python">def send(self):
     &#34;&#34;&#34;Method will send logs to every output class&#34;&#34;&#34;
-    self.flush()
     for output in self.outputs:
         output.send(self.logger)</code></pre>
 </details>
@@ -1172,7 +1145,6 @@ depending on the working environment</dd>
 <h4><code><a title="livelossplot.PlotLosses" href="#livelossplot.PlotLosses">PlotLosses</a></code></h4>
 <ul class="two-column">
 <li><code><a title="livelossplot.PlotLosses.draw" href="#livelossplot.PlotLosses.draw">draw</a></code></li>
-<li><code><a title="livelossplot.PlotLosses.flush" href="#livelossplot.PlotLosses.flush">flush</a></code></li>
 <li><code><a title="livelossplot.PlotLosses.reset_outputs" href="#livelossplot.PlotLosses.reset_outputs">reset_outputs</a></code></li>
 <li><code><a title="livelossplot.PlotLosses.send" href="#livelossplot.PlotLosses.send">send</a></code></li>
 <li><code><a title="livelossplot.PlotLosses.to_bokeh" href="#livelossplot.PlotLosses.to_bokeh">to_bokeh</a></code></li>
