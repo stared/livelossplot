@@ -16,7 +16,7 @@ class NeptuneLogger(BaseOutput):
         """
         import neptune
         self.neptune = neptune
-        self.neptune.init(api_token=api_token, project_qualified_name=project_qualified_name)
+        self.sess = self.neptune.init(api_token=api_token, project_qualified_name=project_qualified_name)
         self.experiment = self.neptune.create_experiment(**kwargs)
 
     def close(self):
