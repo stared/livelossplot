@@ -105,7 +105,7 @@ plotlosses = PlotLosses(outputs=[BokehPlot()])
 
 ## Sponsors
 
-This project supported by [Jacek Migdał](http://jacek.migdal.pl/), [Marek Cichy](https://medium.com/@marekkcichy/), and [Casper da Costa-Luis](https://cdcl.ml/). [Join the sponsors - show your ❤️ and support, and appear on the list](https://github.com/sponsors/stared)! It will give me time and energy to work on this project.
+This project supported by [Jacek Migdał](http://jacek.migdal.pl/), [Marek Cichy](https://medium.com/@marekkcichy/), [Casper da Costa-Luis](https://cdcl.ml/), and [Piotr Zientara](https://twitter.com/piotr_zientara). [Join the sponsors - show your ❤️ and support, and appear on the list](https://github.com/sponsors/stared)! It will give me time and energy to work on this project.
 
 This project is also supported by a European program *Program Operacyjny Inteligentny Rozwój* for [GearShift - building the engine of behavior of wheeled motor vehicles and map’s generation based on artificial intelligence algorithms implemented on the Unreal Engine platform](https://mapadotacji.gov.pl/projekty/874596/?lang=en) lead by ECC Games (NCBR grant GameINN).
 
