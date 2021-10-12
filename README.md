@@ -5,7 +5,7 @@
 ![MIT license - PyPI](https://img.shields.io/pypi/l/livelossplot.svg)
 ![Python version - PyPI](https://img.shields.io/pypi/pyversions/livelossplot.svg)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/stared/livelossplot/Python%20package)](https://github.com/stared/livelossplot/actions)
-[![Downloads](http://pepy.tech/badge/livelossplot)](http://pepy.tech/count/livelossplot)
+[![Downloads](http://pepy.tech/badge/livelossplot)](https://pepy.tech/project/livelossplot)
 [![Twitter @pmigdal](https://img.shields.io/twitter/follow/pmigdal)](https://twitter.com/pmigdal)
 
 Don't train deep learning models blindfolded! Be impatient and look at each epoch of your training!
