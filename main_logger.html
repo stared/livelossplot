@@ -138,7 +138,8 @@ class MainLogger:
                 new_name = new_name.replace(suffix, COMMON_NAME_SHORTCUTS[suffix])
             self.metric_to_name[name] = new_name
 
-    def grouped_log_history(self, raw_names: bool = False,
+    def grouped_log_history(self,
+                            raw_names: bool = False,
                             raw_group_names: bool = False) -&gt; Dict[str, Dict[str, List[LogItem]]]:
         &#34;&#34;&#34;
         Args:
@@ -401,7 +402,8 @@ and replace its name using second value</dd>
                 new_name = new_name.replace(suffix, COMMON_NAME_SHORTCUTS[suffix])
             self.metric_to_name[name] = new_name
 
-    def grouped_log_history(self, raw_names: bool = False,
+    def grouped_log_history(self,
+                            raw_names: bool = False,
                             raw_group_names: bool = False) -&gt; Dict[str, Dict[str, List[LogItem]]]:
         &#34;&#34;&#34;
         Args:
@@ -549,7 +551,8 @@ def log_history(self) -&gt; Dict[str, List[LogItem]]:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def grouped_log_history(self, raw_names: bool = False,
+<pre><code class="python">def grouped_log_history(self,
+                        raw_names: bool = False,
                         raw_group_names: bool = False) -&gt; Dict[str, Dict[str, List[LogItem]]]:
     &#34;&#34;&#34;
     Args:
