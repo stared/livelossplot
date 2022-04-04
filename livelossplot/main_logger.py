@@ -110,7 +110,8 @@ class MainLogger:
                 new_name = new_name.replace(suffix, COMMON_NAME_SHORTCUTS[suffix])
             self.metric_to_name[name] = new_name
 
-    def grouped_log_history(self, raw_names: bool = False,
+    def grouped_log_history(self,
+                            raw_names: bool = False,
                             raw_group_names: bool = False) -> Dict[str, Dict[str, List[LogItem]]]:
         """
         Args:

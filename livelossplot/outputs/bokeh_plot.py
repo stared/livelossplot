@@ -93,7 +93,7 @@ class BokehPlot(BaseOutput):
                 rows.append(row)
                 row = []
         self.grid = self.plotting.gridplot(
-            rows, sizing_mode='scale_width', plot_width=self.plot_width, plot_height=self.plot_height
+            rows, sizing_mode='scale_width', width=self.plot_width, height=self.plot_height
         )
         self.target = self.plotting.show(self.grid, notebook_handle=self.is_notebook)
 
