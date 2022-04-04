@@ -18,7 +18,7 @@ jobs:
         python-version: "3.7"
     - name: Install livelossplot with dependencies
       run: |
-        python setup.py install
+        pip install -e .
     - name: Install pdoc3
       run: |
         pip install pdoc3
