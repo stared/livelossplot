@@ -13,6 +13,11 @@ class BaseSubplot:
     def __call__(self, *args, **kwargs):
         self.draw(*args, **kwargs)
 
+    def set_output_mode(self, mode: str):
+        """Set notebook or script mode - not implemented yet"""
+        ...
+
+
 
 class LossSubplot(BaseSubplot):
     """To rewrire, this one now won't work"""
@@ -59,6 +64,7 @@ class LossSubplot(BaseSubplot):
         plt.title(self.title)
         plt.xlabel('epoch')
         plt.legend(loc='center right')
+        plt.show()
 
 
 class Plot1D(BaseSubplot):
@@ -77,6 +83,7 @@ class Plot1D(BaseSubplot):
         plt.plot(self.X, self.predict(self.model, self.X), '-', label="Model")
         plt.title("Prediction")
         plt.legend(loc='lower right')
+        plt.show()
 
 
 class Plot2d(BaseSubplot):
@@ -119,3 +126,4 @@ class Plot2d(BaseSubplot):
         plt.scatter(self.X[:, 0], self.X[:, 1], c=self.Y, cmap=self.cm_points)
         if self.X_test is not None:
             plt.scatter(self.X_test[:, 0], self.X_test[:, 1], c=self.Y_test, cmap=self.cm_points, alpha=0.3)
+        plt.show()

@@ -4,6 +4,7 @@ from typing import Type, TypeVar, List, Union
 import livelossplot
 from livelossplot.main_logger import MainLogger
 from livelossplot import outputs
+from IPython.display import clear_output
 
 BO = TypeVar('BO', bound=outputs.BaseOutput)
 
@@ -37,6 +38,7 @@ class PlotLosses:
 
     def send(self):
         """Method will send logs to every output class"""
+        clear_output(wait=True)
         for output in self.outputs:
             output.send(self.logger)
 
