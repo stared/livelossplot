@@ -5,7 +5,7 @@ name: Generate pdoc3 documentation
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build-and-deploy:

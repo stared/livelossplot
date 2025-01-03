@@ -47,19 +47,19 @@ pip install git+git://github.com/stared/livelossplot.git
 
 ## Examples
 
-Look at notebook files with full working [examples](https://github.com/stared/livelossplot/blob/master/examples/):
+Look at notebook files with full working [examples](https://github.com/stared/livelossplot/blob/main/examples/):
 
-- [keras.ipynb](https://github.com/stared/livelossplot/blob/master/examples/keras.ipynb) - a Keras callback
-- [minimal.ipynb](https://github.com/stared/livelossplot/blob/master/examples/minimal.ipynb) - a bare API, to use anywhere
-- [script.py](https://github.com/stared/livelossplot/blob/master/examples/script.py) - to be run as a script, `python script.py`
-- [bokeh.ipynb](https://github.com/stared/livelossplot/blob/master/examples/bokeh.ipynb) - a bare API, plots with Bokeh ([open it in Colab to see the plots](https://colab.research.google.com/github/stared/livelossplot/blob/master/examples/bokeh.ipynb))
-- [pytorch.ipynb](https://github.com/stared/livelossplot/blob/master/examples/pytorch.ipynb) - a bare API, as applied to PyTorch
-- [2d_prediction_maps.ipynb](https://github.com/stared/livelossplot/blob/master/examples/2d_prediction_maps.ipynb) - example of custom plots - 2d prediction maps (0.4.1+)
-- [poutyne.ipynb](https://github.com/stared/livelossplot/blob/master/examples/poutyne.ipynb) - a Poutyne callback ([Poutyne](https://poutyne.org/) is a Keras-like framework for PyTorch)
-- [torchbearer.ipynb](https://github.com/stared/livelossplot/blob/master/examples/torchbearer.ipynb) - an example using the built in functionality from torchbearer ([torchbearer](https://github.com/ecs-vlc/torchbearer) is a model fitting library for PyTorch)
-- [neptune.py](https://github.com/stared/livelossplot/blob/master/examples/neptune.py) and [neptune.ipynb](https://github.com/stared/livelossplot/blob/master/examples/neptune.ipynb) - a [Neptune.AI](https://neptune.ai/)
-- [matplotlib.ipynb](https://github.com/stared/livelossplot/blob/master/examples/matplotlib.ipynb) - a Matplotlib output example
-- [various_options.ipynb](https://github.com/stared/livelossplot/blob/master/examples/various_options.ipynb) - an extended API for metrics grouping and custom outputs
+- [keras.ipynb](https://github.com/stared/livelossplot/blob/main/examples/keras.ipynb) - a Keras callback
+- [minimal.ipynb](https://github.com/stared/livelossplot/blob/main/examples/minimal.ipynb) - a bare API, to use anywhere
+- [script.py](https://github.com/stared/livelossplot/blob/main/examples/script.py) - to be run as a script, `python script.py`
+- [bokeh.ipynb](https://github.com/stared/livelossplot/blob/main/examples/bokeh.ipynb) - a bare API, plots with Bokeh ([open it in Colab to see the plots](https://colab.research.google.com/github/stared/livelossplot/blob/main/examples/bokeh.ipynb))
+- [pytorch.ipynb](https://github.com/stared/livelossplot/blob/main/examples/pytorch.ipynb) - a bare API, as applied to PyTorch
+- [2d_prediction_maps.ipynb](https://github.com/stared/livelossplot/blob/main/examples/2d_prediction_maps.ipynb) - example of custom plots - 2d prediction maps (0.4.1+)
+- [poutyne.ipynb](https://github.com/stared/livelossplot/blob/main/examples/poutyne.ipynb) - a Poutyne callback ([Poutyne](https://poutyne.org/) is a Keras-like framework for PyTorch)
+- [torchbearer.ipynb](https://github.com/stared/livelossplot/blob/main/examples/torchbearer.ipynb) - an example using the built in functionality from torchbearer ([torchbearer](https://github.com/ecs-vlc/torchbearer) is a model fitting library for PyTorch)
+- [neptune.py](https://github.com/stared/livelossplot/blob/main/examples/neptune.py) and [neptune.ipynb](https://github.com/stared/livelossplot/blob/main/examples/neptune.ipynb) - a [Neptune.AI](https://neptune.ai/)
+- [matplotlib.ipynb](https://github.com/stared/livelossplot/blob/main/examples/matplotlib.ipynb) - a Matplotlib output example
+- [various_options.ipynb](https://github.com/stared/livelossplot/blob/main/examples/various_options.ipynb) - an extended API for metrics grouping and custom outputs
 
 You [run examples in Colab](https://colab.research.google.com/github/stared/livelossplot).
 
