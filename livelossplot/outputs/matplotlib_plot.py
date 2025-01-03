@@ -24,6 +24,7 @@ class MatplotlibPlot(BaseOutput):
         after_subplot: Optional[Callable[[plt.Axes, str, str], None]] = None,
         before_plots: Optional[Callable[[plt.Figure, np.ndarray, int], None]] = None,
         after_plots: Optional[Callable[[plt.Figure], None]] = None,
+        figsize: Optional[Tuple[int, int]] = None,
     ):
         """
         Args:
@@ -36,6 +37,7 @@ class MatplotlibPlot(BaseOutput):
             after_subplot: function which will be called after every subplot
             before_plots: function which will be called before all subplots
             after_plots: function which will be called after all subplots
+            figsize: optional tuple to explicitly set figure size (overrides cell_size calculation)
         """
         self.cell_size = cell_size
         self.max_cols = max_cols
@@ -47,6 +49,7 @@ class MatplotlibPlot(BaseOutput):
         self._after_subplot = after_subplot if after_subplot else self._default_after_subplot
         self._before_plots = before_plots if before_plots else self._default_before_plots
         self._after_plots = after_plots if after_plots else self._default_after_plots
+        self.figsize = figsize
 
     def send(self, logger: MainLogger):
         """Draw figures with metrics and show"""
@@ -87,9 +90,12 @@ class MatplotlibPlot(BaseOutput):
             num_of_log_groups: number of log groups
         """
         clear_output(wait=True)
-        figsize_x = self.max_cols * self.cell_size[0]
-        figsize_y = ((num_of_log_groups + 1) // self.max_cols + 1) * self.cell_size[1]
-        fig.set_size_inches(figsize_x, figsize_y)
+        if self.figsize is not None:
+            fig.set_size_inches(*self.figsize)
+        else:
+            figsize_x = self.max_cols * self.cell_size[0]
+            figsize_y = ((num_of_log_groups + 1) // self.max_cols + 1) * self.cell_size[1]
+            fig.set_size_inches(figsize_x, figsize_y)
         if num_of_log_groups < axes.size:
             for idx, ax in enumerate(axes[-1]):
                 if idx >= (num_of_log_groups + len(self.extra_plots)) % self.max_cols:
