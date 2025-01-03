@@ -1,9 +1,10 @@
 import warnings
-from typing import Type, TypeVar, List, Union
+from typing import Type, TypeVar, List, Union, Optional, Tuple
 
 import livelossplot
 from livelossplot.main_logger import MainLogger
 from livelossplot import outputs
+from livelossplot.outputs.matplotlib_plot import MatplotlibPlot
 
 BO = TypeVar('BO', bound=outputs.BaseOutput)
 
@@ -12,10 +13,12 @@ class PlotLosses:
     """
     Class collect metrics from the training engine and send it to plugins, when send is called
     """
+
     def __init__(
         self,
         outputs: List[Union[Type[BO], str]] = ['MatplotlibPlot', 'ExtremaPrinter'],
         mode: str = 'notebook',
+        figsize: Optional[Tuple[int, int]] = None,
         **kwargs
     ):
         """
@@ -24,12 +27,16 @@ class PlotLosses:
                 or strings for livelossplot built-in output methods with default parameters
             mode: Options: 'notebook' or 'script' - some of outputs need to change some behaviors,
                 depending on the working environment
+            figsize: tuple of (width, height) in inches for the figure
             **kwargs: key-arguments which are passed to MainLogger constructor
         """
         self.logger = MainLogger(**kwargs)
         self.outputs = [getattr(livelossplot.outputs, out)() if isinstance(out, str) else out for out in outputs]
         for out in self.outputs:
             out.set_output_mode(mode)
+            if figsize is not None and isinstance(out, MatplotlibPlot):
+                print(f"Setting figsize to {figsize}")
+                out.figsize = figsize
 
     def update(self, *args, **kwargs):
         """update logs with arguments that will be passed to main logger"""
