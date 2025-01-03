@@ -1,5 +1,5 @@
 import math
-from typing import Tuple, List, Dict, Optional, Callable
+from typing import Tuple, List, Dict, Optional, Callable, Literal
 
 import warnings
 
@@ -50,6 +50,7 @@ class MatplotlibPlot(BaseOutput):
         self._before_plots = before_plots if before_plots else self._default_before_plots
         self._after_plots = after_plots if after_plots else self._default_after_plots
         self.figsize = figsize
+        self.output_mode: Literal['notebook', 'script'] = "notebook"
 
     def send(self, logger: MainLogger):
         """Draw figures with metrics and show"""
@@ -110,7 +111,11 @@ class MatplotlibPlot(BaseOutput):
         if self.figpath is not None:
             fig.savefig(self.figpath.format(i=self.file_idx))
             self.file_idx += 1
-        plt.show()
+        if self.output_mode == "script":
+            plt.draw()
+            plt.pause(0.1)
+        else:
+            plt.show()
 
     def _draw_metric_subplot(self, ax: plt.Axes, group_logs: Dict[str, List[LogItem]], group_name: str, x_label: str):
         """
@@ -139,3 +144,6 @@ class MatplotlibPlot(BaseOutput):
                 "livelossplot requires inline plots.\nYour current backend is: {}"
                 "\nRun in a Jupyter environment and execute '%matplotlib inline'.".format(backend)
             )
+
+    def _set_output_mode(self, mode: Literal['notebook', 'script']):
+        self.output_mode = mode

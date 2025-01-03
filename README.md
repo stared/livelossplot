@@ -49,6 +49,7 @@ Look at notebook files with full working [examples](https://github.com/stared/li
 
 - [keras.ipynb](https://github.com/stared/livelossplot/blob/master/examples/keras.ipynb) - a Keras callback
 - [minimal.ipynb](https://github.com/stared/livelossplot/blob/master/examples/minimal.ipynb) - a bare API, to use anywhere
+- [script.py](https://github.com/stared/livelossplot/blob/master/examples/script.py) - to be run as a script, `python script.py`
 - [bokeh.ipynb](https://github.com/stared/livelossplot/blob/master/examples/bokeh.ipynb) - a bare API, plots with Bokeh ([open it in Colab to see the plots](https://colab.research.google.com/github/stared/livelossplot/blob/master/examples/bokeh.ipynb))
 - [pytorch.ipynb](https://github.com/stared/livelossplot/blob/master/examples/pytorch.ipynb) - a bare API, as applied to PyTorch
 - [2d_prediction_maps.ipynb](https://github.com/stared/livelossplot/blob/master/examples/2d_prediction_maps.ipynb) - example of custom plots - 2d prediction maps (0.4.1+)
