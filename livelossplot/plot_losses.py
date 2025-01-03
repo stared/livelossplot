@@ -1,5 +1,5 @@
 import warnings
-from typing import Type, TypeVar, List, Union, Optional, Tuple
+from typing import Type, TypeVar, List, Union, Optional, Tuple, Literal
 
 import livelossplot
 from livelossplot.main_logger import MainLogger
@@ -9,6 +9,24 @@ from livelossplot.outputs.matplotlib_plot import MatplotlibPlot
 BO = TypeVar('BO', bound=outputs.BaseOutput)
 
 
+def get_mode() -> Literal['notebook', 'script']:
+    try:
+        from IPython import get_ipython
+        ipython = get_ipython()
+        if ipython is None:
+            return 'script'
+        name = ipython.__class__.__name__
+        if name == "ZMQInteractiveShell" or name == "Shell":
+            # Shell is in Colab
+            return "notebook"
+        elif name == "TerminalInteractiveShell":
+            return "script"
+        print(f"Unknown IPython mode: {name}. Assuming notebook mode.")
+        return "notebook"
+    except ImportError:
+        return "script"
+
+
 class PlotLosses:
     """
     Class collect metrics from the training engine and send it to plugins, when send is called
@@ -16,7 +34,7 @@ class PlotLosses:
     def __init__(
         self,
         outputs: List[Union[Type[BO], str]] = ['MatplotlibPlot', 'ExtremaPrinter'],
-        mode: str = 'notebook',
+        mode: Optional[Literal['notebook', 'script']] = None,
         figsize: Optional[Tuple[int, int]] = None,
         **kwargs
     ):
@@ -31,6 +49,8 @@ class PlotLosses:
         """
         self.logger = MainLogger(**kwargs)
         self.outputs = [getattr(livelossplot.outputs, out)() if isinstance(out, str) else out for out in outputs]
+        if mode is None:
+            mode = get_mode()
         for out in self.outputs:
             out.set_output_mode(mode)
             if figsize is not None and isinstance(out, MatplotlibPlot):
