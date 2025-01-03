@@ -4,7 +4,9 @@
 ![PyPI status](https://img.shields.io/pypi/status/livelossplot.svg)
 ![MIT license - PyPI](https://img.shields.io/pypi/l/livelossplot.svg)
 ![Python version - PyPI](https://img.shields.io/pypi/pyversions/livelossplot.svg)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/stared/livelossplot/Python%20package)](https://github.com/stared/livelossplot/actions)
+[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/stared/livelossplot/pythonpackage.yml?branch=main)](https://github.com/stared/livelossplot/actions)
+[![GitHub Actions: Integrations](https://img.shields.io/github/actions/workflow/status/stared/livelossplot/external_packages.yml?branch=main&label=integrations)](https://github.com/stared/livelossplot/actions)
+[![GitHub Actions: Linting](https://img.shields.io/github/actions/workflow/status/stared/livelossplot/flake8_yapf.yml?branch=main&label=linting)](https://github.com/stared/livelossplot/actions)
 [![Downloads](http://pepy.tech/badge/livelossplot)](https://pepy.tech/project/livelossplot)
 [![Twitter @pmigdal](https://img.shields.io/twitter/follow/pmigdal)](https://twitter.com/pmigdal)
 
@@ -108,7 +110,7 @@ plotlosses = PlotLosses(outputs=[BokehPlot()])
 
 This project supported by [Jacek Migdał](http://jacek.migdal.pl/), [Marek Cichy](https://medium.com/@marekkcichy/), [Casper da Costa-Luis](https://cdcl.ml/), and [Piotr Zientara](https://twitter.com/piotr_zientara). [Join the sponsors - show your ❤️ and support, and appear on the list](https://github.com/sponsors/stared)! It will give me time and energy to work on this project.
 
-This project is also supported by a European program *Program Operacyjny Inteligentny Rozwój* for [GearShift - building the engine of behavior of wheeled motor vehicles and map’s generation based on artificial intelligence algorithms implemented on the Unreal Engine platform](https://mapadotacji.gov.pl/projekty/874596/?lang=en) lead by ECC Games (NCBR grant GameINN).
+This project is also supported by a European program _Program Operacyjny Inteligentny Rozwój_ for [GearShift - building the engine of behavior of wheeled motor vehicles and map’s generation based on artificial intelligence algorithms implemented on the Unreal Engine platform](https://mapadotacji.gov.pl/projekty/874596/?lang=en) lead by ECC Games (NCBR grant GameINN).
 
 ## Trivia
 
