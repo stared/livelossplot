@@ -7,13 +7,7 @@ class NeptuneLogger(BaseOutput):
     """See: https://github.com/neptune-ai/neptune-client
     YOUR_API_TOKEN and USERNAME/PROJECT_NAME
     """
-
-    def __init__(
-        self,
-        api_token: Optional[str] = None,
-        project_qualified_name: Optional[str] = None,
-        **kwargs
-    ):
+    def __init__(self, api_token: Optional[str] = None, project_qualified_name: Optional[str] = None, **kwargs):
         """Set secrets and create experiment
         Args:
             api_token: your api token, you can create NEPTUNE_API_TOKEN environment variable instead
@@ -23,9 +17,7 @@ class NeptuneLogger(BaseOutput):
         import neptune
 
         self.neptune = neptune
-        self.run = self.neptune.init_run(
-            api_token=api_token, project=project_qualified_name, **kwargs
-        )
+        self.run = self.neptune.init_run(api_token=api_token, project=project_qualified_name, **kwargs)
 
     def close(self):
         """Close connection"""
