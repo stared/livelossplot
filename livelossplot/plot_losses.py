@@ -13,7 +13,6 @@ class PlotLosses:
     """
     Class collect metrics from the training engine and send it to plugins, when send is called
     """
-
     def __init__(
         self,
         outputs: List[Union[Type[BO], str]] = ['MatplotlibPlot', 'ExtremaPrinter'],
