@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.6] - 2025-01-03
+
+### Fixed
+
+- MatplotlibPlot now works in script mode - [a long awaited feature](https://github.com/stared/livelossplot/issues/2)!
+- GitHub Actions using current Python versions.
+
+### Added
+
+- `PlotLosses(figsize=(10, 10))` to set the size of the figure due to [popular demand](https://github.com/stared/livelossplot/issues/139).
+- Script vs notebook mode detection.
+
 ## [0.5.5] - 2022-04-03
 
 ## Fixed
