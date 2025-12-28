@@ -78,7 +78,7 @@ But what if you just want to train a small model in Jupyter Notebook? Here is a 
 ```{python}
 plotlosses = PlotLosses()
 plotlosses.update({'acc': 0.7, 'val_acc': 0.4, 'loss': 0.9, 'val_loss': 1.1})
-plot.send()  # draw, update logs, etc
+plotlosses.send()  # draw, update logs, etc
 ```
 
 There are callbacks for common libraries and frameworks: `PlotLossesKeras`, `PlotLossesKerasTF`, `PlotLossesPoutyne`, `PlotLossesIgnite`.
