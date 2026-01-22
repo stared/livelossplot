@@ -1,0 +1,47 @@
+# This workflow builds and publishes the package to PyPI when a tag is pushed
+
+name: Publish Python Package
+
+on:
+  push:
+    tags:
+      - 'v*' # Trigger on tags starting with 'v'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    # Grant GITHUB_TOKEN the permissions required to create a release
+    permissions:
+      contents: read
+      id-token: write # Required for trusted publishing
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x' # Use a recent Python version for building
+
+    - name: Install build dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install build twine
+
+    - name: Build package
+      run: python -m build
+
+    - name: Publish package to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      # No API token needed if using trusted publishing
+      # with:
+      #   password: ${{ secrets.PYPI_API_TOKEN }} # Use an API Token if not using Trusted Publishing
+
+    # Optional: Create a GitHub Release
+    # - name: Create GitHub Release
+    #   uses: softprops/action-gh-release@v1
+    #   with:
+    #     files: dist/*
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
