@@ -145,6 +145,8 @@ class MainLogger:
         Returns:
             a list of log items
         """
+        if name not in self.log_history:
+            return []
         log_metrics = self.log_history[name]
         if full or self.from_step == 0:
             return log_metrics
