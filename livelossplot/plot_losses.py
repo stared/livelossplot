@@ -116,18 +116,6 @@ class PlotLosses:
         self.outputs.append(outputs.BokehPlot(**kwargs))
         return self
 
-    def to_neptune(self, **kwargs) -> 'PlotLosses':
-        """Appends outputs.NeptuneLogger output, with specified parameters.
-
-        Args:
-            **kwargs: keyword arguments for NeptuneLogger
-
-        Returns:
-            Plotlosses object (so it works for chaining)
-        """
-        self.outputs.append(outputs.NeptuneLogger(**kwargs))
-        return self
-
     def to_tensorboard(self, **kwargs) -> 'PlotLosses':
         """Appends outputs.TensorboardLogger output, with specified parameters.
 
