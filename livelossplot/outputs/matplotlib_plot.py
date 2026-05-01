@@ -59,6 +59,8 @@ class MatplotlibPlot(BaseOutput):
         max_rows = math.ceil((len(log_groups) + len(self.extra_plots)) / self.max_cols)
 
         fig, axes = plt.subplots(max_rows, self.max_cols)
+        if not isinstance(axes, np.ndarray):
+            axes = np.array([[axes]])
         axes = axes.reshape(-1, self.max_cols)
         self._before_plots(fig, axes, len(log_groups))
 
