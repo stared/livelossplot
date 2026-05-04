@@ -57,7 +57,6 @@ Look at notebook files with full working [examples](https://github.com/stared/li
 - [2d_prediction_maps.ipynb](https://github.com/stared/livelossplot/blob/main/examples/2d_prediction_maps.ipynb) - example of custom plots - 2d prediction maps (0.4.1+)
 - [poutyne.ipynb](https://github.com/stared/livelossplot/blob/main/examples/poutyne.ipynb) - a Poutyne callback ([Poutyne](https://poutyne.org/) is a Keras-like framework for PyTorch)
 - [torchbearer.ipynb](https://github.com/stared/livelossplot/blob/main/examples/torchbearer.ipynb) - an example using the built in functionality from torchbearer ([torchbearer](https://github.com/ecs-vlc/torchbearer) is a model fitting library for PyTorch)
-- [neptune.py](https://github.com/stared/livelossplot/blob/main/examples/neptune.py) and [neptune.ipynb](https://github.com/stared/livelossplot/blob/main/examples/neptune.ipynb) - a [Neptune.AI](https://neptune.ai/)
 - [matplotlib.ipynb](https://github.com/stared/livelossplot/blob/main/examples/matplotlib.ipynb) - a Matplotlib output example
 - [various_options.ipynb](https://github.com/stared/livelossplot/blob/main/examples/various_options.ipynb) - an extended API for metrics grouping and custom outputs
 
@@ -90,7 +89,7 @@ If you want to use a bare logger, there is `MainLogger`.
 
 Plots: `MatplotlibPlot`, `BokehPlot`.
 
-Loggers: `ExtremaPrinter` (to standard output), `TensorboardLogger`, `TensorboardTFLogger`, `NeptuneLogger`.
+Loggers: `ExtremaPrinter` (to standard output), `TensorboardLogger`, `TensorboardTFLogger`.
 
 To use them, initialize PlotLosses with some outputs:
 
