@@ -1,0 +1,91 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "livelossplot"
+version = "0.6.0"
+description = "Live training loss plot in Jupyter Notebook for Keras, PyTorch and others."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE.txt"]
+requires-python = ">=3.10"
+authors = [
+    { name = "Piotr Migdał", email = "pmigdal@gmail.com" },
+]
+keywords = ["keras", "pytorch", "plot", "chart", "deep-learning"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: Jupyter",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "matplotlib",
+    "bokeh",
+]
+
+[project.urls]
+Homepage = "https://github.com/stared/livelossplot"
+Repository = "https://github.com/stared/livelossplot"
+Issues = "https://github.com/stared/livelossplot/issues"
+Changelog = "https://github.com/stared/livelossplot/blob/main/CHANGELOG.md"
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "ruff",
+    "ty",
+    "jupyter",
+]
+docs = [
+    "pdoc",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["livelossplot"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "livelossplot",
+    "README.md",
+    "LICENSE.txt",
+    "CHANGELOG.md",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+extend-exclude = ["examples", "build", "dist", "scripts"]
+
+[tool.ruff.lint]
+# Conservative selection — no auto-rewrites of import order or syntax,
+# so existing files stay intact. Tighten in a follow-up PR.
+select = ["E", "F", "W"]
+ignore = [
+    "E501",  # line length is enforced by the formatter; soft-ignore here
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Package init files re-export their public API via star imports.
+"**/__init__.py" = ["F401", "F403", "F405"]
+
+[tool.ruff.format]
+quote-style = "preserve"
+
+[tool.ty.src]
+include = ["livelossplot"]
+
+[tool.ty.rules]
+# Optional integrations (keras, torch, tensorflow, ignite, poutyne) aren't in
+# the dev group on purpose, so their imports are unresolved during linting.
+unresolved-import = "warn"

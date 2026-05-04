@@ -9,6 +9,12 @@ build/
 tensorboard_logs/
 examples/_test*
 .mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.ty_cache/
+
+# uv
+.venv/
 
 # OS / editor cruft
 .DS_Store
