@@ -9,3 +9,10 @@ build/
 tensorboard_logs/
 examples/_test*
 .mypy_cache/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/

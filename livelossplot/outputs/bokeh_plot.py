@@ -1,3 +1,4 @@
+import sys
 from typing import List, Dict, Tuple
 
 from livelossplot.main_logger import MainLogger, LogItem
@@ -28,11 +29,17 @@ class BokehPlot(BaseOutput):
         self.skip_first = skip_first  # think about it
         self.figures = {}
         self.is_notebook = False
+        self.is_colab = 'google.colab' in sys.modules
         self.output_file = output_file
         self.colors = palettes.Category10[10]
+        self._colab_handle = None
 
     def send(self, logger: MainLogger) -> None:
         """Draw figures with metrics and show"""
+        if self.is_colab:
+            self._send_colab(logger)
+            return
+
         log_groups = logger.grouped_log_history()
         new_grid_plot = False
         for idx, (group_name, group_logs) in enumerate(log_groups.items(), start=1):
@@ -47,6 +54,46 @@ class BokehPlot(BaseOutput):
             self.io.push_notebook(handle=self.target)
         else:
             self.plotting.save(self.grid)
+
+    def _send_colab(self, logger: MainLogger) -> None:
+        """Colab actively blocks Jupyter Comms, so push_notebook is dead there.
+        Render Bokeh into a complete HTML doc and embed it via <iframe srcdoc>:
+        the iframe is a self-contained browser context, so BokehJS finds its
+        sibling JSON-data element correctly (no DOM fragmentation from Colab's
+        output handling). Updates via display_id atomically replace the iframe
+        wrapper, browser rebuilds the inner document — no flicker."""
+        import html as html_lib
+
+        from bokeh.embed import file_html
+        from bokeh.resources import CDN
+        from IPython.display import HTML, display
+
+        log_groups = logger.grouped_log_history()
+        self.figures = {}
+        for group_name, group_logs in log_groups.items():
+            fig = self.plotting.figure(title=group_name)
+            self.figures[group_name] = self._draw_metric_subplot(fig, group_logs)
+        rows, row = [], []
+        for idx, fig in enumerate(self.figures.values(), start=1):
+            row.append(fig)
+            if idx % self.max_cols == 0:
+                rows.append(row)
+                row = []
+        if row:
+            rows.append(row)
+        grid = self.plotting.gridplot(rows, sizing_mode='scale_width', width=self.plot_width, height=self.plot_height)
+        bokeh_doc = file_html(grid, CDN, 'livelossplot')
+        iframe_height = self.plot_height * len(rows) + 60
+        iframe_html = (
+            f'<iframe srcdoc="{html_lib.escape(bokeh_doc, quote=True)}" '
+            f'style="width: 100%; height: {iframe_height}px; border: none;" '
+            f'sandbox="allow-scripts allow-same-origin"></iframe>'
+        )
+        payload = HTML(iframe_html)
+        if self._colab_handle is None:
+            self._colab_handle = display(payload, display_id=True)
+        else:
+            self._colab_handle.update(payload)
 
     def _draw_metric_subplot(self, fig, group_logs: Dict[str, List[LogItem]]):
         """
@@ -101,6 +148,8 @@ class BokehPlot(BaseOutput):
         """Set notebook or script mode"""
         self.is_notebook = mode == 'notebook'
         if self.is_notebook:
+            # Bokeh auto-detects Colab in recent versions; passing
+            # notebook_type='colab' explicitly raises in Bokeh 3.x.
             self.io.output_notebook()
         else:
             self.io.output_file(self.output_file)
