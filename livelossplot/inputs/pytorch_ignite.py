@@ -1,12 +1,12 @@
-from typing import Optional
 
 import ignite.engine
 from ignite.handlers import global_step_from_engine
+
 from livelossplot.plot_losses import PlotLosses
 
 
 class PlotLossesCallback:
-    def __init__(self, train_engine: Optional[ignite.engine.Engine] = None, **kwargs):
+    def __init__(self, train_engine: ignite.engine.Engine | None = None, **kwargs):
         """
         Args:
             train_engine: engine with global step information, send metohod callback will be attached to it
@@ -51,5 +51,5 @@ class PlotLossesCallback:
         if not self.train_engine:
             self.send()
 
-    def send(self, _: Optional[ignite.engine.Engine] = None):
+    def send(self, _: ignite.engine.Engine | None = None):
         self.liveplot.send()

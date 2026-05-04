@@ -21,9 +21,9 @@ def run_notebook(notebook_path):
     proc.allow_errors = True
 
     proc.preprocess(nb, {'metadata': {'path': 'examples/'}})
-    output_path = os.path.join(dirname, '_test_{}.ipynb'.format(nb_name))
+    output_path = os.path.join(dirname, f'_test_{nb_name}.ipynb')
 
-    with open(output_path, mode='wt') as f:
+    with open(output_path, mode='w') as f:
         nbformat.write(nb, f)
     errors = []
     for cell in nb.cells:

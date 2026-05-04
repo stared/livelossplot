@@ -1,43 +1,35 @@
-from datetime import datetime
-from os import path
+from datetime import datetime, timezone
+from pathlib import Path
 
 from livelossplot.main_logger import MainLogger
 from livelossplot.outputs.base_output import BaseOutput
 
 
 class TensorboardTFLogger(BaseOutput):
-    """
-    Class write logs to TensorBoard (from TensorFlow).
-    """
-    def __init__(self, logdir="./tensorboard_logs/", run_id=None):
+    """Write logs to TensorBoard via TensorFlow's bundled `tf.summary`."""
+
+    def __init__(self, logdir: str | Path = "./tensorboard_logs/", run_id: str | None = None):
         """
         Args:
-            logdir: dir where TensorBoard events will be written
-            run_id: name for log id, otherwise it usses datetime
+            logdir: dir where TensorBoard events will be written.
+            run_id: name for the run; defaults to the current timestamp.
         """
         from tensorflow import summary
         self.summary = summary
-        run_id = datetime.now().isoformat()[:-7].replace("T", " ").replace(":", "_") if run_id is None else run_id
-        self._path = path.join(logdir, run_id)
-        self.writer = summary.create_file_writer(self._path)
+        if run_id is None:
+            run_id = datetime.now(tz=timezone.utc).strftime('%Y-%m-%d %H_%M_%S')
+        self._path = Path(logdir) / run_id
+        self.writer = summary.create_file_writer(str(self._path))
 
-    def close(self):
-        """Close tensorboard writer"""
+    def close(self) -> None:
         self.writer.close()
 
-    def log_scalar(self, name: str, value: float, global_step: int):
-        """
-        Args:
-            name: name of metric
-            value: float value of metric
-            global_step: current step of the training loop
-        """
+    def log_scalar(self, name: str, value: float, global_step: int) -> None:
         with self.writer.as_default():
             self.summary.scalar(name, value, step=global_step)
         self.writer.flush()
 
-    def send(self, logger: MainLogger):
-        """Take log history from logger and store it in tensorboard event"""
+    def send(self, logger: MainLogger) -> None:
         for name, log_items in logger.log_history.items():
-            last_log_item = log_items[-1]
-            self.log_scalar(name, last_log_item.value, last_log_item.step)
+            last = log_items[-1]
+            self.log_scalar(name, last.value, last.step)

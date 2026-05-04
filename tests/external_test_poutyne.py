@@ -1,7 +1,7 @@
 import torch
-from torch import nn, optim
-from torch.utils.data import TensorDataset, DataLoader
 from poutyne import Model
+from torch import nn, optim
+from torch.utils.data import DataLoader, TensorDataset
 
 from livelossplot import MainLogger, PlotLossesPoutyne
 from livelossplot.outputs import BaseOutput
@@ -24,8 +24,7 @@ def get_random_data():
     inputs = torch.rand(dataset_size, num_inputs)
     labels = torch.randint(num_outputs, (dataset_size, ))
     dataset = TensorDataset(inputs, labels)
-    dataloader = DataLoader(dataset, batch_size=10)
-    return dataloader
+    return DataLoader(dataset, batch_size=10)
 
 
 def test_poutyne():

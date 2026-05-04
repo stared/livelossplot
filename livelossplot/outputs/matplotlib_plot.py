@@ -1,30 +1,27 @@
 import math
-from typing import Tuple, List, Dict, Optional, Callable, Literal
+from collections.abc import Callable
 
-import warnings
-
-import numpy as np
-import matplotlib
 import matplotlib.pyplot as plt
+import numpy as np
 from IPython.display import clear_output
-from livelossplot.main_logger import MainLogger, LogItem
-from livelossplot.outputs.base_output import BaseOutput
+
+from livelossplot.main_logger import LogItem, MainLogger
+from livelossplot.outputs.base_output import BaseOutput, OutputMode
 
 
 class MatplotlibPlot(BaseOutput):
-    """NOTE: Removed figsize and dynamix_x_axis."""
     def __init__(
         self,
-        cell_size: Tuple[int, int] = (6, 4),
+        cell_size: tuple[int, int] = (6, 4),
         max_cols: int = 2,
-        max_epoch: int = None,
+        max_epoch: int | None = None,
         skip_first: int = 2,
-        extra_plots: List[Callable[[MainLogger], None]] = [],
-        figpath: Optional[str] = None,
-        after_subplot: Optional[Callable[[plt.Axes, str, str], None]] = None,
-        before_plots: Optional[Callable[[plt.Figure, np.ndarray, int], None]] = None,
-        after_plots: Optional[Callable[[plt.Figure], None]] = None,
-        figsize: Optional[Tuple[int, int]] = None,
+        extra_plots: list[Callable[[plt.Axes, MainLogger], None]] | None = None,
+        figpath: str | None = None,
+        after_subplot: Callable[[plt.Axes, str, str], None] | None = None,
+        before_plots: Callable[[plt.Figure, np.ndarray, int], None] | None = None,
+        after_plots: Callable[[plt.Figure], None] | None = None,
+        figsize: tuple[int, int] | None = None,
     ):
         """
         Args:
@@ -41,16 +38,16 @@ class MatplotlibPlot(BaseOutput):
         """
         self.cell_size = cell_size
         self.max_cols = max_cols
-        self.skip_first = skip_first  # think about it
-        self.extra_plots = extra_plots
+        self.skip_first = skip_first
+        self.extra_plots = extra_plots if extra_plots is not None else []
         self.max_epoch = max_epoch
         self.figpath = figpath
-        self.file_idx = 0  # now only for saving files
-        self._after_subplot = after_subplot if after_subplot else self._default_after_subplot
-        self._before_plots = before_plots if before_plots else self._default_before_plots
-        self._after_plots = after_plots if after_plots else self._default_after_plots
+        self.file_idx = 0
+        self._after_subplot = after_subplot or self._default_after_subplot
+        self._before_plots = before_plots or self._default_before_plots
+        self._after_plots = after_plots or self._default_after_plots
         self.figsize = figsize
-        self.output_mode: Literal['notebook', 'script'] = "notebook"
+        self.output_mode: OutputMode = "notebook"
 
     def send(self, logger: MainLogger):
         """Draw figures with metrics and show"""
@@ -119,7 +116,7 @@ class MatplotlibPlot(BaseOutput):
         else:
             plt.show()
 
-    def _draw_metric_subplot(self, ax: plt.Axes, group_logs: Dict[str, List[LogItem]], group_name: str, x_label: str):
+    def _draw_metric_subplot(self, ax: plt.Axes, group_logs: dict[str, list[LogItem]], group_name: str, x_label: str):
         """
         Args:
             ax: matplotlib Axes
@@ -139,13 +136,5 @@ class MatplotlibPlot(BaseOutput):
 
         self._after_subplot(ax, group_name, x_label)
 
-    def _not_inline_warning(self):
-        backend = matplotlib.get_backend()
-        if "backend_inline" not in backend:
-            warnings.warn(
-                "livelossplot requires inline plots.\nYour current backend is: {}"
-                "\nRun in a Jupyter environment and execute '%matplotlib inline'.".format(backend)
-            )
-
-    def _set_output_mode(self, mode: Literal['notebook', 'script']):
+    def set_output_mode(self, mode: OutputMode) -> None:
         self.output_mode = mode

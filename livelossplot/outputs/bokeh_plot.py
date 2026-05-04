@@ -1,8 +1,7 @@
 import sys
-from typing import List, Dict, Tuple
 
-from livelossplot.main_logger import MainLogger, LogItem
-from livelossplot.outputs.base_output import BaseOutput
+from livelossplot.main_logger import LogItem, MainLogger
+from livelossplot.outputs.base_output import BaseOutput, OutputMode
 
 
 class BokehPlot(BaseOutput):
@@ -11,7 +10,7 @@ class BokehPlot(BaseOutput):
         self,
         max_cols: int = 2,
         skip_first: int = 2,
-        cell_size: Tuple[int, int] = (400, 300),
+        cell_size: tuple[int, int] = (400, 300),
         output_file: str = './bokeh_output.html'
     ):
         """
@@ -21,7 +20,7 @@ class BokehPlot(BaseOutput):
             cell_size: size of one chart
             output_file: file to save the output
         """
-        from bokeh import plotting, io, palettes
+        from bokeh import io, palettes, plotting
         self.plotting = plotting
         self.io = io
         self.plot_width, self.plot_height = cell_size
@@ -42,7 +41,7 @@ class BokehPlot(BaseOutput):
 
         log_groups = logger.grouped_log_history()
         new_grid_plot = False
-        for idx, (group_name, group_logs) in enumerate(log_groups.items(), start=1):
+        for _idx, (group_name, group_logs) in enumerate(log_groups.items(), start=1):
             fig = self.figures.get(group_name)
             if not fig:
                 fig = self.plotting.figure(title=group_name)
@@ -95,7 +94,7 @@ class BokehPlot(BaseOutput):
         else:
             self._colab_handle.update(payload)
 
-    def _draw_metric_subplot(self, fig, group_logs: Dict[str, List[LogItem]]):
+    def _draw_metric_subplot(self, fig, group_logs: dict[str, list[LogItem]]):
         """
         Args:
             fig: bokeh Figure
@@ -144,12 +143,9 @@ class BokehPlot(BaseOutput):
         )
         self.target = self.plotting.show(self.grid, notebook_handle=self.is_notebook)
 
-    def _set_output_mode(self, mode: str):
-        """Set notebook or script mode"""
+    def set_output_mode(self, mode: OutputMode) -> None:
         self.is_notebook = mode == 'notebook'
         if self.is_notebook:
-            # Bokeh auto-detects Colab in recent versions; passing
-            # notebook_type='colab' explicitly raises in Bokeh 3.x.
             self.io.output_notebook()
         else:
             self.io.output_file(self.output_file)

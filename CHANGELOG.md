@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.1] - 2026-05-05
+
+Internal cleanup pass and a few small breaking removals. For older Python or
+older import paths, pin a previous `livelossplot` version.
+
+### Removed
+
+- The `livelossplot.keras` / `livelossplot.tf_keras` / `livelossplot.poutyne` /
+  `livelossplot.pytorch_ignite` import shortcuts (deprecated since 0.5.0).
+  Use `livelossplot.inputs.*` or `from livelossplot import PlotLossesKeras` etc.
+- `PlotLosses.draw()` (deprecated since 0.5.0). Use `.send()`.
+
+### Changed
+
+- `ExtremaPrinter` parameter `massage_template` renamed to `message_template`.
+- `Plot2d` parameter `valiation_data` renamed to `validation_data`.
+
+### Fixed
+
+- Mutable default arguments in `PlotLosses(outputs=...)` and `MatplotlibPlot(extra_plots=...)`.
+- `MainLogger.groups = None` now correctly resets to `{}`.
+- `ipython` declared as a runtime dependency.
+
 ## [0.6.0] - 2026-05-04
 
 ### Changed

@@ -2,8 +2,7 @@ from random import randint
 
 from keras import Sequential
 from keras.layers import LSTM, Dense
-from numpy import argmax
-from numpy import array
+from numpy import argmax, array
 
 from livelossplot import MainLogger, PlotLossesKeras
 from livelossplot.outputs import BaseOutput

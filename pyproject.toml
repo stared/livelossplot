@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "livelossplot"
-version = "0.6.0"
+version = "0.6.1"
 description = "Live training loss plot in Jupyter Notebook for Keras, PyTorch and others."
 readme = "README.md"
 license = "MIT"
@@ -30,8 +30,9 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
 ]
 dependencies = [
-    "matplotlib",
-    "bokeh",
+    "matplotlib>=3.6",
+    "bokeh>=3.0",
+    "ipython>=8.0",
 ]
 
 [project.urls]
@@ -68,11 +69,12 @@ target-version = "py310"
 extend-exclude = ["examples", "build", "dist", "scripts"]
 
 [tool.ruff.lint]
-# Conservative selection — no auto-rewrites of import order or syntax,
-# so existing files stay intact. Tighten in a follow-up PR.
-select = ["E", "F", "W"]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "RET"]
 ignore = [
-    "E501",  # line length is enforced by the formatter; soft-ignore here
+    "E501",
+    "B008",
+    "SIM102",
+    "SIM108",
 ]
 
 [tool.ruff.lint.per-file-ignores]

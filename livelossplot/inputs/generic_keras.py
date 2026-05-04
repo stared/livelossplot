@@ -1,4 +1,3 @@
-from typing import Dict
 
 from livelossplot.plot_losses import PlotLosses
 
@@ -12,7 +11,7 @@ class _PlotLossesCallback:
         """
         self.liveplot = PlotLosses(**kwargs)
 
-    def on_epoch_end(self, epoch: int, logs: Dict[str, float]):
+    def on_epoch_end(self, epoch: int, logs: dict[str, float]):
         """Send metrics to livelossplot
         Args:
             epoch: epoch number
