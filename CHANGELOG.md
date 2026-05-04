@@ -7,23 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.5.7] - 2026-05-04
+## [0.6.0] - 2026-05-04
 
-### Fixed
+### Changed
 
-- `BokehPlot` now renders and live-updates inside Google Colab. Colab blocks Jupyter Comms, so `push_notebook` was silently dead; the plot is now embedded via `<iframe srcdoc>` and refreshed through an IPython `display_id` handle ([issue #109](https://github.com/stared/livelossplot/issues/109)).
-- `Plot2d` works again as a `PlotLosses` output. Removed buggy `super().__init__(self)` in `LossSubplot`/`Plot1D` and reworked `Plot2d.send` to manage its own figure/axes and use the configured `predict` callback ([issue #137](https://github.com/stared/livelossplot/issues/137), PR #138).
-- `MatplotlibPlot` no longer errors when `max_cols=1` (PR #147).
-- Groups whose metrics start at different steps now plot correctly (PR #149).
-- CI: install `tensorboard` explicitly — TensorFlow 2.16+ no longer bundles it, which broke `external_test_tensorboard.py`.
+- Minimum Python is now 3.10.
 
 ### Removed
 
-- Neptune.AI support (`NeptuneLogger`, `to_neptune`, and the related example/test) — Neptune is no longer maintained.
+- Neptune.AI integration — Neptune is no longer maintained.
 
-### Chore
+### Fixed
 
-- Default branch renamed `master` → `main`; build badges updated.
+- `BokehPlot` now works in Google Colab ([issue #109](https://github.com/stared/livelossplot/issues/109)).
+- `Plot2d` works again as a `PlotLosses` output ([issue #137](https://github.com/stared/livelossplot/issues/137)).
+- `MatplotlibPlot` no longer errors when `max_cols=1` (PR #147).
+- Groups whose metrics start at different steps now plot correctly (PR #149).
 
 ## [0.5.6] - 2025-01-03
 

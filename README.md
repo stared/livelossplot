@@ -4,15 +4,15 @@
 ![PyPI status](https://img.shields.io/pypi/status/livelossplot.svg)
 ![MIT license - PyPI](https://img.shields.io/pypi/l/livelossplot.svg)
 ![Python version - PyPI](https://img.shields.io/pypi/pyversions/livelossplot.svg)
-[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/stared/livelossplot/pythonpackage.yml?branch=main)](https://github.com/stared/livelossplot/actions)
-[![GitHub Actions: Integrations](https://img.shields.io/github/actions/workflow/status/stared/livelossplot/external_packages.yml?branch=main&label=integrations)](https://github.com/stared/livelossplot/actions)
-[![GitHub Actions: Linting](https://img.shields.io/github/actions/workflow/status/stared/livelossplot/flake8_yapf.yml?branch=main&label=linting)](https://github.com/stared/livelossplot/actions)
+[![Tests](https://img.shields.io/github/actions/workflow/status/stared/livelossplot/tests.yml?branch=main&label=tests)](https://github.com/stared/livelossplot/actions/workflows/tests.yml)
+[![Integrations](https://img.shields.io/github/actions/workflow/status/stared/livelossplot/external_packages.yml?branch=main&label=integrations)](https://github.com/stared/livelossplot/actions/workflows/external_packages.yml)
+[![Lint](https://img.shields.io/github/actions/workflow/status/stared/livelossplot/lint.yml?branch=main&label=lint)](https://github.com/stared/livelossplot/actions/workflows/lint.yml)
 [![Downloads](http://pepy.tech/badge/livelossplot)](https://pepy.tech/project/livelossplot)
 [![Twitter @pmigdal](https://img.shields.io/twitter/follow/pmigdal)](https://twitter.com/pmigdal)
 
 Don't train deep learning models blindfolded! Be impatient and look at each epoch of your training!
 
-([RECENT CHANGES](CHANGELOG.md), [EXAMPLES IN COLAB](https://colab.research.google.com/github/stared/livelossplot), [CODE](https://github.com/stared/livelossplot))
+([API DOCS](https://p.migdal.pl/livelossplot/), [RECENT CHANGES](CHANGELOG.md), [EXAMPLES IN COLAB](https://colab.research.google.com/github/stared/livelossplot), [CODE](https://github.com/stared/livelossplot))
 
 A live training loss plot in [Jupyter Notebook](http://jupyter.org/) for [Keras](https://keras.io/), [PyTorch](http://pytorch.org/) and other frameworks. An open-source Python package by [Piotr Migdał](https:///), [Bartłomiej Olechno](https://github.com/Bartolo1024/) and [others](https://github.com/stared/livelossplot/graphs/contributors). **Open for collaboration!** (Some tasks are as simple as writing code docstrings, so - no excuses! :))
 
@@ -26,23 +26,54 @@ model.fit(X_train, Y_train,
           verbose=0)
 ```
 
-![Animated fig for livelossplot tracking log-loss and accuracy](https://raw.githubusercontent.com/stared/livelossplot/master/livelossplot.gif)
+![Animated fig for livelossplot tracking log-loss and accuracy](https://raw.githubusercontent.com/stared/livelossplot/main/livelossplot.gif)
 
 - (The most FA)Q: Why not TensorBoard?
 - A: Jupyter Notebook compatibility (for exploration and teaching). The simplicity of use.
 
 ## Installation
 
-To install [this version from PyPI](https://pypi.org/project/livelossplot/), type:
+### Add to your project
 
 ```bash
+uv add livelossplot
+# or
 pip install livelossplot
 ```
 
-To get the newest one from this repo (note that we are in the alpha stage, so there may be frequent updates), type:
+[On PyPI](https://pypi.org/project/livelossplot/). Requires Python 3.10+.
+
+### Run without installing
+
+For a one-off script, [uv](https://docs.astral.sh/uv/) can run it in an ephemeral environment:
 
 ```bash
-pip install git+git://github.com/stared/livelossplot.git
+uv run --with livelossplot script.py
+```
+
+Or pin the dependencies inside the script itself, then `uv run script.py`:
+
+```python
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["livelossplot", "torch"]
+# ///
+from livelossplot import PlotLosses
+# ...
+```
+
+For Jupyter:
+
+```bash
+uv run --with livelossplot --with jupyterlab jupyter lab
+```
+
+### From the latest main
+
+```bash
+uv add "livelossplot @ git+https://github.com/stared/livelossplot.git"
+# or
+pip install git+https://github.com/stared/livelossplot.git
 ```
 
 ## Examples

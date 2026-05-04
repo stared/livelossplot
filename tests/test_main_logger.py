@@ -1,5 +1,3 @@
-import re
-
 from livelossplot import MainLogger
 
 
