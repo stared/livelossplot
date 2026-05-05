@@ -9,14 +9,12 @@ class BokehPlot(BaseOutput):
     def __init__(
         self,
         max_cols: int = 2,
-        skip_first: int = 2,
         cell_size: tuple[int, int] = (400, 300),
         output_file: str = './bokeh_output.html'
     ):
         """
         Args:
             max_cols: max number of charts in one row
-            skip_first: flag, skip first log
             cell_size: size of one chart
             output_file: file to save the output
         """
@@ -25,7 +23,6 @@ class BokehPlot(BaseOutput):
         self.io = io
         self.plot_width, self.plot_height = cell_size
         self.max_cols = max_cols
-        self.skip_first = skip_first  # think about it
         self.figures = {}
         self.is_notebook = False
         self.is_colab = 'google.colab' in sys.modules
@@ -99,10 +96,6 @@ class BokehPlot(BaseOutput):
         Args:
             fig: bokeh Figure
             group_logs: groups with list of log items
-
-        Notes:
-            for now, with local imports, no output annotation  -> self.plotting.Figure
-            there used to be skip first part, but I skip it first
         """
         from bokeh.models import ColumnDataSource, HoverTool
         for i, (name, logs) in enumerate(group_logs.items()):

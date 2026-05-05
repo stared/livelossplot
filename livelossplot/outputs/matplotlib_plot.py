@@ -15,7 +15,6 @@ class MatplotlibPlot(BaseOutput):
         cell_size: tuple[int, int] = (6, 4),
         max_cols: int = 2,
         max_epoch: int | None = None,
-        skip_first: int = 2,
         extra_plots: list[Callable[[plt.Axes, MainLogger], None]] | None = None,
         figpath: str | None = None,
         after_subplot: Callable[[plt.Axes, str, str], None] | None = None,
@@ -28,7 +27,6 @@ class MatplotlibPlot(BaseOutput):
             cell_size: size of one chart
             max_cols: maximal number of charts in one row
             max_epoch: maximum epoch on x axis
-            skip_first: number of first steps to skip
             extra_plots: extra charts functions
             figpath path: to save figure
             after_subplot: function which will be called after every subplot
@@ -38,7 +36,6 @@ class MatplotlibPlot(BaseOutput):
         """
         self.cell_size = cell_size
         self.max_cols = max_cols
-        self.skip_first = skip_first
         self.extra_plots = extra_plots if extra_plots is not None else []
         self.max_epoch = max_epoch
         self.figpath = figpath
@@ -124,7 +121,6 @@ class MatplotlibPlot(BaseOutput):
             group_name: group name
             x_label: label for the x axis
         """
-        # There used to be skip first part, but I skip it first
         if self.max_epoch is not None:
             ax.set_xlim(0, self.max_epoch)
 
