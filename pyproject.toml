@@ -63,6 +63,10 @@ include = [
     "CHANGELOG.md",
 ]
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["-ra", "--strict-markers", "--strict-config"]
+
 [tool.ruff]
 line-length = 120
 target-version = "py310"
