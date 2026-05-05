@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "livelossplot"
-version = "0.6.1"
+version = "0.6.2"
 description = "Live training loss plot in Jupyter Notebook for Keras, PyTorch and others."
 readme = "README.md"
 license = "MIT"

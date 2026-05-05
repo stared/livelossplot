@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.2] - 2026-05-05
+
+Polish pass on top of 0.6.1.
+
+### Fixed
+
+- `BokehPlot` no longer opens a browser tab in script mode.
+- `BokehPlot` non-colab path now renders trailing partial rows correctly when
+  the group count isn't divisible by `max_cols`.
+
+### Removed
+
+- Unused `skip_first` parameter on `MatplotlibPlot` and `BokehPlot`.
+
 ## [0.6.1] - 2026-05-05
 
 Internal cleanup pass and a few small breaking removals. For older Python or
