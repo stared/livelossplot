@@ -38,7 +38,7 @@ class BokehPlot(BaseOutput):
 
         log_groups = logger.grouped_log_history()
         new_grid_plot = False
-        for _idx, (group_name, group_logs) in enumerate(log_groups.items(), start=1):
+        for group_name, group_logs in log_groups.items():
             fig = self.figures.get(group_name)
             if not fig:
                 fig = self.plotting.figure(title=group_name)
@@ -69,14 +69,7 @@ class BokehPlot(BaseOutput):
         for group_name, group_logs in log_groups.items():
             fig = self.plotting.figure(title=group_name)
             self.figures[group_name] = self._draw_metric_subplot(fig, group_logs)
-        rows, row = [], []
-        for idx, fig in enumerate(self.figures.values(), start=1):
-            row.append(fig)
-            if idx % self.max_cols == 0:
-                rows.append(row)
-                row = []
-        if row:
-            rows.append(row)
+        rows = self._build_grid_rows()
         grid = self.plotting.gridplot(rows, sizing_mode='scale_width', width=self.plot_width, height=self.plot_height)
         bokeh_doc = file_html(grid, CDN, 'livelossplot')
         iframe_height = self.plot_height * len(rows) + 60
@@ -123,14 +116,21 @@ class BokehPlot(BaseOutput):
         )
         return fig
 
-    def _create_grid_plot(self):
-        rows = []
-        row = []
+    def _build_grid_rows(self) -> list[list]:
+        """Lay out figures into rows of `max_cols`, including a trailing partial row."""
+        rows: list[list] = []
+        row: list = []
         for idx, fig in enumerate(self.figures.values(), start=1):
             row.append(fig)
             if idx % self.max_cols == 0:
                 rows.append(row)
                 row = []
+        if row:
+            rows.append(row)
+        return rows
+
+    def _create_grid_plot(self) -> None:
+        rows = self._build_grid_rows()
         self.grid = self.plotting.gridplot(
             rows, sizing_mode='scale_width', width=self.plot_width, height=self.plot_height
         )
