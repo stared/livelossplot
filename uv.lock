@@ -1295,10 +1295,12 @@ wheels = [
 
 [[package]]
 name = "livelossplot"
-version = "0.6.0"
+version = "0.6.1"
 source = { editable = "." }
 dependencies = [
     { name = "bokeh" },
+    { name = "ipython", version = "8.39.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "ipython", version = "9.13.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "matplotlib" },
 ]
 
@@ -1315,8 +1317,9 @@ docs = [
 
 [package.metadata]
 requires-dist = [
-    { name = "bokeh" },
-    { name = "matplotlib" },
+    { name = "bokeh", specifier = ">=3.0" },
+    { name = "ipython", specifier = ">=8.0" },
+    { name = "matplotlib", specifier = ">=3.6" },
 ]
 
 [package.metadata.requires-dev]

@@ -1,6 +1,6 @@
-from typing import Dict
 
 from poutyne.framework import Callback
+
 from ..plot_losses import PlotLosses
 
 
@@ -11,7 +11,7 @@ class PlotLossesCallback(Callback):
         Args:
             **kwargs: keyword arguments that will be passed to PlotLosses constructor
         """
-        super(PlotLossesCallback, self).__init__()
+        super().__init__()
         self.liveplot = PlotLosses(**kwargs)
         self.metrics = None
 
@@ -21,7 +21,7 @@ class PlotLossesCallback(Callback):
         self.metrics = list(metrics)
         self.metrics += ['val_' + metric for metric in metrics]
 
-    def on_epoch_end(self, epoch: int, logs: Dict[str, float]):
+    def on_epoch_end(self, epoch: int, logs: dict[str, float]):
         """Send metrics to livelossplot
         Args:
             epoch: epoch number

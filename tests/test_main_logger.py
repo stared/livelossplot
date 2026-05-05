@@ -6,7 +6,7 @@ def test_main_logger():
     logger = MainLogger()
     logs = {'loss': 0.6}
     logger.update(logs)
-    assert 'loss' in logger.log_history.keys()
+    assert 'loss' in logger.log_history
     assert len(logger.log_history['loss']) == 1
 
 
@@ -72,7 +72,7 @@ def test_main_logger_autogroups():
     grouped_log_history = logger.grouped_log_history()
     target_groups = {'Accuracy': ('validation', 'training'), 'Loss': ('validation', 'training'), 'lr': ('lr', )}
     for target_group, target_metrics in target_groups.items():
-        for m1, m2 in zip(sorted(grouped_log_history[target_group].keys()), sorted(target_metrics)):
+        for m1, m2 in zip(sorted(grouped_log_history[target_group].keys()), sorted(target_metrics), strict=False):
             assert m1 == m2
 
 
