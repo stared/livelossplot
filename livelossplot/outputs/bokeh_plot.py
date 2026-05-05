@@ -134,7 +134,9 @@ class BokehPlot(BaseOutput):
         self.grid = self.plotting.gridplot(
             rows, sizing_mode='scale_width', width=self.plot_width, height=self.plot_height
         )
-        self.target = self.plotting.show(self.grid, notebook_handle=self.is_notebook)
+        # `show` opens a browser tab in script mode; only call it for notebooks where it sets up
+        # the notebook handle used by `push_notebook` for live updates.
+        self.target = self.plotting.show(self.grid, notebook_handle=True) if self.is_notebook else None
 
     def set_output_mode(self, mode: OutputMode) -> None:
         self.is_notebook = mode == 'notebook'
