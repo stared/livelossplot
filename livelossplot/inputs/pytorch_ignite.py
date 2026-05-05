@@ -9,12 +9,12 @@ class PlotLossesCallback:
     def __init__(self, train_engine: ignite.engine.Engine | None = None, **kwargs):
         """
         Args:
-            train_engine: engine with global step information, send metohod callback will be attached to it
-                if None send method will be called on the end of each store call it may cause warnings and errors in
-                the case of multiple engines attached
+            train_engine: engine with global step information; the send callback will be attached to it.
+                If None, send is called at the end of each store call, which may cause warnings or errors
+                when multiple engines are attached.
 
         Keyword Args:
-            **kwargs: keyword args that will be passed to livelossplot PlotLosses class
+            **kwargs: keyword args forwarded to `PlotLosses`.
         """
         self.liveplot = PlotLosses(**kwargs)
         self.train_engine = train_engine
@@ -34,22 +34,17 @@ class PlotLossesCallback:
         engine.add_event_handler(ignite.engine.Events.ITERATION_COMPLETED, self.store)
 
     def store(self, engine: ignite.engine.Engine):
-        """Store computed metrics, that will be send to main logger
-        Args:
-            engine: engine with state.metrics
-        """
-        metrics = {}
-        if not hasattr(engine.state, 'metrics') or len(engine.state.metrics) == 0:
+        """Forward `engine.state.metrics` to the main logger."""
+        if not getattr(engine.state, 'metrics', None):
             return
-        kwargs = dict(
-            current_step=global_step_from_engine(self.train_engine)
-            (self.train_engine, self.train_engine.last_event_name)
-        ) if self.train_engine else {}
-        for key, val in engine.state.metrics.items():
-            metrics[key] = val
-        self.liveplot.update(metrics, **kwargs)
-        if not self.train_engine:
+        metrics = dict(engine.state.metrics)
+        if self.train_engine is not None:
+            step_fn = global_step_from_engine(self.train_engine)
+            current_step = step_fn(self.train_engine, self.train_engine.last_event_name)
+            self.liveplot.update(metrics, current_step=current_step)
+        else:
+            self.liveplot.update(metrics)
             self.send()
 
-    def send(self, _: ignite.engine.Engine | None = None):
+    def send(self, _: ignite.engine.Engine | None = None) -> None:
         self.liveplot.send()
