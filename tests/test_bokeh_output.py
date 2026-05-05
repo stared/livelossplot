@@ -8,7 +8,7 @@ from livelossplot.outputs import BokehPlot
 
 def test_bokeh_plot(tmp_path: Path) -> None:
     output_file = tmp_path / "bokeh_output.html"
-    plot = BokehPlot(output_file=str(output_file))
+    plot = BokehPlot(output_file=str(output_file), auto_open=False)
     liveplot = PlotLosses(outputs=[plot], mode='script')
 
     rng = np.random.default_rng(0)

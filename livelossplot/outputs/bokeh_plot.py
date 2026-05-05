@@ -10,13 +10,17 @@ class BokehPlot(BaseOutput):
         self,
         max_cols: int = 2,
         cell_size: tuple[int, int] = (400, 300),
-        output_file: str = './bokeh_output.html'
+        output_file: str = './bokeh_output.html',
+        auto_open: bool = True,
     ):
         """
         Args:
             max_cols: max number of charts in one row
             cell_size: size of one chart
-            output_file: file to save the output
+            output_file: file to save the output (script mode)
+            auto_open: in script mode, open the saved HTML in a browser tab on the first `send()`
+                so subsequent `send()`s update the file for live preview via browser refresh.
+                Disable for tests or headless runs.
         """
         from bokeh import io, palettes, plotting
         self.plotting = plotting
@@ -27,6 +31,7 @@ class BokehPlot(BaseOutput):
         self.is_notebook = False
         self.is_colab = 'google.colab' in sys.modules
         self.output_file = output_file
+        self.auto_open = auto_open
         self.colors = palettes.Category10[10]
         self._colab_handle = None
 
@@ -134,9 +139,16 @@ class BokehPlot(BaseOutput):
         self.grid = self.plotting.gridplot(
             rows, sizing_mode='scale_width', width=self.plot_width, height=self.plot_height
         )
-        # `show` opens a browser tab in script mode; only call it for notebooks where it sets up
-        # the notebook handle used by `push_notebook` for live updates.
-        self.target = self.plotting.show(self.grid, notebook_handle=True) if self.is_notebook else None
+        # In notebook mode, `show` returns a handle for `push_notebook` to update inline.
+        # In script mode, `show` opens the saved HTML once so the user can refresh to see updates;
+        # `auto_open=False` skips that for tests/headless runs.
+        if self.is_notebook:
+            self.target = self.plotting.show(self.grid, notebook_handle=True)
+        elif self.auto_open:
+            self.plotting.show(self.grid)
+            self.target = None
+        else:
+            self.target = None
 
     def set_output_mode(self, mode: OutputMode) -> None:
         self.is_notebook = mode == 'notebook'

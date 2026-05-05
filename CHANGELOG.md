@@ -11,9 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Polish pass on top of 0.6.1.
 
+### Added
+
+- `BokehPlot(auto_open=False)` to suppress the script-mode browser tab for
+  tests or headless runs. Default stays `True` so live preview keeps working.
+
 ### Fixed
 
-- `BokehPlot` no longer opens a browser tab in script mode.
 - `BokehPlot` non-colab path now renders trailing partial rows correctly when
   the group count isn't divisible by `max_cols`.
 
